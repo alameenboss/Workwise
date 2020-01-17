@@ -443,6 +443,9 @@
     <Content Include="Views\CompanyProfile\_totalemployesPopup.cshtml" />
     <Content Include="Views\Shared\_Loading.cshtml" />
     <Content Include="Views\Companies\_CompanyCard.cshtml" />
+    <Content Include="Views\Index\_CreatePost.cshtml" />
+    <Content Include="Views\Index\_TopProfiles.cshtml" />
+    <Content Include="Views\Index\_PostPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

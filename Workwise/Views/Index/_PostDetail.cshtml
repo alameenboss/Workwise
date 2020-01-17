@@ -1,0 +1,18 @@
+﻿@model  bool
+@{
+    var hasComment = Model;
+}
+
+
+@if (Model)
+{
+    <div class="posty">
+        @Html.Partial("_PostPartial")
+        @Html.Partial("_PostCommentPartial")
+    </div>
+
+}
+else
+{
+    @Html.Partial("_PostPartial")
+}
