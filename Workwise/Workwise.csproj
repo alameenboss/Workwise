@@ -422,6 +422,20 @@
     <Content Include="Views\CompanyProfile\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Index\_PostProjectPopup.cshtml" />
+    <Content Include="Views\Index\_PostJobPopup.cshtml" />
+    <Content Include="Views\Index\_ChatListbox.cshtml" />
+    <Content Include="Views\CompanyProfile\_CreateLocationPopup.cshtml" />
+    <Content Include="Views\CompanyProfile\_OverviewPopup.cshtml" />
+    <Content Include="Views\CompanyProfile\_ExperiencePopup.cshtml" />
+    <Content Include="Views\CompanyProfile\_EducationPopup.cshtml" />
+    <Content Include="Views\CompanyProfile\_locationPopup.cshtml" />
+    <Content Include="Views\CompanyProfile\_skillsPopup.cshtml" />
+    <Content Include="Views\CompanyProfile\_portfolioPopup.cshtml" />
+    <Content Include="Views\CompanyProfile\_establishPopup.cshtml" />
+    <Content Include="Views\CompanyProfile\_totalemployesPopup.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

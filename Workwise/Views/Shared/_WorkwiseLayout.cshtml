@@ -26,28 +26,15 @@
 
 </head>
 <body oncontextmenu="return false;">
+    <div class="wrapper">
 
-    @RenderBody()
+        @Html.Partial("_Header")
 
-    <footer>
-        <div class="footy-sec mn no-margin">
-            <div class="container">
-                <ul>
-                    <li><a href="/Home/HelpCenter" title="">Help Center</a></li>
-                    <li><a href="/Home/AboutUs" title="">About</a></li>
-                    <li><a href="#" title="">Privacy Policy</a></li>
-                    <li><a href="#" title="">Community Guidelines</a></li>
-                    <li><a href="#" title="">Cookies Policy</a></li>
-                    <li><a href="#" title="">Career</a></li>
-                    <li><a href="/forum" title="">Forum</a></li>
-                    <li><a href="#" title="">Language</a></li>
-                    <li><a href="#" title="">Copyright Policy</a></li>
-                </ul>
-                <p><img src="/images/copy-icon2.png" alt="">Copyright 2019</p>
-                <img class="fl-rgt" src="/images/logo2.png" alt="">
-            </div>
-        </div>
-    </footer>
+        @RenderBody()
+
+        @Html.Partial("_Footer")
+
+    </div><!--theme-layout end-->
 
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/popper.js"></script>
