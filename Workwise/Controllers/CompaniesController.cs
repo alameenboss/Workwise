@@ -3,15 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Workwise.Models;
+using Workwise.Service;
+using Workwise.Service.Interface;
 
 namespace Workwise.Controllers
 {
     public class CompaniesController : Controller
     {
-        // GET: Conpanies
+        private readonly ICompanyService _companyService;
+
+      
+        public CompaniesController()
+        {
+            _companyService = new CompanyService();
+        }
+
+
         public ActionResult Index()
         {
-            return View();
+
+            var model = _companyService.GetAllCompanies().ToList();
+
+            return View(model);
         }
     }
 }

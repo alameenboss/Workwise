@@ -1,0 +1,17 @@
+﻿@model Workwise.Models.CompanyViewModel
+
+
+<div class="col-lg-3 col-md-4 col-sm-6">
+    <div class="company_profile_info">
+        <div class="company-up-info">
+            <img src="@Model.ImageUrl" alt="">
+            <h3>@Model.Name</h3>
+            <h4>Establish @Model.EstablishedDate.Month, @Model.EstablishedDate.Year</h4>
+            <ul>
+                <li><a href="/companyprofile/Follow/@Model.Id" title="" class="follow">Follow</a></li>
+                <li><a href="/companyprofile/Message/@Model.Id" title="" class="message-us"><i class="fa fa-envelope"></i></a></li>
+            </ul>
+        </div>
+        <a href="/companyprofile/@Model.Id" title="" class="view-more-pro">View Profile</a>
+    </div><!--company_profile_info end-->
+</div>
