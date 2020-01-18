@@ -9,11 +9,11 @@
                                 <div class="user-profile">
                                     <div class="username-dt">
                                         <div class="usr-pic">
-                                            <img src="/images/user-pic.png" alt="">
+                                            <img src="/images/alameen_user.jpg" alt="">
                                         </div>
                                     </div><!--username-dt end-->
                                     <div class="user-specs">
-                                        <h3>John Doe</h3>
+                                        <h3>Alameen S</h3>
                                         <span>Graphic Designer at Self Employed</span>
                                     </div>
                                 </div><!--user-profile end-->
@@ -48,7 +48,7 @@
                                     <div class="suggestion-usd">
                                         <img src="/images/s2.png" alt="">
                                         <div class="sgt-text">
-                                            <h4>John Doe</h4>
+                                            <h4>Alameen S</h4>
                                             <span>PHP Developer</span>
                                         </div>
                                         <span><i class="fa fa-plus"></i></span>
@@ -80,7 +80,7 @@
                                     <div class="suggestion-usd">
                                         <img src="/images/s6.png" alt="">
                                         <div class="sgt-text">
-                                            <h4>John Doe</h4>
+                                            <h4>Alameen S</h4>
                                             <span>PHP Developer</span>
                                         </div>
                                         <span><i class="fa fa-plus"></i></span>
@@ -130,14 +130,10 @@
                         <div class="main-ws-sec">
                             @Html.Partial("_CreatePost")
                             <div class="posts-section">
-                                @Html.Partial("_PostDetail",false)
                                 @Html.Partial("_TopProfiles")
-                                @Html.Partial("_PostDetail",false)
-                                
-                                @Html.Partial("_PostDetail",true)
-                                
-
-                                </div><!--posts-section end-->
+                                @Html.Partial("_PostDetail", false)
+                                @Html.Partial("_PostDetail", true)
+                            </div><!--posts-section end-->
                         </div><!--main-ws-sec end-->
                     </div>
                     <div class="col-lg-3 pd-right-none no-pd">
@@ -258,7 +254,7 @@
                                     <div class="suggestion-usd">
                                         <img src="/images/s2.png" alt="">
                                         <div class="sgt-text">
-                                            <h4>John Doe</h4>
+                                            <h4>Alameen S</h4>
                                             <span>PHP Developer</span>
                                         </div>
                                         <span><i class="fa fa-plus"></i></span>
@@ -290,7 +286,7 @@
                                     <div class="suggestion-usd">
                                         <img src="/images/s6.png" alt="">
                                         <div class="sgt-text">
-                                            <h4>John Doe</h4>
+                                            <h4>Alameen S</h4>
                                             <span>PHP Developer</span>
                                         </div>
                                         <span><i class="fa fa-plus"></i></span>
@@ -312,3 +308,23 @@
 @Html.Partial("_PostProjectPopup")
 @Html.Partial("_PostJobPopup")
 @Html.Partial("_ChatListbox")
+
+
+<script>
+    $(function () {
+        $(window).scroll(function () {
+        if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+            //alert("near bottom!");
+            $('.spinner').show();
+            $.ajax({
+                url: '/Index/GetPosts',
+                method: 'GET',
+                success: function (response) {// success callback function
+                    $('.posts-section').append(response);
+                    $('.spinner').hide
+                }
+            });
+        }
+        });
+    });
+</script>

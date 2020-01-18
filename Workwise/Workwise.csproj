@@ -204,6 +204,7 @@
     <Content Include="css\jquery.range.css" />
     <Content Include="css\line-awesome-font-awesome.min.css" />
     <Content Include="css\line-awesome.css" />
+    <Content Include="css\MyStyles.css" />
     <Content Include="css\responsive.css" />
     <Content Include="css\slick-theme.css" />
     <Content Include="css\slick.css" />
@@ -211,6 +212,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="images\alameen_user.jpg" />
     <Content Include="images\all-out.png" />
     <Content Include="images\bg-img1.png" />
     <Content Include="images\bg-img2.png" />
@@ -314,6 +316,19 @@
     <Content Include="images\pf-img8.jpg" />
     <Content Include="images\pf-img9.jpg" />
     <Content Include="images\photo-icon.png" />
+    <Content Include="images\PostImages\Image1.jpg" />
+    <Content Include="images\PostImages\Image10.jpg" />
+    <Content Include="images\PostImages\Image11.jpg" />
+    <Content Include="images\PostImages\Image12.jpg" />
+    <Content Include="images\PostImages\Image13.jpg" />
+    <Content Include="images\PostImages\Image2.jpg" />
+    <Content Include="images\PostImages\Image3.jpg" />
+    <Content Include="images\PostImages\Image4.jpg" />
+    <Content Include="images\PostImages\Image5.jpg" />
+    <Content Include="images\PostImages\Image6.jpg" />
+    <Content Include="images\PostImages\Image7.jpg" />
+    <Content Include="images\PostImages\Image8.jpg" />
+    <Content Include="images\PostImages\Image9.jpg" />
     <Content Include="images\pro-icon1.png" />
     <Content Include="images\pro-icon2.png" />
     <Content Include="images\pro-icon3.png" />
@@ -446,6 +461,8 @@
     <Content Include="Views\Index\_CreatePost.cshtml" />
     <Content Include="Views\Index\_TopProfiles.cshtml" />
     <Content Include="Views\Index\_PostPartial.cshtml" />
+    <Content Include="Views\Index\_PostCommentPartial.cshtml" />
+    <Content Include="Views\Index\_PostDetail.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

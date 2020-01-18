@@ -13,5 +13,12 @@ namespace Workwise.Controllers
         {
             return View();
         }
+
+        public ActionResult GetPosts()
+        {
+            var model = DateTime.Now.Second % 2 == 0 ? true : false;
+            return PartialView("_PostDetail", model);
+        }
+
     }
 }

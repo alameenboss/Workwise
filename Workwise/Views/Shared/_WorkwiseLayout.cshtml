@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<!-- saved from url=(0047)/ -->
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,14 +22,14 @@
     <link rel="stylesheet" type="text/css" href="/css/jquery.range.css">
     <link rel="stylesheet" type="text/css" href="/css/flatpickr.min.css">
 
-
-
+    <link rel="stylesheet" type="text/css" href="~/css/MyStyles.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
 </head>
 <body oncontextmenu="return false;">
     <div class="wrapper">
 
         @Html.Partial("_Header")
-
+        <div class="content-seperator"></div>
         @RenderBody()
 
         @Html.Partial("_Loading")
@@ -38,7 +38,7 @@
 
     </div><!--theme-layout end-->
 
-    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    
     <script type="text/javascript" src="/js/popper.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/jquery.mCustomScrollbar.js"></script>

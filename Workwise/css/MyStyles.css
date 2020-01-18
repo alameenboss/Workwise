@@ -1,0 +1,30 @@
+﻿
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index :999;
+}
+.content-seperator {
+    margin-top: 56px;
+}
+
+header .user-account .user-info > img  {
+    height:30px !important;
+}
+.post-bar .post_topbar .usy-dt > img {
+    height: 30px !important;
+}
+
+.post-topbar .user-picy > img {
+    border-radius : 100%;
+}
+@media (max-width: 576px) {
+    .content-seperator {
+        margin-top: 150px;
+    }
+}
+
+.posty {
+    margin-bottom: 20px;
+}
