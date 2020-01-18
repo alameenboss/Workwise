@@ -13,7 +13,6 @@
     </div>
 </section>
 
-
 <main>
     <div class="main-section">
         <div class="container">
@@ -23,10 +22,10 @@
                         <div class="main-left-sidebar">
                             <div class="user_profile">
                                 <div class="user-pro-img">
-                                    <img src="/images/alameen_user.jpg" alt="">
+                                    <img src="/images/alameen_user.jpg" alt="" id="uploaded_image">
                                     <div class="add-dp" id="OpenImgUpload">
-                                        <input type="file" id="file">
-                                        <label for="file"><i class="fa fa-camera"></i></label>
+                                        <input type="file" name="upload_image" id="upload_image" accept="image/*" />
+                                        <label for="upload_image"><i class="fa fa-camera"></i></label>
                                     </div>
                                 </div><!--user-pro-img end-->
                                 <div class="user_pro_status">
@@ -2203,3 +2202,90 @@
         <a href="#" title="" class="close-box"><i class="fa fa-close"></i></a>
     </div><!--overview-edit end-->
 </div><!--overview-box end-->
+
+
+<div id="uploadimageModal" class="modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload & Crop Image</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8 text-center">
+                        <div id="image_demo" style="width:350px; margin-top:30px"></div>
+                    </div>
+                    <div class="col-md-4" style="padding-top:30px;">
+                        <br />
+                        <br />
+                        <br />
+                        <button class="btn btn-success crop_image">Crop & Upload Image</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(function () {
+
+         let $image_crop = $('#image_demo').croppie({
+        enableExif: true,
+        viewport: {
+            width: 200,
+            height: 200,
+            type: 'circle' //circle//square
+        },
+        boundary: {
+            width: 300,
+            height: 300
+        }
+    });
+
+    $('#upload_image').bind('change', function (e) {
+        debugger;
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            $image_crop.croppie('bind', {
+                url: event.target.result
+            }).then(function () {
+                console.log('jQuery bind complete');
+            });
+        }
+        reader.readAsDataURL(this.files[0]);
+        $('#uploadimageModal').modal('show');
+    });
+
+    $('.crop_image').click(function (event) {
+        $image_crop.croppie('result', {
+            type: 'canvas',
+            size: 'viewport'
+        }).then(function (response) {
+            $.ajax({
+                url: "/FileUpload/SaveImage/",
+                type: "POST",
+                data: { "image": response },
+                success: function (data) {
+                    $('#uploadimageModal').modal('hide');
+                    $('#uploaded_image').attr('src',data.imageUrl);
+                }
+            });
+        })
+    });
+
+
+    //$('.fa-camera').undind('click').bind('click', function (e) {
+    //    e.preventDefault();
+    //    e.stopImmediatePropagation()
+    //});
+})
+
+
+</script>
