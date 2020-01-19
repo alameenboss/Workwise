@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Workwise.Controllers
 {
+    [Authorize]
     public class CompanyProfileController : Controller
     {
         // GET: Conpanies

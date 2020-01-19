@@ -16,6 +16,8 @@ namespace Workwise.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string ImageUrl { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

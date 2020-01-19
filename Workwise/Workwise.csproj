@@ -186,6 +186,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001181817256_InitialCreate.cs" />
+    <Compile Include="Migrations\202001181817256_InitialCreate.Designer.cs">
+      <DependentUpon>202001181817256_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001191601539_UpdateUserInfo.cs" />
+    <Compile Include="Migrations\202001191601539_UpdateUserInfo.Designer.cs">
+      <DependentUpon>202001191601539_UpdateUserInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\ExternalLoginConfirmationViewModel.cs" />
@@ -482,6 +491,14 @@
     <Content Include="Views\Login\_RegisterPartial.cshtml" />
     <Content Include="Views\Login\_LoginPartial.cshtml" />
     <Content Include="Views\Login\Register.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202001181817256_InitialCreate.resx">
+      <DependentUpon>202001181817256_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001191601539_UpdateUserInfo.resx">
+      <DependentUpon>202001191601539_UpdateUserInfo.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

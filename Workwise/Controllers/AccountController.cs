@@ -70,7 +70,7 @@ namespace Workwise.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(@"~\Views\Login\index.cshtml",model);
+                return View(@"~\Views\Login\Index.cshtml",model);
             }
 
             // This doesn't count login failures towards account lockout
@@ -87,7 +87,7 @@ namespace Workwise.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(@"~\Views\Login\index.cshtml",model);
+                    return View(@"~\Views\Login\Index.cshtml",model);
             }
         }
 
@@ -139,7 +139,7 @@ namespace Workwise.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            return View("~/Views/Login/Register.cshtml");
         }
 
         //
@@ -151,7 +151,11 @@ namespace Workwise.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { 
+                    UserName = model.Username, 
+                    Email = model.Email,
+                    ImageUrl = model.ImageUrl
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -163,13 +167,13 @@ namespace Workwise.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Index");
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View("~/Views/Login/Register.cshtml",model);
         }
 
         //
@@ -392,7 +396,7 @@ namespace Workwise.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Login");
         }
 
         //
@@ -449,7 +453,7 @@ namespace Workwise.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Index");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

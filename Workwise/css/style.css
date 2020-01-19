@@ -536,17 +536,18 @@ nav > ul > li > a:hover {
 
 .user-account {
 	float: right;
-	width: 110px;
+	width: 209px;
 	border-left: 1px solid #dd3e2b;
 	border-right: 1px solid #dd3e2b;
 	box-sizing: border-box;
 	position: relative;
 }
 .user-info {
-	float: left;
-	width: 100%;
-	padding: 13px 10px;
-	position: relative;
+    float: left;
+    width: 100%;
+    padding: 13px 10px;
+    position: relative;
+    display: inline-flex;
 }
 .user-account-settingss {
     position: absolute;
@@ -684,25 +685,27 @@ nav > ul > li > a:hover {
 	border-radius: 100px;
 }
 .user-info a {
-	color: #fff;
-	font-size: 14px;
-	float: left;
-	margin-top: 8px;
+    color: #fff;
+    font-size: 14px;
+    float: left;
+    margin-top: 8px;
+    overflow-x: hidden;
 }
 .user-info a:hover {
 	color: #fff;
 }
 .user-info > i {
-	position: absolute;
-	top: 51%;
-	right: 10px;
-	color: #fff;
-	font-size: 12px;
-	-webkit-transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	-o-transform: translateY(-50%);
-	transform: translateY(-50%);
+    margin-top: 15px;
+    margin-left: 5px;
+    padding: 0px;
+    display: flex;
+    color: #fff;
+    font-size: 12px;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 

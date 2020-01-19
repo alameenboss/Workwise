@@ -19,6 +19,10 @@ header .user-account .user-info > img  {
 .post-topbar .user-picy > img {
     border-radius : 100%;
 }
+
+header nav {
+    width: 51% !important;
+}
 @media (max-width: 576px) {
     .content-seperator {
         margin-top: 150px;

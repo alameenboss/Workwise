@@ -1,4 +1,8 @@
-﻿<div class="sign_in_sec current " id="tab-2">
+﻿@model Workwise.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+<div class="sign_in_sec current " id="tab-2">
     <div class="signup-tab">
         <i class="fa fa-long-arrow-left"></i>
         <h2>alameenboss@example.com</h2>
@@ -8,61 +12,81 @@
         </ul>
     </div><!--signup-tab end-->
     <div class="dff-tab current" id="tab-3">
-        <form>
-            <div class="row">
-                <div class="col-lg-12 no-pdd">
-                    <div class="sn-field">
-                        <input type="text" name="name" placeholder="Full Name">
-                        <i class="fa fa-user"></i>
-                    </div>
-                </div>
-                <div class="col-lg-12 no-pdd">
-                    <div class="sn-field">
-                        <input type="text" name="country" placeholder="Country">
-                        <i class="fa fa-globe"></i>
-                    </div>
-                </div>
-                <div class="col-lg-12 no-pdd">
-                    <div class="sn-field">
-                        <select>
-                            <option>Category</option>
-                            <option>Category 1</option>
-                            <option>Category 2</option>
-                            <option>Category 3</option>
-                            <option>Category 4</option>
-                        </select>
-                        <i class="fa fa-dropbox"></i>
-                        <span><i class="fa fa-ellipsis-h"></i></span>
-                    </div>
-                </div>
-                <div class="col-lg-12 no-pdd">
-                    <div class="sn-field">
-                        <input type="password" name="password" placeholder="Password">
-                        <i class="fa fa-lock"></i>
-                    </div>
-                </div>
-                <div class="col-lg-12 no-pdd">
-                    <div class="sn-field">
-                        <input type="password" name="repeat-password" placeholder="Repeat Password">
-                        <i class="fa fa-lock"></i>
-                    </div>
-                </div>
-                <div class="col-lg-12 no-pdd">
-                    <div class="checky-sec st2">
-                        <div class="fgt-sec">
-                            <input type="checkbox" name="cc" id="c2">
-                            <label for="c2">
-                                <span></span>
-                            </label>
-                            <small>Yes, I understand and agree to the workwise Terms &amp; Conditions.</small>
-                        </div><!--fgt-sec end-->
-                    </div>
-                </div>
-                <div class="col-lg-12 no-pdd">
-                    <button type="submit" value="submit">Get Started</button>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-lg-12 no-pdd">
+                <div class="sn-field">
+                    @*<input type="text" name="name" placeholder="Full Name">*@
+                    @Html.TextBoxFor(m => m.Username, new { placeholder = "User Name" })
+                    <i class="fa fa-user"></i>
                 </div>
             </div>
-        </form>
+            @*<div class="col-lg-12 no-pdd">
+            <div class="sn-field">
+                <input type="text" name="country" placeholder="Country">
+                <i class="fa fa-globe"></i>
+            </div>
+        </div>*@
+            @*<div class="col-lg-12 no-pdd">
+            <div class="sn-field">
+                <select>
+                    <option>Category</option>
+                    <option>Category 1</option>
+                    <option>Category 2</option>
+                    <option>Category 3</option>
+                    <option>Category 4</option>
+                </select>
+                <i class="fa fa-dropbox"></i>
+                <span><i class="fa fa-ellipsis-h"></i></span>
+            </div>
+        </div>*@
+            <div class="col-lg-12 no-pdd">
+                <div class="sn-field">
+                    @*<input type="text" name="country" placeholder="Country">*@
+                    @Html.TextBoxFor(m => m.Email, new { placeholder = "Email Id" })
+                    <i class="fa fa-envelope"></i>
+                </div>
+            </div>
+            <div class="col-lg-12 no-pdd">
+                <div class="sn-field">
+                    @*<input type="password" name="password" placeholder="Password">*@
+                    @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
+                    <i class="fa fa-lock"></i>
+                </div>
+            </div>
+            <div class="col-lg-12 no-pdd">
+                <div class="sn-field">
+                    @*<input type="password" name="repeat-password" placeholder="Repeat Password">*@
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Repeat Password" })
+                    <i class="fa fa-lock"></i>
+                </div>
+            </div>
+            <div class="col-lg-12 no-pdd">
+                <div class="checky-sec st2">
+                    <div class="fgt-sec">
+                        <input type="checkbox" name="cc" id="c2">
+                        <label for="c2">
+                            <span></span>
+                        </label>
+                        <small>Yes, I understand and agree to the workwise Terms &amp; Conditions.</small>
+                    </div><!--fgt-sec end-->
+                </div>
+            </div>
+            <div class="col-lg-12 no-pdd">
+                <div class="sn-field">
+                    @*<input type="text" name="name" placeholder="Full Name">*@
+                    @Html.TextBoxFor(m => m.ImageUrl, new { placeholder = "ImagePath" })
+                    <i class="fa fa-user"></i>
+                </div>
+            </div>
+            <div class="col-lg-12 no-pdd">
+                <button type="submit" value="submit">Get Started</button>
+            </div>
+        </div>
+        }
     </div><!--dff-tab end-->
     <div class="dff-tab" id="tab-4">
         <form>

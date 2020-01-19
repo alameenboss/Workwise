@@ -9,6 +9,7 @@ using Workwise.Service.Interface;
 
 namespace Workwise.Controllers
 {
+    [Authorize]
     public class CompaniesController : Controller
     {
         private readonly ICompanyService _companyService;

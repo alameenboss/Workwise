@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Workwise.Models
 {
     public class RegisterViewModel
     {
+
+        [Required]
+        [Display(Name = "User Name")]
+        public string Username { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -20,5 +24,7 @@ namespace Workwise.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }
