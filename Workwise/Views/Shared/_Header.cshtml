@@ -157,7 +157,9 @@
             <div class="menu-btn">
                 <a href="#" title=""><i class="fa fa-bars"></i></a>
             </div><!--menu-btn end-->
-            @Html.Partial("_LoginPartial")
+
+            @Html.Action("LoginPartial","MyProfileFeed")
+            @*@Html.Partial("_LoginPartial")*@
 
         </div><!--header-data end-->
     </div>

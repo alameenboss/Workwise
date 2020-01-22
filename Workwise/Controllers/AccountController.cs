@@ -58,7 +58,7 @@ namespace Workwise.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View(@"~\Views\Login\index.cshtml");
+            return View();
         }
 
         //
@@ -70,12 +70,12 @@ namespace Workwise.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(@"~\Views\Login\Index.cshtml",model);
+                return View(model);
             }
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -87,7 +87,7 @@ namespace Workwise.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(@"~\Views\Login\Index.cshtml",model);
+                    return View(model);
             }
         }
 
@@ -139,7 +139,7 @@ namespace Workwise.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View("~/Views/Login/Register.cshtml");
+            return View();
         }
 
         //
@@ -153,8 +153,7 @@ namespace Workwise.Controllers
             {
                 var user = new ApplicationUser { 
                     UserName = model.Username, 
-                    Email = model.Email,
-                    ImageUrl = model.ImageUrl
+                    Email = model.Email
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -173,7 +172,7 @@ namespace Workwise.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View("~/Views/Login/Register.cshtml",model);
+            return View(model);
         }
 
         //
@@ -373,6 +372,7 @@ namespace Workwise.Controllers
                 }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
+
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);

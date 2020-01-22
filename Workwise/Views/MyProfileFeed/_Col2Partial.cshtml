@@ -1,0 +1,78 @@
+﻿<div class="col-lg-6">
+    <div class="main-ws-sec">
+        <div class="user-tab-sec rewivew">
+            <h3>Alameen S</h3>
+            <div class="star-descp">
+                <span>Graphic Designer at Self Employed</span>
+                <ul>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star-half-o"></i></li>
+                </ul>
+                <a href="#" title="">Status</a>
+            </div><!--star-descp end-->
+            <div class="tab-feed st2 settingjb">
+                <ul>
+                    <li data-tab="feed-dd" class="active">
+                        <a href="#" title="">
+                            <img src="/images/ic1.png" alt="">
+                            <span>Feed</span>
+                        </a>
+                    </li>
+                    <li data-tab="info-dd">
+                        <a href="#" title="">
+                            <img src="/images/ic2.png" alt="">
+                            <span>Info</span>
+                        </a>
+                    </li>
+                    <li data-tab="saved-jobs">
+                        <a href="#" title="">
+                            <img src="/images/ic4.png" alt="">
+                            <span>Jobs</span>
+                        </a>
+                    </li>
+                    <li data-tab="my-bids">
+                        <a href="#" title="">
+                            <img src="/images/ic5.png" alt="">
+                            <span>Bids</span>
+                        </a>
+                    </li>
+                    <li data-tab="portfolio-dd">
+                        <a href="#" title="">
+                            <img src="/images/ic3.png" alt="">
+                            <span>Portfolio</span>
+                        </a>
+                    </li>
+                    <li data-tab="rewivewdata">
+                        <a href="#" title="">
+                            <img src="/images/review.png" alt="">
+                            <span>Reviews</span>
+                        </a>
+                    </li>
+                    <li data-tab="payment-dd">
+                        <a href="#" title="">
+                            <img src="/images/ic6.png" alt="">
+                            <span>Payment</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div><!-- tab-feed end-->
+        </div><!--user-tab-sec end-->
+
+
+        @Html.Partial(@"~\Views\MyProfileFeed\UsertabDetails\_SavedJobsPartial.cshtml")
+        @Html.Partial(@"~\Views\MyProfileFeed\UsertabDetails\_FeedPartial.cshtml")
+        @Html.Partial(@"~\Views\MyProfileFeed\UsertabDetails\_MyBidsPartial.cshtml")
+        @Html.Partial(@"~\Views\MyProfileFeed\UsertabDetails\_ReviewDataPartial.cshtml")
+        @Html.Partial(@"~\Views\MyProfileFeed\UsertabDetails\_MyBid2Partial.cshtml")
+        @Html.Partial(@"~\Views\MyProfileFeed\UsertabDetails\_PortfolioPartial.cshtml")
+        @Html.Partial(@"~\Views\MyProfileFeed\UsertabDetails\_PaymentPartial.cshtml")
+
+
+
+
+    </div><!--main-ws-sec end-->
+</div>

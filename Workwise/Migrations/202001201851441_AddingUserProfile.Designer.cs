@@ -7,13 +7,13 @@ namespace Workwise.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class AddingUserProfile : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddingUserProfile));
         
         string IMigrationMetadata.Id
         {
-            get { return "202001181817256_InitialCreate"; }
+            get { return "202001201851441_AddingUserProfile"; }
         }
         
         string IMigrationMetadata.Source
