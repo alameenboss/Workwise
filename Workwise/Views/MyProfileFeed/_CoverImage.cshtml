@@ -1,14 +1,20 @@
-﻿
-<section class="cover-sec">
-    <img src="/images/cover-img.jpg" alt="">
-    <div class="add-pic-box">
-        <div class="container">
-            <div class="row no-gutters">
-                <div class="col-lg-12 col-sm-12">
-                    <input type="file" id="file">
-                    <label for="file">Change Image</label>
+﻿@{
+    var mode = ViewData["Mode"] != null ? ViewData["Mode"].ToString() : string.Empty;
+}
+    <section class="cover-sec">
+        <img src="/images/cover-img.jpg" alt="">
+        @if (mode == "Edit")
+        {
+            <div class="add-pic-box">
+                <div class="container">
+                    <div class="row no-gutters">
+                        <div class="col-lg-12 col-sm-12">
+                            <input type="file" id="coverimage">
+                            <label for="coverimage">Change Image</label>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        }
+
+    </section>

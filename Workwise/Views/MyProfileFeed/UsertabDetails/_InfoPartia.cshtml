@@ -1,30 +1,120 @@
-﻿<div class="product-feed-tab" id="info-dd">
+﻿@{
+    var mode = ViewData["Mode"] != null ? ViewData["Mode"].ToString() : string.Empty;
+}
+<div class="product-feed-tab" id="info-dd">
     <div class="user-profile-ov">
-        <h3><a href="#" title="" class="overview-open"><i class="fa fa-pencil"></i></a></h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempor aliquam felis, nec condimentum ipsum commodo id. Vivamus sit amet augue nec urna efficitur tincidunt. Vivamus consectetur aliquam lectus commodo viverra. Nunc eu augue nec arcu efficitur faucibus. Aliquam accumsan ac magna convallis bibendum. Quisque laoreet augue eget augue fermentum scelerisque. Vivamus dignissim mollis est dictum blandit. Nam porta auctor neque sed congue. Nullam rutrum eget ex at maximus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget vestibulum lorem.</p>
+
+        <h3>
+            Overview
+            @if (mode == "Edit")
+            {
+                <a href="#" title="" class="overview-open pull-right">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            }
+
+        </h3>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Quisque tempor aliquam felis, nec condimentum ipsum commodo id.
+            Vivamus sit amet augue nec urna efficitur tincidunt.
+            Vivamus consectetur aliquam lectus commodo viverra.
+            Nunc eu augue nec arcu efficitur faucibus.
+            Aliquam accumsan ac magna convallis bibendum.
+            Quisque laoreet augue eget augue fermentum scelerisque.
+            Vivamus dignissim mollis est dictum blandit.
+            Nam porta auctor neque sed congue.
+            Nullam rutrum eget ex at maximus.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Donec eget vestibulum lorem.
+        </p>
     </div><!--user-profile-ov end-->
     <div class="user-profile-ov st2">
-        <h3><a href="#" title="" class="exp-bx-open"><i class="fa fa-plus-square"></i></a></h3>
-        <h4>Web designer <a href="#" title=""><i class="fa fa-pencil"></i></a></h4>
+        <h3>
+            Experience
+            @if (mode == "Edit")
+            {
+                <a href="#" title="" class="exp-bx-open pull-right">
+                    <i class="fa fa-plus-square"></i>
+                </a>
+            }
+            
+        </h3>
+        <h4>
+            Web designer  
+            @if (mode == "Edit")
+            {
+                <a href="#" title="" class="pull-right">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            }
+        </h4>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempor aliquam felis, nec condimentum ipsum commodo id. Vivamus sit amet augue nec urna efficitur tincidunt. Vivamus consectetur aliquam lectus commodo viverra. </p>
-        <h4>UI#" title=""><i class="fa fa-pencil"></i></a></h4>
+        <h4>
+            UI
+            @if (mode == "Edit")
+            {
+                <a href="#" title="" class="pull-right">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            }
+        </h4>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempor aliquam felis, nec condimentum ipsum commodo id.</p>
-        <h4>PHP developer <a href="#" title=""><i class="fa fa-pencil"></i></a></h4>
+        <h4>
+            PHP developer  
+            @if (mode == "Edit")
+            {
+                <a href="#" title="" class="pull-right">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            }
+        </h4>
         <p class="no-margin">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempor aliquam felis, nec condimentum ipsum commodo id. Vivamus sit amet augue nec urna efficitur tincidunt. Vivamus consectetur aliquam lectus commodo viverra. </p>
     </div><!--user-profile-ov end-->
     <div class="user-profile-ov">
-        <h3><a href="#" title=""><i class="fa fa-plus-square"></i></a></h3>
-        <h4>Master of Computer Science</h4>
+        <h3>Education
+        @if (mode == "Edit")
+        {
+            <a href="#" title="" class="pull-right">
+                <i class="fa fa-plus-square"></i>
+            </a>
+        }
+    </a></h3>
+        <h4>
+            Master of Computer Science 
+            @if (mode == "Edit")
+            {
+                <a href="#" title="" class="pull-right">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            }
+        </h4>
         <span>2015 - 2018</span>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempor aliquam felis, nec condimentum ipsum commodo id. Vivamus sit amet augue nec urna efficitur tincidunt. Vivamus consectetur aliquam lectus commodo viverra. </p>
     </div><!--user-profile-ov end-->
     <div class="user-profile-ov">
-        <h3><a href="#" title=""><i class="fa fa-plus-square"></i></a></h3>
+        <h3>
+            Location
+            @if (mode == "Edit")
+            {
+                <a href="#" title="" class="pull-right">
+                    <i class="fa fa-plus-square"></i>
+                </a>
+            }
+        </h3>
         <h4>India</h4>
         <p>151/4 BT Chownk, Delhi </p>
     </div><!--user-profile-ov end-->
     <div class="user-profile-ov">
-        <h3><a href="#"><i class="fa fa-plus-square"></i></a></h3>
+        <h3>
+            Skills
+            @if (mode == "Edit")
+            {
+                <a href="#" title="" class="pull-right">
+                    <i class="fa fa-plus-square"></i>
+                </a>
+            }
+        </h3>
         <ul>
             <li><a href="#" title="">HTML</a></li>
             <li><a href="#" title="">PHP</a></li>

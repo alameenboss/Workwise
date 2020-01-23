@@ -1,6 +1,13 @@
-﻿<div class="suggestions full-width">
+﻿@{
+    var mode = ViewData["Mode"] != null ? ViewData["Mode"].ToString() : string.Empty;
+
+    var heading = mode == "Edit" ? "People Viewed Profile" : "Suggestions";
+}
+
+
+<div class="suggestions full-width">
     <div class="sd-title">
-        <h3>People Viewed Profile</h3>
+        <h3>@heading</h3>
         <i class="fa fa-ellipsis-v"></i>
     </div><!--sd-title end-->
     <div class="suggestions-list">
@@ -15,7 +22,7 @@
         <div class="suggestion-usd">
             <img src="/images/s2.png" alt="">
             <div class="sgt-text">
-                <h4>Alameen S</h4>
+                <h4>Mark Brown</h4>
                 <span>PHP Developer</span>
             </div>
             <span><i class="fa fa-plus"></i></span>
@@ -47,7 +54,7 @@
         <div class="suggestion-usd">
             <img src="/images/s6.png" alt="">
             <div class="sgt-text">
-                <h4>Alameen S</h4>
+                <h4>Peter Hien</h4>
                 <span>PHP Developer</span>
             </div>
             <span><i class="fa fa-plus"></i></span>
