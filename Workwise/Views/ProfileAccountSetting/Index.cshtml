@@ -36,7 +36,7 @@
                                         </div>
                                     </div><!--notbar end-->
                                     <div class="notbar">
-                                        <h4>Notification Email</h4>
+                                        <h4>Notification Email</h4>For
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium nulla quis erat dapibus, varius hendrerit neque suscipit. Integer in ex euismod, posuere lectus id</p>
                                         <div class="toggle-btn">
                                             <div class="custom-control custom-switch">
@@ -153,7 +153,7 @@
                                         </div>
                                     </div>
                                     <div class="cp-field">
-                                        <h5><a href="#" title="">Forgot Password?</a></h5>
+                                        <h5>@Html.ActionLink("Forgot your password?", "ForgotPassword","Account")</h5>
                                     </div>
                                     <div class="save-stngs pd2">
                                         <ul>
@@ -165,6 +165,7 @@
                                 }
                             </div><!--acc-setting end-->
                         </div>
+
                         <div class="tab-pane fade" id="nav-notification" role="tabpanel" aria-labelledby="nav-notification-tab">
                             <div class="acc-setting">
                                 <h3>Notifications</h3>
@@ -268,7 +269,7 @@
                                             <img src="/images/r-img2.png" alt="">
                                         </div>
                                         <div class="request-info">
-                                            <h3>Alameen S</h3>
+                                            <h3>@SessionHelper.UserName</h3>
                                             <span>PHP Developer</span>
                                         </div>
                                         <div class="accept-feat">
@@ -328,7 +329,7 @@
                                             <img src="/images/r-img6.png" alt="">
                                         </div>
                                         <div class="request-info">
-                                            <h3>Alameen S</h3>
+                                            <h3>@SessionHelper.UserName</h3>
                                             <span>PHP Developer</span>
                                         </div>
                                         <div class="accept-feat">
@@ -446,7 +447,7 @@
                                             <img src="/images/r-img2.png" alt="">
                                         </div>
                                         <div class="request-info">
-                                            <h3>Alameen S</h3>
+                                            <h3>@SessionHelper.UserName</h3>
                                             <span>PHP Developer</span>
                                         </div>
                                         <div class="accept-feat">
@@ -506,7 +507,7 @@
                                             <img src="/images/r-img6.png" alt="">
                                         </div>
                                         <div class="request-info">
-                                            <h3>Alameen S</h3>
+                                            <h3>@SessionHelper.UserName</h3>
                                             <span>PHP Developer</span>
                                         </div>
                                         <div class="accept-feat">
