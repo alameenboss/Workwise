@@ -71,18 +71,14 @@
             </li>
         </ul>
         <p>
-            @*@if(Model.Description.Length > 150)
-        {
-            Model.Description.Substring(0, 150);
-            <span>...</span>
-        }
-        else
-        {
-            @Model.Description
-        }*@
-            @Model.Description
-            <a href="#" title="">Show All</a>
-
+            @if (Model.Description.Length > 100)
+            {
+                @Model.Description.Substring(0, 150)<span>...</span><a href="#" title="">Show All</a>
+            }
+            else
+            {
+                @Model.Description
+            }
         </p>
 
         <ul class="skill-tags">

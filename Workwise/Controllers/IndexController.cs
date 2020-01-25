@@ -8,6 +8,7 @@ using Workwise.Data;
 using Workwise.Models;
 using Microsoft.AspNet.Identity;
 using Workwise.Helper;
+using System.IO;
 
 namespace Workwise.Controllers
 {
@@ -34,8 +35,12 @@ namespace Workwise.Controllers
         public ActionResult GetPosts()
         {
             var text = new RandomText();
-            text.AddContentParagraphs(2, 2, 4, 5, 12);
-
+            text.AddContentParagraphs(RandomGenerator.GenerateLockedRandom(1, 10),
+                1, 
+                RandomGenerator.GenerateLockedRandom(10, 20),
+                RandomGenerator.GenerateLockedRandom(1, 10), 
+                RandomGenerator.GenerateLockedRandom(10, 30));
+             
             var model = new Post()
             {
                 PostedOn = DateTime.Now.AddSeconds(-90),
@@ -59,7 +64,7 @@ namespace Workwise.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePost(Post model)
+        public ActionResult CreatePost(Post model, HttpPostedFileBase PostImage)
         {
             if (!ModelState.IsValid)
             {
@@ -68,6 +73,19 @@ namespace Workwise.Controllers
            
             try
             {
+                
+                if (PostImage != null)
+                {
+                    var postedImage = new ImageModel();
+                    var fileName = Guid.NewGuid().ToString().Replace("-", "").Replace(" ", "") + ".png";
+                    var path = Path.Combine(Server.MapPath("~/Images/Upload"), fileName);
+                    var imgUrl = @"/Images/Upload/" + fileName;
+                    PostImage.SaveAs(path);
+                    postedImage.ImageUrl = imgUrl;
+                    model.PostImages = new List<ImageModel>();
+                    model.PostImages.Add(postedImage);
+                }
+                
                 postrepository.SavePost(model, User.Identity.GetUserId());
                 return RedirectToAction("Index");
             }

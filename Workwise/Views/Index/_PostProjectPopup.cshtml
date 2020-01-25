@@ -4,7 +4,7 @@
 <div class="post-popup pst-pj">
     <div class="post-project">
         <div class="post-project-fields">
-            @using (Html.BeginForm("CreatePost", "Index", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("CreatePost", "Index", FormMethod.Post, new { @class = "form-horizontal", role = "form",enctype="multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
                 <div class="row">
@@ -24,6 +24,10 @@
                     </div>
                     <div class="col-lg-12">
                         @Html.TextAreaFor(m => Model.Description, new { htmlAttributes = new { placeholder = "Description" } })
+                    </div>
+                    <div class="col-lg-12">
+                        <input type="file" name="PostImage" id="PostImage" accept="image/*" />
+                        <label for="PostImage">Change Image</label>
                     </div>
                     <div class="col-lg-12">
                         <ul>
