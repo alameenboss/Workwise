@@ -1,4 +1,6 @@
-﻿<main>
+﻿@using Workwise.Models;
+@model List<Post>
+<main>
     <div class="main-section">
         <div class="container">
             <div class="main-section-data">
@@ -131,8 +133,14 @@
                             @Html.Partial("_CreatePost")
                             <div class="posts-section">
                                 @Html.Partial("_TopProfiles")
-                                @Html.Partial("_PostDetail", false)
-                                @Html.Partial("_PostDetail", true)
+
+                                @*@Html.Action("GetPosts", "Index")
+                                @Html.Action("GetPosts", "Index")*@
+                                @foreach (var item in Model)
+                                {
+                                    @Html.Partial("_PostDetail", item)
+                                }
+
                             </div><!--posts-section end-->
                         </div><!--main-ws-sec end-->
                     </div>
@@ -305,7 +313,7 @@
 </main>
 
 
-@Html.Partial("_PostProjectPopup")
+@Html.Partial("_PostProjectPopup",new Post())
 @Html.Partial("_PostJobPopup")
 @Html.Partial("_ChatListbox")
 

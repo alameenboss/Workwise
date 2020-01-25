@@ -88,27 +88,27 @@ namespace Workwise.Helper
 
         }
 
-        public  static UserProfile GetUser(IPrincipal obj)
+        public  static UserProfile GetUser(string userid)
         {
 
-            if (SessionHelper.Get<UserProfile>("USER_INFO") == null)
+            if (SessionHelper.Get<UserProfile>(userid) == null)
             {
                 UserProfileRepository repo = new UserProfileRepository();
-                var model = repo.GetByUserId(obj.Identity.GetUserId());
+                var model = repo.GetByUserId(userid);
                 if (!(model?.Id > 0))
                 {
                     model = new UserProfile()
                     {
-                        FirstName = "Alameen",
+                        FirstName = "Demo User",
                         ImageUrl = @"\images\alameen_user.jpg"
                     };
                 }
-                SessionHelper.Set<UserProfile>("USER_INFO", model);
+                SessionHelper.Set<UserProfile>(userid, model);
                 SessionHelper.UserImage = model.ImageUrl;
                 SessionHelper.UserName = model.FirstName;
             }
 
-            return SessionHelper.Get<UserProfile>("USER_INFO");
+            return SessionHelper.Get<UserProfile>(userid);
 
         }
         #endregion

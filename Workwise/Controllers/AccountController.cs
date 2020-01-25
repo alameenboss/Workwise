@@ -85,7 +85,7 @@ namespace Workwise.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    SessionHelper.GetUser(User);
+                    SessionHelper.GetUser(User.Identity.GetUserId());
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -420,6 +420,7 @@ namespace Workwise.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session.Abandon();
             return RedirectToAction("Login");
         }
 

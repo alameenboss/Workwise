@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using Microsoft.AspNet.Identity;
+using System.Web.Mvc;
 using Workwise.Helper;
 
 namespace Workwise.Controllers
@@ -6,23 +7,16 @@ namespace Workwise.Controllers
     [Authorize]
     public class MyProfileFeedController : Controller
     {
-        //private readonly ApplicationDbContext _context;
-        //public MyProfileFeedController(ApplicationDbContext context)
-        //{
-        //    _context = context;
-        //}
-
-
         public ActionResult Index(string mode)
         {
             ViewData["Mode"] = mode;
-            ViewData["ImageUrl"] = SessionHelper.GetUser(User).ImageUrl;
+            ViewData["ImageUrl"] = SessionHelper.GetUser(User.Identity.GetUserId()).ImageUrl;
             return View();
         }
 
         public ActionResult LoginPartial()
         {
-            var model = SessionHelper.GetUser(User);
+            var model = SessionHelper.GetUser(User.Identity.GetUserId());
             return PartialView("_LoginPartial", model);
         }
 

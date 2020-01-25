@@ -1,4 +1,6 @@
-﻿<div class="comment-section">
+﻿@model  Workwise.Models.Post
+
+<div class="comment-section">
     <a href="#" class="plus-ic">
         <i class="fa fa-plus"></i>
     </a>
@@ -49,7 +51,7 @@
     </div><!--comment-sec end-->
     <div class="post-comment">
         <div class="cm_img">
-            <img src="/images/bg-img4.png" alt="">
+            <img src="@SessionHelper.UserImage" alt="">
         </div>
         <div class="comment_box">
             <form>

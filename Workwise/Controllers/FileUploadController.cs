@@ -54,7 +54,7 @@ namespace Workwise.Controllers
             obj.Save(path, System.Drawing.Imaging.ImageFormat.Png);
 
             new UserProfileRepository().SaveUserImage(User.Identity.GetUserId(), imgUrl);
-            SessionHelper.Get<UserProfile>("USER_INFO").ImageUrl = imgUrl;
+            SessionHelper.Get<UserProfile>(User.Identity.GetUserId()).ImageUrl = imgUrl;
             SessionHelper.UserImage = imgUrl;
             return Json(new { success = true, imageUrl = imgUrl }, JsonRequestBehavior.AllowGet);
         }

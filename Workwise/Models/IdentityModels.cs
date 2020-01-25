@@ -30,6 +30,16 @@ namespace Workwise.Models
             return new ApplicationDbContext();
         }
 
-        public virtual DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
+
+        public DbSet<Post> Post { get; set; }
+
+        public DbSet<ImageModel> PostImages { get; set; }
+
+        public DbSet<Tags> PostTags { get; set; }
+
+        public DbSet<Comment> PostComment { get; set; }
+
+
     }
 }

@@ -180,13 +180,16 @@
     <Compile Include="Controllers\ProfilesController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
+    <Compile Include="Data\PostRepository.cs" />
     <Compile Include="Data\UserProfileRepository.cs" />
     <Compile Include="Data\CompanyRepository.cs" />
     <Compile Include="Data\Interface\ICompanyRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helper\UserHelper.cs" />
+    <Compile Include="Helper\PrettyDate.cs" />
+    <Compile Include="Helper\RandomGenerator.cs" />
+    <Compile Include="Helper\SessionHelper.cs" />
     <Compile Include="Migrations\202001201828237_InitialCreate.cs" />
     <Compile Include="Migrations\202001201828237_InitialCreate.Designer.cs">
       <DependentUpon>202001201828237_InitialCreate.cs</DependentUpon>
@@ -194,6 +197,10 @@
     <Compile Include="Migrations\202001201851441_AddingUserProfile.cs" />
     <Compile Include="Migrations\202001201851441_AddingUserProfile.Designer.cs">
       <DependentUpon>202001201851441_AddingUserProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001251431449_Post.cs" />
+    <Compile Include="Migrations\202001251431449_Post.Designer.cs">
+      <DependentUpon>202001251431449_Post.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ForgotPasswordViewModel.cs" />
@@ -204,6 +211,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PostModel\Post.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\ResetPasswordViewModel.cs" />
     <Compile Include="Models\SendCodeViewModel.cs" />
@@ -514,6 +522,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001201851441_AddingUserProfile.resx">
       <DependentUpon>202001201851441_AddingUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001251431449_Post.resx">
+      <DependentUpon>202001251431449_Post.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
