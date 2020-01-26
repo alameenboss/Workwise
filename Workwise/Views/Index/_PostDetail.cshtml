@@ -3,12 +3,12 @@
 @if (Model.HasCommmet)
 {
     <div class="posty">
-        @Html.Partial("_PostPartial")
-        @Html.Partial("_PostCommentPartial")
+        @Html.Partial(@"~\Views\Index\_PostPartial.cshtml")
+        @Html.Partial(@"~\Views\Index\_PostCommentPartial.cshtml")
     </div>
 
 }
 else
 {
-    @Html.Partial("_PostPartial")
+    @Html.Partial(@"~\Views\Index\_PostPartial.cshtml")
 }

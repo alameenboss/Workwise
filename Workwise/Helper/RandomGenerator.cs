@@ -55,7 +55,22 @@ namespace Workwise.Helper
         public RandomText()
         {
             _builder = new StringBuilder();
-            _words = new string[] { "anemone", "wagstaff", "man", "the", "for", "and", "a", "with", "bird", "fox", "alphabetized", "an", "and", "any", "appear", "box", "button", "click", "copy", "count", "first", "formatting", "generates", "in", "into", "list", "of", "options", "paste", "second", "select", "several", "text", "the", "this", "unique", "utility", "will", "with", "words", "your" };
+            _words = new string[] { "anemone", "wagstaff", "man", "the", "for", "and", "a", "with", "bird", "fox", "a", "about", "advised", "after", "afterwards",
+                "age", "also", "ambassador", "amongst", "ample", "an", "ancient", "and", "annotationes", "ans", "application", "appointed", "as", "asse", "at",
+                "author", "bartholomew", "be", "been", "bellay", "biblioth", "bishop", "born", "bud", "budde", "buddeus", "buried", "but", "by", "called",
+                "calvinism", "caused", "coins", "coll", "collection", "collegium", "commentarii", "contains", "contributed", "corresponded", "correspondence",
+                "day", "death", "des", "died", "dissipated", "du", "earlier", "eius", "epistolae", "equal", "erasmus", "esteem", "et", "extensive", "facility",
+                "family", "flee", "fontainebleau", "for", "found", "france", "francis", "franz", "from", "gained", "ge", "geneva", "graecae", "great", "greatest",
+                "greatly", "greek", "guillaume", "had", "having","he","held","high","him","his","history","house","in","idle","inclination","induced","i",
+                "influence","is","jean","johann","latin","law","leanings","learned","le","leo","lexicographical","library","libros","life","linguae",
+                "literature","louis","ma","made","marchands","marvel","massacre","means","measures","members","men","more","most","name","narbonne","nationale",
+                "night","notes","obliged","of","on","only","open","or","origin","orl","others","pandectarum","paris","part","partibus","particularl","passion",
+                "persuaded","philology","pomerania","printing","profession","progress","prohibiting","protestantism","purity","que","rapid","refrain","refuge",
+                "religious","emarkable","removed","reputation","requ","request","retired","roman","rome","sections","see","seized","sent","settled","several",
+                "she","should","small","some","sorbonne", "study", "sudden", "suggest", "suspected", "swedish", "switzerland", "that", "the", "their", "them",
+                "they", "this", "thomas", "time", "times", "to", "took", "towards", "traditions", "tratise", "trilingue", "twentyfour", "under",
+                "university", "upheld", "voluminous", "was", "went", "were", "when", "where", "which", "while", "who", "widow", "with", "work", "worthily",
+                "written", "wroteM", "years" };
         }
 
         public void AddContentParagraphs(int numberParagraphs, int minSentences,

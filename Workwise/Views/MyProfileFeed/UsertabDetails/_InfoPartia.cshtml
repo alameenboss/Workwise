@@ -1,12 +1,12 @@
 ﻿@{
-    var mode = ViewData["Mode"] != null ? ViewData["Mode"].ToString() : string.Empty;
+    var username = ViewData["username"] != null ? ViewData["username"].ToString() : string.Empty;
 }
 <div class="product-feed-tab" id="info-dd">
     <div class="user-profile-ov">
 
         <h3>
             Overview
-            @if (mode == "Edit")
+            @if (username == User.Identity.Name)
             {
                 <a href="#" title="" class="overview-open pull-right">
                     <i class="fa fa-pencil"></i>
@@ -32,7 +32,7 @@
     <div class="user-profile-ov st2">
         <h3>
             Experience
-            @if (mode == "Edit")
+            @if (username == User.Identity.Name)
             {
                 <a href="#" title="" class="exp-bx-open pull-right">
                     <i class="fa fa-plus-square"></i>
@@ -42,7 +42,7 @@
         </h3>
         <h4>
             Web designer  
-            @if (mode == "Edit")
+            @if (username == User.Identity.Name)
             {
                 <a href="#" title="" class="pull-right">
                     <i class="fa fa-pencil"></i>
@@ -52,7 +52,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempor aliquam felis, nec condimentum ipsum commodo id. Vivamus sit amet augue nec urna efficitur tincidunt. Vivamus consectetur aliquam lectus commodo viverra. </p>
         <h4>
             UI
-            @if (mode == "Edit")
+            @if (username == User.Identity.Name)
             {
                 <a href="#" title="" class="pull-right">
                     <i class="fa fa-pencil"></i>
@@ -62,7 +62,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempor aliquam felis, nec condimentum ipsum commodo id.</p>
         <h4>
             PHP developer  
-            @if (mode == "Edit")
+            @if (username == User.Identity.Name)
             {
                 <a href="#" title="" class="pull-right">
                     <i class="fa fa-pencil"></i>
@@ -73,7 +73,7 @@
     </div><!--user-profile-ov end-->
     <div class="user-profile-ov">
         <h3>Education
-        @if (mode == "Edit")
+        @if (username == User.Identity.Name)
         {
             <a href="#" title="" class="pull-right">
                 <i class="fa fa-plus-square"></i>
@@ -82,7 +82,7 @@
     </a></h3>
         <h4>
             Master of Computer Science 
-            @if (mode == "Edit")
+            @if (username == User.Identity.Name)
             {
                 <a href="#" title="" class="pull-right">
                     <i class="fa fa-pencil"></i>
@@ -95,7 +95,7 @@
     <div class="user-profile-ov">
         <h3>
             Location
-            @if (mode == "Edit")
+            @if (username == User.Identity.Name)
             {
                 <a href="#" title="" class="pull-right">
                     <i class="fa fa-plus-square"></i>
@@ -108,7 +108,7 @@
     <div class="user-profile-ov">
         <h3>
             Skills
-            @if (mode == "Edit")
+            @if (username == User.Identity.Name)
             {
                 <a href="#" title="" class="pull-right">
                     <i class="fa fa-plus-square"></i>

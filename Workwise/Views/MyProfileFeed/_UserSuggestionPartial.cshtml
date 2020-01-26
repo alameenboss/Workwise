@@ -1,7 +1,7 @@
 ﻿@{
-    var mode = ViewData["Mode"] != null ? ViewData["Mode"].ToString() : string.Empty;
+    var username = ViewData["username"] != null ? ViewData["username"].ToString() : string.Empty;
 
-    var heading = mode == "Edit" ? "People Viewed Profile" : "Suggestions";
+    var heading = username == User.Identity.Name ? "People Viewed Profile" : "Suggestions";
 }
 
 

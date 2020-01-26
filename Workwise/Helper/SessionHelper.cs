@@ -99,8 +99,8 @@ namespace Workwise.Helper
                 {
                     model = new UserProfile()
                     {
-                        FirstName = "Demo User",
-                        ImageUrl = @"\images\alameen_user.jpg"
+                        FirstName = userid,
+                        ImageUrl = @"\images\DefaultPhoto.png"
                     };
                 }
                 SessionHelper.Set<UserProfile>(userid, model);

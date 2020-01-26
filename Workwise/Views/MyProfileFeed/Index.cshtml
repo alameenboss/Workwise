@@ -1,4 +1,5 @@
-﻿
+﻿@using Workwise.Models;
+@model List<Post>
 @Html.Partial("_CoverImage")
 
 <main>
@@ -29,8 +30,8 @@
 @Html.Partial("_SkillsPartial")
 @Html.Partial("_ProtfolioPartial")
 
-<div id="uploadimageModal" class="modal modal-lg" role="dialog">
-    <div class="modal-dialog">
+<div id="uploadimageModal" class="modal" role="dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -99,6 +100,23 @@
                     }
                 });
             })
+        });
+
+        $(window).scroll(function () {
+            // debugger;
+            if ($('#feed-dd').hasClass('current')) {
+                if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                    $('.spinner').show();
+                    $.ajax({
+                        url: '/Index/GetPosts',
+                        method: 'GET',
+                        success: function (response) {// success callback function
+                            $('.product-feed-tab .posts-section').append(response);
+                            $('.spinner').hide
+                        }
+                    });
+                }
+            }
         });
 
     })

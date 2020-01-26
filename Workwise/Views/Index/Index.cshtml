@@ -138,7 +138,7 @@
                                 @Html.Action("GetPosts", "Index")*@
                                 @foreach (var item in Model)
                                 {
-                                    @Html.Partial("_PostDetail", item)
+                                    @Html.Partial(@"~\Views\Index\_PostDetail.cshtml", item)
                                 }
 
                             </div><!--posts-section end-->

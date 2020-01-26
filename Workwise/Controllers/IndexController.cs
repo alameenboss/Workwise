@@ -59,7 +59,7 @@ namespace Workwise.Controllers
                     }
                 }
             };
-            return PartialView("_PostDetail", model);
+            return PartialView(@"~\Views\Index\_PostDetail.cshtml", model);
         }
 
         [HttpPost]

@@ -1,9 +1,9 @@
 ﻿@{
-    var mode = ViewData["Mode"] != null ? ViewData["Mode"].ToString() : string.Empty;
+    var username = ViewData["username"] != null ? ViewData["username"].ToString() : string.Empty;
 }
     <section class="cover-sec">
         <img src="/images/cover-img.jpg" alt="">
-        @if (mode == "Edit")
+        @if (username == User.Identity.Name)
         {
             <div class="add-pic-box">
                 <div class="container">

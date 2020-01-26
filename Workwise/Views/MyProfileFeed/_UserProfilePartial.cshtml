@@ -1,12 +1,12 @@
 ﻿@{
-    var mode = ViewData["Mode"] != null ? ViewData["Mode"].ToString() : string.Empty;
-    var ImageUrl = ViewData["ImageUrl"] != null ? ViewData["ImageUrl"].ToString() : string.Empty;
-    
+    var username = ViewData["username"] != null ? ViewData["username"].ToString() : string.Empty;
+    var userImage = ViewData["userimage"] != null ? ViewData["userimage"].ToString() : string.Empty;
+     
 }
 <div class="user_profile">
     <div class="user-pro-img">
-        <img src="@ImageUrl" alt="" id="uploaded_image">
-        @if (mode == "Edit")
+        <img src="@userImage" alt="" id="uploaded_image">
+        @if (username == User.Identity.Name)
         {
             <div class="add-dp" id="OpenImgUpload">
                 <input type="file" name="upload_image" id="upload_image" accept="image/*" />
@@ -16,7 +16,7 @@
 
     </div><!--user-pro-img end-->
     <div class="user_pro_status">
-        @if (mode != "Edit")
+        @if (username != User.Identity.Name)
         {
             <ul class="flw-hr">
                 <li><a href="#" title="" class="flww"><i class="fa fa-plus"></i> Follow</a></li>
