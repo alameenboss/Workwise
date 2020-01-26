@@ -58,40 +58,55 @@
     <div class="job_descp">
         @if (hasImage)
         {
-            <img class="card-img-top" src="@Model.PostImages.FirstOrDefault().ImageUrl" style="width:100%;margin-bottom:10px;padding:0px;" />
+            var firstPost = Model.PostImages.FirstOrDefault().ImageUrl;
+            <a href="@firstPost" target="_blank">
+                <div style="max-height:300px;overflow:hidden">
+
+                    @if (firstPost.EndsWith(".jpg") || firstPost.EndsWith(".jpeg") || firstPost.EndsWith(".png") || firstPost.EndsWith(".gif"))
+                    {
+                    <img class="card-img-top" src="@firstPost" style="width:100%;margin-bottom:10px;padding:0px;" />
+                    }
+                    else if(firstPost.EndsWith(".mp4"))
+                    {
+                    <video controls="controls" style="width:100%">
+                        <source src="@firstPost" type="video/mp4" />
+                    </video>
+                    }
+                </div>
+            </a>
         }
 
         <h3>@Model.Title</h3>
         <ul class="job-dt">
-            <li>
-                <a href="#" title="">@Model.Worktype.ToString()</a>
-            </li>
-            <li>
-                <span>Rs. @Model.Rate / hr</span>
-            </li>
+        <li>
+        <a href="#" title="">@Model.Worktype.ToString()</a>
+        </li>
+        <li>
+        <span>Rs. @Model.Rate / hr</span>
+        </li>
         </ul>
         <p>
-            @if (Model.Description.Length > 100)
-            {
-                @Model.Description.Substring(0, 150)<span>...</span><a href="#" title="">Show All</a>
-            }
-            else
-            {
-                @Model.Description
-            }
+        @if (Model.Description.Length > 100)
+        {
+            @Model.Description.Substring(0, 150)<span>...</span><a href="#" title="">Show All</a>
+        }
+        else
+        {
+            @Model.Description
+        }
         </p>
 
         <ul class="skill-tags">
-            @if (Model.Tags != null)
-            {
+        @if (Model.Tags != null)
+        {
 
-                foreach (var tag in Model.Tags)
-                {
-                    <li>
-                        <a href="/Search/@tag" title="">@tag</a>
-                    </li>
-                }
+            foreach (var tag in Model.Tags)
+            {
+                <li>
+                <a href="/Search/@tag" title="">@tag</a>
+                </li>
             }
+        }
         </ul>
     </div>
     <div class="job-status-bar">

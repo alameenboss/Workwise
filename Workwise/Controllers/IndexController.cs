@@ -77,7 +77,10 @@ namespace Workwise.Controllers
                 if (PostImage != null)
                 {
                     var postedImage = new ImageModel();
-                    var fileName = Guid.NewGuid().ToString().Replace("-", "").Replace(" ", "") + ".png";
+
+                    var extention = Path.GetExtension(PostImage.FileName);
+
+                    var fileName = Guid.NewGuid().ToString().Replace("-", "").Replace(" ", "") + "." + extention;
                     var path = Path.Combine(Server.MapPath("~/Images/Upload"), fileName);
                     var imgUrl = @"/Images/Upload/" + fileName;
                     PostImage.SaveAs(path);
