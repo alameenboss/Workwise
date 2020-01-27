@@ -1,57 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System.Web;
 using System.Web.Mvc;
-using Workwise.Models;
-using Microsoft.AspNet.Identity;
 using Workwise.Data;
-
+using Workwise.Helper;
 namespace Workwise.Controllers
 {
     [Authorize]
     public class MyProfileFeedController : Controller
     {
-        //private readonly ApplicationDbContext _context;
-        //public MyProfileFeedController(ApplicationDbContext context)
-        //{
-        //    _context = context;
-        //}
-
-        // GET: Conpanies
-        public ActionResult Index(string mode)
+        private ApplicationUserManager _userManager;
+        private readonly PostRepository postrepository;
+        public ApplicationUserManager UserManager
         {
-            ViewData["Mode"] = mode;
-            UserProfileRepository repo = new UserProfileRepository();
-            var model = repo.GetByUserId(User.Identity.GetUserId());
-            if (!(model?.Id > 0))
+            get
             {
-                model = new UserProfile()
-                {
-                    FirstName = User.Identity.GetUserName(),
-                    ImageUrl = @"/images/alameen_user.jpg"
-                };
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
-            
-            ViewData["ImageUrl"] = model.ImageUrl;
-            return View();
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        public MyProfileFeedController()
+        {
+            postrepository = new PostRepository();
+        }
+       
+        public MyProfileFeedController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
+        public ActionResult Index(string id)
+        {
+            var user = UserManager.FindByName(id);
+            var model = postrepository.GetLatestPostByUser(user.Id);
+            ViewData["username"] = id;
+            var userprofile = new UserProfileRepository();
+
+            ViewData["userimage"] = userprofile.GetByUserId(user.Id).ImageUrl;
+            ViewData["firstname"] = userprofile.GetByUserId(user.Id).FirstName;
+            return View(model);
         }
 
         public ActionResult LoginPartial()
         {
-            UserProfileRepository repo = new UserProfileRepository();
-            var model = repo.GetByUserId(User.Identity.GetUserId());
-            if (!(model?.Id > 0))
-            {
-                model = new UserProfile()
-                {
-                    FirstName = User.Identity.GetUserName(),
-                    ImageUrl = @"/images/alameen_user.jpg"
-                };
-            }
+            var model = SessionHelper.GetUser(User.Identity.GetUserId());
             return PartialView("_LoginPartial", model);
         }
 
 
+
+        
     }
 }

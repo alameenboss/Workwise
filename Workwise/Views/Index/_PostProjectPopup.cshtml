@@ -1,42 +1,33 @@
-﻿
+﻿@model Workwise.Models.Post
+
 
 <div class="post-popup pst-pj">
     <div class="post-project">
-        <h3>Post a project</h3>
         <div class="post-project-fields">
-            <form>
+            @using (Html.BeginForm("CreatePost", "Index", FormMethod.Post, new { @class = "form-horizontal", role = "form",enctype="multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
                 <div class="row">
                     <div class="col-lg-12">
-                        <input type="text" name="title" placeholder="Title">
+                        @Html.TextBoxFor(m => Model.Title, new { htmlAttributes = new { placeholder = "Title" } })
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
+                        <div class="price-br">
+                            @Html.EditorFor(m => Model.Rate, new { htmlAttributes = new { placeholder = "Price" } })
+                            <i class="fa fa-dollar"></i>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
                         <div class="inp-field">
-                            <select>
-                                <option>Category</option>
-                                <option>Category 1</option>
-                                <option>Category 2</option>
-                                <option>Category 3</option>
-                            </select>
+                            @Html.EnumDropDownListFor(model => model.Worktype)
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <input type="text" name="skills" placeholder="Skills">
+                        @Html.TextAreaFor(m => Model.Description, new { htmlAttributes = new { placeholder = "Description" } })
                     </div>
                     <div class="col-lg-12">
-                        <div class="price-sec">
-                            <div class="price-br">
-                                <input type="text" name="price1" placeholder="Price">
-                                <i class="fa fa-dollar"></i>
-                            </div>
-                            <span>To</span>
-                            <div class="price-br">
-                                <input type="text" name="price1" placeholder="Price">
-                                <i class="fa fa-dollar"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <textarea name="description" placeholder="Description"></textarea>
+                        <input type="file" name="PostImage" id="PostImage" accept="image/*" />
+                        <label for="PostImage">Change Image</label>
                     </div>
                     <div class="col-lg-12">
                         <ul>
@@ -45,7 +36,7 @@
                         </ul>
                     </div>
                 </div>
-            </form>
+            }
         </div><!--post-project-fields end-->
         <a href="#" title=""><i class="fa fa-times-circle-o"></i></a>
     </div><!--post-project end-->

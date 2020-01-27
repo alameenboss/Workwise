@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -32,10 +35,10 @@
                         <div class="col-lg-6">
                             <div class="cmp-info">
                                 <div class="cm-logo">
-                                    <img src="/images/cm-logo.png" alt="">
-                                    <p>Workwise,  is a global freelancing platform and social networking where businesses and independent professionals connect and collaborate remotely</p>
+                                    <img src="/images/logo2.png" alt="">
+                                    <p>Friend.ly Message,  is a global freelancing platform and social networking where businesses and independent professionals connect and collaborate remotely</p>
                                 </div><!--cm-logo end-->
-                                <img src="/images/cm-main-img.png" alt="">
+                                @*<img src="/images/cm-main-img.png" alt="">*@
                             </div><!--cmp-info end-->
                         </div>
                         @RenderBody()
@@ -70,6 +73,6 @@
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/slick.min.js"></script>
     <script type="text/javascript" src="/js/script.js"></script>
-
+    @RenderSection("scripts", required: false)
 </body>
 </html>

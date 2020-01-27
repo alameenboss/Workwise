@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using System;
+using System.IO;
+using System.Net.Mail;
+using System.Net.Mime;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
 using Workwise.Models;
 
 namespace Workwise
@@ -18,11 +18,71 @@ namespace Workwise
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            return WriteFileAsync(message);
+        }
+
+        //private Task configSendGridasync(IdentityMessage message)
+        //{
+        //    var myMessage = new SendGridMessage();
+        //    myMessage.AddTo(message.Destination);
+        //    myMessage.From = new System.Net.Mail.MailAddress(
+        //                        "Joe@contoso.com", "Joe S.");
+        //    myMessage.Subject = message.Subject;
+        //    myMessage.Text = message.Body;
+        //    myMessage.Html = message.Body;
+
+        //    var credentials = new NetworkCredential(
+        //               ConfigurationManager.AppSettings["mailAccount"],
+        //               ConfigurationManager.AppSettings["mailPassword"]
+        //               );
+
+        //    // Create a Web transport for sending email.
+        //    var transportWeb = new Web(credentials);
+
+        //    // Send the email.
+        //    if (transportWeb != null)
+        //    {
+        //        return transportWeb.DeliverAsync(myMessage);
+        //    }
+        //    else
+        //    {
+        //        return Task.FromResult(0);
+        //    }
+        //}
+
+        private Task SendMail(IdentityMessage message)
+        {
+            #region formatter
+            string text = string.Format("Please click on this link to {0}: {1}", message.Subject, message.Body);
+            string html = "Please confirm your account by clicking this link: <a href=\"" + message.Body + "\">link</a><br/>";
+
+            html += HttpUtility.HtmlEncode(@"Or click on the copy the following link on the browser:" + message.Body);
+            #endregion
+
+            MailMessage msg = new MailMessage();
+            msg.From = new MailAddress("noreplay@gmail.com");
+            msg.To.Add(new MailAddress(message.Destination));
+            msg.Subject = message.Subject;
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
+
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587));
+            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("****@gmail.com", "****");
+            smtpClient.Credentials = credentials;
+            smtpClient.EnableSsl = true;
+            return smtpClient.SendMailAsync(msg);
+        }
+
+        
+
+        private async Task WriteFileAsync(IdentityMessage message)
+        {
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine(@"C:\Temp\", "Email.html")))
+            {
+                await outputFile.WriteAsync(message.Body);
+            }
         }
     }
-
     public class SmsService : IIdentityMessageService
     {
         public Task SendAsync(IdentityMessage message)
@@ -40,7 +100,7 @@ namespace Workwise
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
@@ -81,8 +141,11 @@ namespace Workwise
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = 
-                    new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+                manager.UserTokenProvider =
+                    new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"))
+                    {
+                        TokenLifespan = TimeSpan.FromHours(1)
+                    };
             }
             return manager;
         }
