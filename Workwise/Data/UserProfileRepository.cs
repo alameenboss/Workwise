@@ -41,6 +41,7 @@ namespace Workwise.Data
             }
         }
 
+
         public void SaveProfile(UserProfile profile)
         {
             using (var db = new ApplicationDbContext())

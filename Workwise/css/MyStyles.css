@@ -36,3 +36,25 @@ header nav {
 .job_descp > p {
     white-space: pre-wrap;
 }
+
+.user-pro-img img {
+
+    width:200px;
+    height:200px;
+}
+.header-data nav > ul > li {
+    padding: 12px 5px !important;
+}
+
+.attach-image {
+    top: 0px;
+    position: absolute;
+    right: 15px;
+}
+
+.post-topbar .status-text {
+    float: left;
+    margin: 15px;
+    font-size: 1em;
+    font-weight: 600;
+}

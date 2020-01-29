@@ -85,7 +85,7 @@ namespace Workwise.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    SessionHelper.GetUser(User.Identity.GetUserId());
+                    SessionHelper.GetUser(UserManager.FindByName(model.Username).Id);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -165,6 +165,7 @@ namespace Workwise.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    CreateUserProfile(user);
 
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
     
@@ -179,6 +180,25 @@ namespace Workwise.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private void CreateUserProfile(ApplicationUser user)
+        {
+
+            var userprofileRepo = new Data.UserProfileRepository();
+
+            var userid = UserManager.FindByName(user.UserName).Id;
+
+            var profile = userprofileRepo.GetByUserId(userid);
+
+            if (profile == null)
+                profile = new UserProfile();
+
+            profile.FirstName = user.UserName;
+
+            profile.ImageUrl = @"\images\DefaultPhoto.png";
+
+            userprofileRepo.SaveProfile(profile);
         }
 
         // GET: /Account/ConfirmEmail

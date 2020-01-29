@@ -24,11 +24,11 @@
                     </div>
                     <div class="col-lg-12">
                         @Html.TextAreaFor(m => Model.Description, new { htmlAttributes = new { placeholder = "Description" } })
+                        
+                        @*<label for="PostImage" class="attach-image"><i class="fa fa-camera"></i>
+                        <input type="file" name="PostImage" id="PostImage" accept="image/*" style="display:none" /></label>*@
                     </div>
-                    <div class="col-lg-12">
-                        <input type="file" name="PostImage" id="PostImage" accept="image/*" />
-                        <label for="PostImage">Change Image</label>
-                    </div>
+                    <input type="file" name="PostImage" id="PostImage" accept="image/*" />
                     <div class="col-lg-12">
                         <ul>
                             <li><button class="active" type="submit" value="post">Post</button></li>

@@ -86,9 +86,9 @@
         </li>
         </ul>
         <p>
-        @if (Model.Description.Length > 100)
+        @if (!string.IsNullOrEmpty(Model.Description) && Model.Description.Length > 300)
         {
-            @Model.Description.Substring(0, 150)<span>...</span><a href="#" title="">Show All</a>
+            @Model.Description.Substring(0, 300)<span>...</span><a href="#" title="">Show All</a>
         }
         else
         {

@@ -77,7 +77,7 @@ namespace Workwise
 
         private async Task WriteFileAsync(IdentityMessage message)
         {
-            using (StreamWriter outputFile = new StreamWriter(Path.Combine(@"C:\Temp\", "Email.html")))
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine(@"D:\Temp\", "Email.html")))
             {
                 await outputFile.WriteAsync(message.Body);
             }

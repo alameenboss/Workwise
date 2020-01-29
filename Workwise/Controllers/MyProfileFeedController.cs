@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Workwise.Data;
 using Workwise.Helper;
+using Workwise.Models;
+
 namespace Workwise.Controllers
 {
     [Authorize]
@@ -35,13 +39,20 @@ namespace Workwise.Controllers
 
         public ActionResult Index(string id)
         {
+            var model = new List<Post>();
             var user = UserManager.FindByName(id);
-            var model = postrepository.GetLatestPostByUser(user.Id);
-            ViewData["username"] = id;
-            var userprofile = new UserProfileRepository();
-
-            ViewData["userimage"] = userprofile.GetByUserId(user.Id).ImageUrl;
-            ViewData["firstname"] = userprofile.GetByUserId(user.Id).FirstName;
+            if (user != null)
+            {
+                model = postrepository.GetLatestPostByUser(user.Id).ToList();
+                ViewData["username"] = user.UserName;
+                var userprofile = new UserProfileRepository();
+                var _user = userprofile.GetByUserId(user.Id);
+                ViewData["userimage"] = string.IsNullOrEmpty(_user?.ImageUrl) ? @"\images\DefaultPhoto.png" : _user?.ImageUrl;
+                ViewData["firstname"] = string.IsNullOrEmpty(_user?.FirstName) ? "FirstName" : _user?.FirstName;
+            }
+            
+            
+            
             return View(model);
         }
 
