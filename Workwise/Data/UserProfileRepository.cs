@@ -50,5 +50,14 @@ namespace Workwise.Data
                 db.SaveChanges();
             }
         }
+
+        public List<UserProfile> GetAllUsers()
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                return db.UserProfiles.ToList();
+
+            }
+        }
     }
 }

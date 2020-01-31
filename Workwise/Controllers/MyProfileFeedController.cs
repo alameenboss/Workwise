@@ -40,7 +40,8 @@ namespace Workwise.Controllers
         public ActionResult Index(string id)
         {
             var model = new List<Post>();
-            var user = UserManager.FindByName(id);
+            if (string.IsNullOrEmpty(id)) id = User.Identity.GetUserId();
+            var user = UserManager.FindById(id);
             if (user != null)
             {
                 model = postrepository.GetLatestPostByUser(user.Id).ToList();
@@ -62,7 +63,19 @@ namespace Workwise.Controllers
             return PartialView("_LoginPartial", model);
         }
 
+        public ActionResult SaveUserInfo(UserProfile profile)
+        {
+            var userprofilerepo = new UserProfileRepository();
+            var user = userprofilerepo.GetByUserId(User.Identity.GetUserId());
+            if (user == null)
+                user = new UserProfile(); 
 
+            user.FirstName = profile.FirstName;
+            user.Designation = profile.Designation;
+            userprofilerepo.SaveProfile(user);
+
+            return RedirectToAction("Index");
+        }
 
         
     }

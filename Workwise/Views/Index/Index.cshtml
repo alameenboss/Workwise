@@ -1,4 +1,5 @@
 ﻿@using Workwise.Models;
+@using Microsoft.AspNet.Identity;
 @model List<Post>
 <main>
     <div class="main-section">
@@ -16,7 +17,7 @@
                                     </div><!--username-dt end-->
                                     <div class="user-specs">
                                         <h3>@SessionHelper.UserName</h3>
-                                        <span>System Analyst at <b>Hexaware</b></span>
+                                        <span>@SessionHelper.GetUser(User.Identity.GetUserId()).Designation</span>
                                     </div>
                                 </div><!--user-profile end-->
                                 <ul class="user-fw-status">

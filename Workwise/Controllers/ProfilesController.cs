@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Workwise.Data;
 
 namespace Workwise.Controllers
 {
@@ -12,7 +13,10 @@ namespace Workwise.Controllers
         // GET: Conpanies
         public ActionResult Index()
         {
-            return View();
+
+            var userRepo = new UserProfileRepository();
+            var model = userRepo.GetAllUsers();
+            return View(model);
         }
     }
 }

@@ -82,6 +82,17 @@ $(window).on("load", function() {
         return false;
     });
 
+
+    $(".edit-basic-open").on("click", function () {
+        $("#edit-basic-box").addClass("open");
+        $(".wrapper").addClass("overlay");
+        return false;
+    });
+    $(".close-box, #edit-basic-box .cancel").on("click", function () {
+        $("#edit-basic-box").removeClass("open");
+        $(".wrapper").removeClass("overlay");
+        return false;
+    });
     //  ============= EXPERIENCE EDIT FUNCTION =========
 
     $(".exp-bx-open").on("click", function(){

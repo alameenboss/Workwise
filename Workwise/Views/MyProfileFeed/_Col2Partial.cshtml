@@ -1,14 +1,27 @@
-﻿@{
+﻿
+@using Microsoft.AspNet.Identity;
+@{
     var username = ViewData["username"] != null ? ViewData["username"].ToString() : string.Empty;
     var firstName = ViewData["firstname"] != null ? ViewData["firstname"].ToString() : string.Empty;
 }
 <div class="col-lg-6">
     <div class="main-ws-sec">
         <div class="user-tab-sec rewivew">
-            <h3>@firstName</h3>
-            
+            <div>
+                <h3>
+                    @firstName
+                    @if (username == User.Identity.Name)
+                    {
+                        <a href="#" title="" class="edit-basic-open pull-right">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    }
+                </h3>
+
+
+            </div>
             <div class="star-descp">
-                <span>System Analyst at <b>Hexaware</b></span>
+                <span>@SessionHelper.GetUser(User.Identity.GetUserId()).Designation</span>
 
                 <ul>
                     <li><i class="fa fa-star"></i></li>

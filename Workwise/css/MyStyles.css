@@ -27,6 +27,11 @@ header nav {
     .content-seperator {
         margin-top: 150px;
     }
+
+    #msg-list-container, .message-bar-head {
+        display: none;
+    }
+    
 }
 
 .posty {
@@ -57,4 +62,15 @@ header nav {
     margin: 15px;
     font-size: 1em;
     font-weight: 600;
+}
+#mCSB_1_scrollbar_vertical {
+   background-color:  rgb(29, 161, 242)
+}
+
+.messages-line {
+    margin-top :100px;
+}
+
+.edit-basic-open{
+    font-size:0.5em;
 }

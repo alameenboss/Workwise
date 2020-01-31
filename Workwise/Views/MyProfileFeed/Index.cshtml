@@ -21,6 +21,18 @@
     </div>
 </main>
 
+<div class="overview-box" id="edit-basic-box">
+    <div class="overview-edit">
+        <h3>Basic Information</h3>
+        <form method="post" action="/MyProfileFeed/SaveUserInfo">
+            <input type="text" placeholder="First Name" name="firstname"/>
+            <input type="text" placeholder="Designation" name="designation"/>
+            <button type="submit" class="save">Save</button>
+            <button type="button" class="cancel">Cancel</button>
+        </form>
+        <a href="#" title="" class="close-box"><i class="fa fa-close"></i></a>
+    </div>
+</div>
 
 
 @Html.Partial("_OverviewPartial")
