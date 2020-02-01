@@ -1,0 +1,22 @@
+﻿@using Workwise.Models;
+@model  List<UserProfile>
+
+@foreach (var user in Model)
+{
+    <li class="usr-list-item" data-userid="@user.FirstName">
+
+        <div class="usr-msg-details">
+            <div class="usr-ms-img">
+                <img src="@user.ImageUrl" alt="">
+                <span class="msg-status display-none"></span>
+            </div>
+            <div class="usr-mg-info">
+                <h3>@user.FirstName</h3>
+                <p>Last Message <img src="/images/smley.png" alt=""></p>
+            </div>
+            <span class="posted_time">@DateTime.Now</span>
+            <span class="msg-notifc">3</span>
+        </div>
+        <input type="hidden" class="connection-id" value="">
+    </li>
+}

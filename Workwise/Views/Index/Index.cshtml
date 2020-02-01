@@ -23,14 +23,14 @@
                                 <ul class="user-fw-status">
                                     <li>
                                         <h4>Following</h4>
-                                        <span>34</span>
+                                        <span>0</span>
                                     </li>
                                     <li>
                                         <h4>Followers</h4>
-                                        <span>155</span>
+                                        <span>0</span>
                                     </li>
                                     <li>
-                                        <a href="/UserProfile/" title="">View Profile</a>
+                                        <a href="/MyProfileFeed/" title="">View Profile</a>
                                     </li>
                                 </ul>
                             </div><!--user-data end-->
@@ -40,55 +40,9 @@
                                     <i class="fa fa-ellipsis-v"></i>
                                 </div><!--sd-title end-->
                                 <div class="suggestions-list">
-                                    <div class="suggestion-usd">
-                                        <img src="/images/s1.png" alt="">
-                                        <div class="sgt-text">
-                                            <h4>Jessica William</h4>
-                                            <span>Graphic Designer</span>
-                                        </div>
-                                        <span><i class="fa fa-plus"></i></span>
-                                    </div>
-                                    <div class="suggestion-usd">
-                                        <img src="/images/s2.png" alt="">
-                                        <div class="sgt-text">
-                                            <h4>Antony Mist</h4>
-                                            <span>PHP Developer</span>
-                                        </div>
-                                        <span><i class="fa fa-plus"></i></span>
-                                    </div>
-                                    <div class="suggestion-usd">
-                                        <img src="/images/s3.png" alt="">
-                                        <div class="sgt-text">
-                                            <h4>Poonam</h4>
-                                            <span>Wordpress Developer</span>
-                                        </div>
-                                        <span><i class="fa fa-plus"></i></span>
-                                    </div>
-                                    <div class="suggestion-usd">
-                                        <img src="/images/s4.png" alt="">
-                                        <div class="sgt-text">
-                                            <h4>Bill Gates</h4>
-                                            <span>C &amp; C++ Developer</span>
-                                        </div>
-                                        <span><i class="fa fa-plus"></i></span>
-                                    </div>
-                                    <div class="suggestion-usd">
-                                        <img src="/images/s5.png" alt="">
-                                        <div class="sgt-text">
-                                            <h4>Jessica William</h4>
-                                            <span>Graphic Designer</span>
-                                        </div>
-                                        <span><i class="fa fa-plus"></i></span>
-                                    </div>
-                                    <div class="suggestion-usd">
-                                        <img src="/images/s6.png" alt="">
-                                        <div class="sgt-text">
-                                            <h4>Antony Mist</h4>
-                                            <span>PHP Developer</span>
-                                        </div>
-                                        <span><i class="fa fa-plus"></i></span>
-                                    </div>
-                                    <div class="view-more">
+                                
+                                    @Html.Action("SuggestedUser")
+                                     <div class="view-more">
                                         <a href="#" title="">View More</a>
                                     </div>
                                 </div><!--suggestions-list end-->
@@ -133,7 +87,7 @@
                         <div class="main-ws-sec">
                             @Html.Partial("_CreatePost")
                             <div class="posts-section">
-                                @Html.Partial("_TopProfiles")
+                                @Html.Action("TopProfiles")
 
                                 @*@Html.Action("GetPosts", "Index")
                                 @Html.Action("GetPosts", "Index")*@
@@ -158,7 +112,7 @@
                                     <a href="#" title="">Learn More</a>
                                 </div>
                             </div><!--widget-about end-->
-                            <div class="widget widget-jobs">
+                            <div class="widget widget-jobs" style="display:none">
                                 <div class="sd-title">
                                     <h3>Top Jobs</h3>
                                     <i class="fa fa-ellipsis-v"></i>
@@ -211,7 +165,7 @@
                                     </div><!--job-info end-->
                                 </div><!--jobs-list end-->
                             </div><!--widget-jobs end-->
-                            <div class="widget widget-jobs">
+                            <div class="widget widget-jobs" style="display:none">
                                 <div class="sd-title">
                                     <h3>Most Viewed This Week</h3>
                                     <i class="fa fa-ellipsis-v"></i>
@@ -252,54 +206,7 @@
                                     <i class="fa fa-ellipsis-v"></i>
                                 </div><!--sd-title end-->
                                 <div class="suggestions-list">
-                                    <div class="suggestion-usd">
-                                        <img src="/images/s1.png" alt="">
-                                        <div class="sgt-text">
-                                            <h4>Jessica William</h4>
-                                            <span>Graphic Designer</span>
-                                        </div>
-                                        <span><i class="fa fa-plus"></i></span>
-                                    </div>
-                                    <div class="suggestion-usd">
-                                        <img src="/images/s2.png" alt="">
-                                        <div class="sgt-text">
-                                            <h4>Antony Mist</h4>
-                                            <span>PHP Developer</span>
-                                        </div>
-                                        <span><i class="fa fa-plus"></i></span>
-                                    </div>
-                                    <div class="suggestion-usd">
-                                        <img src="/images/s3.png" alt="">
-                                        <div class="sgt-text">
-                                            <h4>Poonam</h4>
-                                            <span>Wordpress Developer</span>
-                                        </div>
-                                        <span><i class="fa fa-plus"></i></span>
-                                    </div>
-                                    <div class="suggestion-usd">
-                                        <img src="/images/s4.png" alt="">
-                                        <div class="sgt-text">
-                                            <h4>Bill Gates</h4>
-                                            <span>C &amp; C++ Developer</span>
-                                        </div>
-                                        <span><i class="fa fa-plus"></i></span>
-                                    </div>
-                                    <div class="suggestion-usd">
-                                        <img src="/images/s5.png" alt="">
-                                        <div class="sgt-text">
-                                            <h4>Jessica William</h4>
-                                            <span>Graphic Designer</span>
-                                        </div>
-                                        <span><i class="fa fa-plus"></i></span>
-                                    </div>
-                                    <div class="suggestion-usd">
-                                        <img src="/images/s6.png" alt="">
-                                        <div class="sgt-text">
-                                            <h4>Antony Mist</h4>
-                                            <span>PHP Developer</span>
-                                        </div>
-                                        <span><i class="fa fa-plus"></i></span>
-                                    </div>
+                                    @Html.Action("SuggestedUser")
                                     <div class="view-more">
                                         <a href="#" title="">View More</a>
                                     </div>

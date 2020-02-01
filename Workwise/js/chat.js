@@ -29,30 +29,27 @@ $(function () {
     $.connection.hub.start().done(function () {
         chat.server.getAllActiveConnections().done(function (connections) {
             $.map(connections, function (item) {
-
-                let template = '<li class="usr-list-item"><div class="usr-msg-details"><div class="usr-ms-img"><img src="' +
-                    item.UserImage
-                    + '" alt=""></div><div class="usr-mg-info"><h3>' + item.UserName
-                    + '</h3></div><span class="posted_time">1:55 PM</span></div>'
-                    + '<input type="hidden" class="connection-id" value="' + item.ConnectionId + '">'
-                    + '</li>';
-
-                $(".messages-list ul").append(template);
-
+                let $userDiv = $('.usr-list-item[data-userid="' + item.UserName + '"]');
+                $userDiv.find('.connection-id').val(item.ConnectionId);
+                $userDiv.find('.msg-status').removeClass('display-none');
             });
 
             $(".messages-list").find('ul li').click(function () {
+                $('.message-bar-head .online-status').addClass('display-none')
 
-                $("#frndConnId").val($(this).find('.connection-id').val());
                 $('.message-bar-head .usr-mg-info h3').html($(this).find('.usr-mg-info h3').text());
 
                 let img_src = $(this).find('.usr-ms-img img').attr('src');
 
                 $('.message-bar-head .usr-ms-img > img').attr('src', img_src);
-
+                
                 $('.message-bar-head').show();
 
-                $('#message-input').focus();
+                if (!$(this).find('.msg-status').hasClass('display-none')) {
+                    $('.message-bar-head .online-status').removeClass('display-none');
+                    $("#frndConnId").val($(this).find('.connection-id').val());
+                    $('#message-input').focus();
+                }
             });
         });
 

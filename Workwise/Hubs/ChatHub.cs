@@ -21,7 +21,9 @@ namespace Workwise.Hubs
     {
         public void Send(string name, string message,string userImage, string connId,string myConnectionId)
         {
-            var msg = $"<div class='main-message-box ta-right'><div class='message-dt'><div class='message-inner-dt'><p>{message}</p></div><span>Sat, Aug 23, 1:08 PM</span></div><div class='messg-usr-img'><img src='{userImage}' alt='' class='mCS_img_loaded'></div></div>";
+            var msg = $"<div class='main-message-box ta-right'><div class='message-dt'><div class='message-inner-dt'>" +
+                $"<p>{message}</p></div><span>{DateTime.Now}</span></div><div class='messg-usr-img'>" +
+                $"<img src='{userImage}' alt='' class='mCS_img_loaded'></div></div>";
             Clients.Client(connId).addNewMessageToPage(name, msg, myConnectionId);
         }
 
@@ -31,11 +33,20 @@ namespace Workwise.Hubs
         {
             var id = Context.ConnectionId;
 
-            if (SignalRUsers.Count(x => x.ConnectionId == id) == 0)
+            if (SignalRUsers.Count(x => x.UserName == userName) == 0)
             {
                 SignalRUsers.Add(new Users { ConnectionId = id, UserName = userName, UserImage = userImage });
             }
+            else
+            {
+                SignalRUsers.FirstOrDefault(x => x.UserName == userName).ConnectionId = id;
+            }
         }
+
+        //public override Task OnConnected()
+        //{
+        //    return base.OnConnected();
+        //}
 
         public override Task OnDisconnected(bool stopCalled)
         {

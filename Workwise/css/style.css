@@ -689,7 +689,7 @@ nav > ul > li > a:hover {
     font-size: 14px;
     float: left;
     margin-top: 8px;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 .user-info a:hover {
 	color: #fff;

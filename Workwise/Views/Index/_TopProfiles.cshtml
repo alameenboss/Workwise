@@ -1,63 +1,33 @@
-﻿<div class="top-profiles">
+﻿@using Workwise.Models;
+@model List<UserProfile>
+<div class="top-profiles">
     <div class="pf-hd">
         <h3>Top Profiles</h3>
         <i class="fa fa-ellipsis-v"></i>
     </div>
     <div class="profiles-slider">
 
-        @for (int iCounter = 1; iCounter < 3; iCounter++)
+        @foreach (var user in Model)
         {
             <div class="user-profy" tabindex="-1" style="width: 153px;">
-                <img src="/images/user1.png" alt="">
-                <h3>William Smith</h3>
-                <span>Graphic Designer</span>
+                <img src="@user.ImageUrl" alt="">
+                <h3>@user.FirstName</h3>
+                <span>@user.Designation</span>
                 <ul>
                     <li>
-                        <a href="#" title="" class="followw" tabindex="-1">Follow</a>
+                        <a href="#" title="" class="followw follow-user"  data-userid="@user.UserId" tabindex="-1" onclick="return false;">Follow</a>
                     </li>
                     <li>
-                        <a href="#" title="" class="envlp" tabindex="-1"><img src="/images/envelop.png" alt=""></a>
+                        <a href="#" title="" class="envlp message-user" data-userid="@user.UserId" tabindex="-1" onclick="return false;"><img src="/images/envelop.png" alt=""></a>
                     </li>
                     <li>
-                        <a href="#" title="" class="hire" tabindex="-1">hire</a>
+                        <a href="#" title="" class="hire hire-user" data-userid="@user.UserId" tabindex="-1" onclick="return false;">hire</a>
                     </li>
                 </ul>
                 <a href="#" title="" tabindex="-1">View Profile</a>
             </div>
-            <div class="user-profy" tabindex="-1" style="width: 153px;">
-                <img src="/images/user2.png" alt="">
-                <h3>Jessica William</h3>
-                <span>Graphic Designer</span>
-                <ul>
-                    <li>
-                        <a href="#" title="" class="followw" tabindex="-1">Follow</a>
-                    </li>
-                    <li>
-                        <a href="#" title="" class="envlp" tabindex="-1"><img src="/images/envelop.png" alt=""></a>
-                    </li>
-                    <li>
-                        <a href="#" title="" class="hire" tabindex="-1">hire</a>
-                    </li>
-                </ul>
-                <a href="#" title="" tabindex="-1">View Profile</a>
-            </div>
-            <div class="user-profy" tabindex="-1" style="width: 153px;">
-                <img src="/images/user3.png" alt="">
-                <h3>Peter Parker</h3>
-                <span>Graphic Designer</span>
-                <ul>
-                    <li>
-                        <a href="#" title="" class="followw" tabindex="-1">Follow</a>
-                    </li>
-                    <li>
-                        <a href="#" title="" class="envlp" tabindex="-1"><img src="/images/envelop.png" alt=""></a>
-                    </li>
-                    <li>
-                        <a href="#" title="" class="hire" tabindex="-1">hire</a>
-                    </li>
-                </ul>
-                <a href="#" title="" tabindex="-1">View Profile</a>
-            </div>
+            
+            
         }
 
 

@@ -11,13 +11,13 @@
                     <div class="col-lg-12">
                         @Html.TextBoxFor(m => Model.Title, new { htmlAttributes = new { placeholder = "Title" } })
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" style="display:none">
                         <div class="price-br">
                             @Html.EditorFor(m => Model.Rate, new { htmlAttributes = new { placeholder = "Price" } })
                             <i class="fa fa-dollar"></i>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" style="display:none">
                         <div class="inp-field">
                             @Html.EnumDropDownListFor(model => model.Worktype)
                         </div>

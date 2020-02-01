@@ -101,5 +101,18 @@ namespace Workwise.Controllers
 
         }
 
+
+        public ActionResult SuggestedUser()
+        {
+            var userprofilerepo = new UserProfileRepository();
+            var model = userprofilerepo.GetAllUsers().Where(x => x.UserId != User.Identity.GetUserId()).ToList();
+            return PartialView(@"~\Views\Index\_SuggestedUsers.cshtml", model);
+        }
+        public ActionResult TopProfiles()
+        {
+            var userprofilerepo = new UserProfileRepository();
+            var model = userprofilerepo.GetAllUsers().Where(x => x.UserId != User.Identity.GetUserId()).ToList();
+            return PartialView(@"~\Views\Index\_TopProfiles.cshtml", model);
+        }
     }
 }

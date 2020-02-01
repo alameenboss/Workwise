@@ -531,6 +531,8 @@
     <Content Include="Views\MyProfileFeed\UsertabDetails\_PortfolioPartial.cshtml" />
     <Content Include="Views\MyProfileFeed\UsertabDetails\_PaymentPartial.cshtml" />
     <Content Include="Views\Messages\RemovedHtml.cshtml" />
+    <Content Include="Views\Index\_SuggestedUsers.cshtml" />
+    <Content Include="Views\Messages\_UserPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202001201828237_InitialCreate.resx">

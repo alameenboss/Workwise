@@ -1,0 +1,15 @@
+﻿@model List<Workwise.Models.UserProfile>
+
+@foreach (var user in Model)
+{
+
+    <div class="suggestion-usd">
+        <img src="@user.ImageUrl" alt="">
+        <div class="sgt-text">
+            <h4>@user.FirstName</h4>
+            <span>@user.Designation</span>
+        </div>
+        <span class="follow-user" data-userid="@user.UserId"><i class="fa fa-plus"></i></span>
+    </div>
+}
+

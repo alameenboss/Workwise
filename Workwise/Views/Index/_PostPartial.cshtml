@@ -50,7 +50,7 @@
             <li>
                 <a href="#" title=""><i class="fa fa-envelope"></i></a>
             </li>
-            <li>
+            <li style="display:none">
                 <a href="#" title="" class="bid_now">Bid Now</a>
             </li>
         </ul>
@@ -75,15 +75,15 @@
                 </div>
             </a>
         }
-
+        <br />
         <h3>@Model.Title</h3>
-        <ul class="job-dt">
-        <li>
-        <a href="#" title="">@Model.Worktype.ToString()</a>
-        </li>
-        <li>
-        <span>Rs. @Model.Rate / hr</span>
-        </li>
+        <ul class="job-dt" style="display:none">
+            <li>
+                <a href="#" title="">@Model.Worktype.ToString()</a>
+            </li>
+            <li>
+                <span>Rs. @Model.Rate / hr</span>
+            </li>
         </ul>
         <p>
         @if (!string.IsNullOrEmpty(Model.Description) && Model.Description.Length > 300)
