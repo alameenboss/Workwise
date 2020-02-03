@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Workwise.Data;
 using Workwise.Data.Interface;
-using Workwise.Models;
+using Workwise.Data.Models;
 using Workwise.Service.Interface;
 
 namespace Workwise.Service

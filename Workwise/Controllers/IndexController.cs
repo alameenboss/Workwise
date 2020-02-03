@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Workwise.Data.Interface;
 using Workwise.Helper;
-using Workwise.Models;
+using Workwise.Data.Models;
 
 namespace Workwise.Controllers
 {

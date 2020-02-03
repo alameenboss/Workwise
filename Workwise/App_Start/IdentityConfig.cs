@@ -10,7 +10,7 @@ using System.Net.Mime;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
-using Workwise.Models;
+using Workwise.Data.Models;
 
 namespace Workwise
 {

@@ -5,15 +5,15 @@ namespace Workwise.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Workwise.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Workwise.Data.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Workwise.Models.ApplicationDbContext";
+            ContextKey = "Workwise.Data.Models.ApplicationDbContext";
         }
 
-        protected override void Seed(Workwise.Models.ApplicationDbContext context)
+        protected override void Seed(Workwise.Data.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

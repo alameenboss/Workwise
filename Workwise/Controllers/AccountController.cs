@@ -9,7 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Workwise.Helper;
-using Workwise.Models;
+using Workwise.Data.Models;
+using Workwise.Data.Interface;
 
 namespace Workwise.Controllers
 {
@@ -18,11 +19,14 @@ namespace Workwise.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private readonly IUserProfileRepository _userProfileRepo;
         public AccountController()
         {
         }
-
+        public AccountController(IUserProfileRepository userProfileRepo)
+        {
+            _userProfileRepo = userProfileRepo;
+        }
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
@@ -165,7 +169,7 @@ namespace Workwise.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    CreateUserProfile(user);
+                    await _userProfileRepo.CreateUserProfileAsync(user.Id, user.UserName);
 
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
     
@@ -182,24 +186,7 @@ namespace Workwise.Controllers
             return View(model);
         }
 
-        private void CreateUserProfile(ApplicationUser user)
-        {
-
-            var userprofileRepo = new Data.UserProfileRepository();
-
-            var userid = UserManager.FindByName(user.UserName).Id;
-
-            var profile = userprofileRepo.GetByUserId(userid);
-
-            if (profile == null)
-                profile = new UserProfile();
-
-            profile.FirstName = user.UserName;
-
-            profile.ImageUrl = @"\images\DefaultPhoto.png";
-
-            userprofileRepo.SaveProfile(profile);
-        }
+        
 
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -445,6 +432,7 @@ namespace Workwise.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             Session.Abandon();
+            Session.Clear();
             return RedirectToAction("Login");
         }
 

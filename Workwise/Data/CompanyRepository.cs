@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Workwise.Data.Interface;
-using Workwise.Models;
+using Workwise.Data.Models;
 
 namespace Workwise.Data
 {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Workwise.Models;
+using System.Threading.Tasks;
+using Workwise.Data.Models;
 
 namespace Workwise.Data.Interface
 {
@@ -9,5 +10,6 @@ namespace Workwise.Data.Interface
         void SaveUserImage(string userid, string imgPath);
         void SaveProfile(UserProfile profile);
         List<UserProfile> GetAllUsers();
+        Task CreateUserProfileAsync(string userId, string userName);
     }
 }

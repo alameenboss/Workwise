@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Workwise.Models;
+using Workwise.Data.Models;
 using Workwise.Service;
 using Workwise.Service.Interface;
 

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using Workwise.Data.Interface;
-using Workwise.Models;
+using Workwise.Data.Models;
 
 namespace Workwise.Data
 {
@@ -57,5 +58,21 @@ namespace Workwise.Data
 
             }
         }
+
+        public async Task CreateUserProfileAsync(string userId, string userName)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                db.UserProfiles.Add(new UserProfile()
+                {
+                    UserId = userId,
+                    FirstName = userName,
+                    ImageUrl = @"/images/DefaultPhoto.png"
+                });
+                await db.SaveChangesAsync();
+            }
+        }
+
+        
     }
 }

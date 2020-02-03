@@ -2,7 +2,7 @@
 using System.Security.Principal;
 using System.Web;
 using Workwise.Data;
-using Workwise.Models;
+using Workwise.Data.Models;
 namespace Workwise.Helper
 {
 

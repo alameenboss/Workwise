@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Workwise.Models;
+using Workwise.Data.Models;
 
 namespace Workwise.Service.Interface
 {
