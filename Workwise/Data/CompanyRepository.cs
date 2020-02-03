@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Workwise.Data.Interface;
 using Workwise.Models;
 
@@ -9,7 +7,6 @@ namespace Workwise.Data
 {
     public class CompanyRepository : ICompanyRepository
     {
-
         public IEnumerable<CompanyViewModel> GetAllCompanies()
         {
             var model = new List<CompanyViewModel>();
@@ -100,6 +97,5 @@ namespace Workwise.Data
 
             return model;
         }
-
     }
 }

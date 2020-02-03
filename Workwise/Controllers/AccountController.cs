@@ -432,7 +432,11 @@ namespace Workwise.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
-
+        public ActionResult LoginPartial()
+        {
+            var model = SessionHelper.GetUser(User.Identity.GetUserId());
+            return PartialView("_LoginPartial", model);
+        }
         //
         // POST: /Account/LogOff
         [HttpPost]

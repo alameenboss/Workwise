@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Workwise.Data;
+﻿using System.Web.Mvc;
+using Workwise.Data.Interface;
 
 namespace Workwise.Controllers
 {
     [Authorize]
-    public class ProfilesController : Controller
+    public class ProfilesController : BaseController
     {
-        // GET: Conpanies
+        private readonly IUserProfileRepository _userProfileRepo;
+       
+        public ProfilesController(IUserProfileRepository userProfileRepo)
+        {
+            _userProfileRepo = userProfileRepo;
+        }
+
+
         public ActionResult Index()
         {
-
-            var userRepo = new UserProfileRepository();
-            var model = userRepo.GetAllUsers();
+            var model = _userProfileRepo.GetAllUsers();
             return View(model);
         }
     }

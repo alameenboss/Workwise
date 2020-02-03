@@ -8,9 +8,8 @@ using Workwise.Models;
 
 namespace Workwise.Data
 {
-    public class PostRepository
+    public class PostRepository : IPostRepository
     {
-
         public void SavePost(Post post, string UserId)
         {
             using (var db = new ApplicationDbContext())

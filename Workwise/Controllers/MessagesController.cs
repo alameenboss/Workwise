@@ -1,17 +1,21 @@
 ﻿using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Workwise.Data;
+using Workwise.Data.Interface;
 
 namespace Workwise.Controllers
 {
     [Authorize]
-    public class MessagesController : Controller
+    public class MessagesController : BaseController
     {
-        // GET: Conpanies
+        private readonly IUserProfileRepository _userProfileRepo;
+        
+        public MessagesController(IUserProfileRepository userProfileRepo)
+        {
+            _userProfileRepo = userProfileRepo;
+           
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -19,8 +23,7 @@ namespace Workwise.Controllers
 
         public ActionResult GetUsers()
         {
-            var userprofilerepo = new UserProfileRepository();
-            var model = userprofilerepo.GetAllUsers().Where(x => x.UserId != User.Identity.GetUserId()).ToList();
+            var model = _userProfileRepo.GetAllUsers().Where(x => x.UserId != User.Identity.GetUserId()).ToList();
             return PartialView(@"~\Views\Messages\_UserPartial.cshtml", model);
         }
     }

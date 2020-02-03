@@ -4,37 +4,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Workwise.Data;
-using Workwise.Helper;
+using Workwise.Data.Interface;
 using Workwise.Models;
 
 namespace Workwise.Controllers
 {
-    [Authorize]
-    public class MyProfileFeedController : Controller
-    {
-        private ApplicationUserManager _userManager;
-        private readonly PostRepository postrepository;
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
 
-        public MyProfileFeedController()
-        {
-            postrepository = new PostRepository();
-        }
-       
+    [Authorize]
+    public class MyProfileFeedController : BaseController
+    {
+        private readonly IUserProfileRepository _userProfileRepo;
+        private readonly IPostRepository _postrepository;
+
+
         public MyProfileFeedController(ApplicationUserManager userManager)
         {
-            UserManager = userManager;
+            UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        }
+
+        public MyProfileFeedController(IUserProfileRepository userProfileRepo, IPostRepository postrepository)
+        {
+            _userProfileRepo = userProfileRepo;
+            _postrepository = postrepository;
         }
 
         public ActionResult Index(string id)
@@ -44,9 +35,9 @@ namespace Workwise.Controllers
             var user = UserManager.FindById(id);
             if (user != null)
             {
-                model = postrepository.GetLatestPostByUser(user.Id).ToList();
+                model = _postrepository.GetLatestPostByUser(user.Id).ToList();
                 ViewData["username"] = user.UserName;
-                var userprofile = new UserProfileRepository();
+                var userprofile = _userProfileRepo;
                 var _user = userprofile.GetByUserId(user.Id);
                 ViewData["userimage"] = string.IsNullOrEmpty(_user?.ImageUrl) ? @"\images\DefaultPhoto.png" : _user?.ImageUrl;
                 ViewData["firstname"] = string.IsNullOrEmpty(_user?.FirstName) ? "FirstName" : _user?.FirstName;
@@ -57,26 +48,18 @@ namespace Workwise.Controllers
             return View(model);
         }
 
-        public ActionResult LoginPartial()
-        {
-            var model = SessionHelper.GetUser(User.Identity.GetUserId());
-            return PartialView("_LoginPartial", model);
-        }
-
         public ActionResult SaveUserInfo(UserProfile profile)
         {
-            var userprofilerepo = new UserProfileRepository();
-            var user = userprofilerepo.GetByUserId(User.Identity.GetUserId());
+            var user = _userProfileRepo.GetByUserId(User.Identity.GetUserId());
             if (user == null)
                 user = new UserProfile(); 
 
             user.FirstName = profile.FirstName;
             user.Designation = profile.Designation;
-            userprofilerepo.SaveProfile(user);
+            _userProfileRepo.SaveProfile(user);
 
             return RedirectToAction("Index");
         }
 
-        
     }
 }

@@ -10,7 +10,7 @@ using Workwise.Service.Interface;
 namespace Workwise.Controllers
 {
     [Authorize]
-    public class CompaniesController : Controller
+    public class CompaniesController : BaseController
     {
         private readonly ICompanyService _companyService;
 

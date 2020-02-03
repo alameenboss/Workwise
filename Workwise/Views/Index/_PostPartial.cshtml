@@ -5,7 +5,7 @@
 <div class="post-bar @(Model.HasCommmet ? "no-margin":"") ">
     <div class="post_topbar">
         <div class="usy-dt">
-            <img src="@Model.PostedBy.ImageUrl" alt="">
+            <img class="profile-pic" src="@Model.PostedBy.ImageUrl" alt="">
             <div class="usy-name">
                 <h3>@Model.PostedBy.FirstName</h3>
                 <span><img src="/images/clock.png" alt="">@PrettyDate.GetPrettyDate(Model.PostedOn)</span>

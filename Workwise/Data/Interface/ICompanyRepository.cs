@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Workwise.Models;
 
 namespace Workwise.Data.Interface
 {
-    interface ICompanyRepository
+    public interface ICompanyRepository
     {
         IEnumerable<CompanyViewModel> GetAllCompanies();
     }

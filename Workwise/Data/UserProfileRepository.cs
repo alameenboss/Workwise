@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using Workwise.Data.Interface;
 using Workwise.Models;
 
 namespace Workwise.Data
 {
-    public class UserProfileRepository 
+    public class UserProfileRepository : IUserProfileRepository
     {
 
         public UserProfile GetByUserId(string UserId)

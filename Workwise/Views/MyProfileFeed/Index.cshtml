@@ -108,7 +108,11 @@
                     data: { "image": response },
                     success: function (data) {
                         $('#uploadimageModal').modal('hide');
-                        $('#uploaded_image').attr('src', data.imageUrl);
+                        $user_images = $('#uploaded_image,#feed-dd .post_topbar .usy-dt  .profile-pic,#logoutForm .user-info > img');
+                        $user_images.fadeOut(500, function () {
+                            $user_images.attr("src", data.imageUrl);
+                            $user_images.fadeIn(500);
+                        });
                     }
                 });
             })

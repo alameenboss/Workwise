@@ -93,7 +93,7 @@ namespace Workwise.Helper
 
             if (SessionHelper.Get<UserProfile>(userid) == null)
             {
-                UserProfileRepository repo = new UserProfileRepository();
+                var repo = new UserProfileRepository();
                 var model = repo.GetByUserId(userid);
                 if (!(model?.Id > 0))
                 {

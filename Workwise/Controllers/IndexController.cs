@@ -1,30 +1,29 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Workwise.Data;
-using Workwise.Models;
-using Microsoft.AspNet.Identity;
+using Workwise.Data.Interface;
 using Workwise.Helper;
-using System.IO;
+using Workwise.Models;
 
 namespace Workwise.Controllers
 {
     [Authorize]
-    public class IndexController : Controller
+    public class IndexController : BaseController
     {
-        private readonly PostRepository postrepository;
-        public IndexController()
+        private readonly IUserProfileRepository _userProfileRepo;
+        private readonly IPostRepository _postrepository;
+        public IndexController(IUserProfileRepository userProfileRepo, IPostRepository postrepository)
         {
-            postrepository = new PostRepository();
+            _userProfileRepo = userProfileRepo;
+            _postrepository = postrepository;
         }
 
-        // GET: Conpanies
         public ActionResult Index()
         {
-            var model = postrepository.GetLatestPostByUser(User.Identity.GetUserId());
+            var model = _postrepository.GetLatestPostByUser(User.Identity.GetUserId());
             if (model == null)
             {
                 model = new List<Post>();
@@ -48,9 +47,6 @@ namespace Workwise.Controllers
                 Title = new RandomText().GetNewSentence(5),
                 Description = text.Content,
                 Rate = RandomGenerator.GenerateLockedRandom(20, 400),
-                LikeCount = RandomGenerator.GenerateLockedRandom(10, 1000),
-                ViewCount = RandomGenerator.GenerateLockedRandom(10, 1000),
-                CommentCount = RandomGenerator.GenerateLockedRandom(10, 1000),
                 PostImages = new List<ImageModel>()
                 {
                     new ImageModel()
@@ -73,45 +69,31 @@ namespace Workwise.Controllers
            
             try
             {
-                
                 if (PostImage != null)
                 {
-                    var postedImage = new ImageModel();
-
-                    var extention = Path.GetExtension(PostImage.FileName);
-
-                    var fileName = Guid.NewGuid().ToString().Replace("-", "").Replace(" ", "") + "." + extention;
-                    var path = Path.Combine(Server.MapPath("~/Images/Upload"), fileName);
-                    var imgUrl = @"/Images/Upload/" + fileName;
-                    PostImage.SaveAs(path);
-                    postedImage.ImageUrl = imgUrl;
-                    model.PostImages = new List<ImageModel>();
-                    model.PostImages.Add(postedImage);
-                }
-                
-                postrepository.SavePost(model, User.Identity.GetUserId());
+                    model.PostImages.Add(new ImageModel()
+                    {
+                        ImageUrl = ImageHelper.SavePostedFile(PostImage, Server.MapPath("~/Images/Upload"))
+                    });
+                }   
+                _postrepository.SavePost(model, User.Identity.GetUserId());
                 return RedirectToAction("Index");
             }
             catch (Exception)
             {
-
                 throw;
             }
-            
-
         }
 
 
         public ActionResult SuggestedUser()
         {
-            var userprofilerepo = new UserProfileRepository();
-            var model = userprofilerepo.GetAllUsers().Where(x => x.UserId != User.Identity.GetUserId()).ToList();
+            var model = _userProfileRepo.GetAllUsers().Where(x => x.UserId != User.Identity.GetUserId()).ToList();
             return PartialView(@"~\Views\Index\_SuggestedUsers.cshtml", model);
         }
         public ActionResult TopProfiles()
         {
-            var userprofilerepo = new UserProfileRepository();
-            var model = userprofilerepo.GetAllUsers().Where(x => x.UserId != User.Identity.GetUserId()).ToList();
+            var model = _userProfileRepo.GetAllUsers().Where(x => x.UserId != User.Identity.GetUserId()).ToList();
             return PartialView(@"~\Views\Index\_TopProfiles.cshtml", model);
         }
     }
