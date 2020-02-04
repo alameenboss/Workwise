@@ -10,9 +10,9 @@ namespace Workwise.Data.Models
     public class OnlineUser
     {
         [Key]
-        public int OnlineUserID { get; set; }
-        public int UserID { get; set; }
-        public string ConnectionID { get; set; }
+        public int OnlineUserId { get; set; }
+        public string UserId { get; set; }
+        public string ConnectionId { get; set; }
         public bool IsOnline { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }

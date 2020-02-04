@@ -220,7 +220,6 @@
     <Compile Include="Data\Models\ResetPasswordViewModel.cs" />
     <Compile Include="Data\Models\SendCodeViewModel.cs" />
     <Compile Include="Data\Models\Tags.cs" />
-    <Compile Include="Data\Models\User.cs" />
     <Compile Include="Data\Models\UserImage.cs" />
     <Compile Include="Data\Models\UserNotification.cs" />
     <Compile Include="Data\Models\UserNotificationList.cs" />
@@ -236,6 +235,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\Base64Helper.cs" />
+    <Compile Include="Helper\DefaultsHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="Helper\PrettyDate.cs" />
     <Compile Include="Helper\RandomGenerator.cs" />
@@ -246,11 +246,17 @@
     <Compile Include="Migrations\202002030848148_InitialMigration.Designer.cs">
       <DependentUpon>202002030848148_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002040251472_InitialMigration2.cs" />
+    <Compile Include="Migrations\202002040251472_InitialMigration2.Designer.cs">
+      <DependentUpon>202002040251472_InitialMigration2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\CompanyService.cs" />
     <Compile Include="Service\Interface\ICompanyService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\UserViewModel.cs" />
+    <Compile Include="ViewModel\MessageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\all.min.css" />
@@ -561,6 +567,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202002030848148_InitialMigration.resx">
       <DependentUpon>202002030848148_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002040251472_InitialMigration2.resx">
+      <DependentUpon>202002040251472_InitialMigration2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

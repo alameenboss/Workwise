@@ -10,30 +10,30 @@ namespace Workwise.Data.Interface
 {
     public interface IUser
     {
-        Tuple<User, string> SaveUser(User objentity);
-        User CheckLogin(string userName, string password);
+        //Tuple<UserProfile, string> SaveUser(UserProfile objentity);
+        //UserProfile CheckLogin(string userName, string password);
         void SaveUserOnlineStatus(OnlineUser objentity);
-        List<string> GetUserConnectionID(int UserID);
-        List<string> GetUserConnectionID(int[] userIDs);
-        List<User> GetAllUsers();
-        List<OnlineUserDetails> GetOnlineFriends(int userID);
-        User GetUserById(int userId);
-        List<UserSearchResult> SearchUsers(string name, int userID);
-        List<FriendRequests> GetSentFriendRequests(int userID);
-        List<FriendRequests> GetReceivedFriendRequests(int userID);
-        void SendFriendRequest(int endUserID, int loggedInUserID);
-        int SaveUserNotification(string notificationType, int fromUserID, int toUserID);
-        FriendMapping GetFriendRequestStatus(int userID);
-        int ResponseToFriendRequest(int requestorID, string requestResponse, int endUserID);
-        List<UserNotificationList> GetUserNotifications(int toUserID);
-        int GetUserNotificationCounts(int toUserID);
-        void ChangeNotificationStatus(int[] notificationIDs);
-        FriendMapping RemoveFriendMapping(int friendMappingID);
-        List<User> GetUsersByLinqQuery(Expression<Func<User, bool>> where);
-        List<OnlineUserDetails> GetRecentChats(int currentUserID);
-        OnlineUserDetails GetUserOnlineStatus(int userID);
-        void UpdateUserProfilePicture(int userID, string imagePath);
-        void SaveUserImage(int userID, string imagePath, bool isProfilePicture);
-        List<OnlineUserDetails> GetFriends(int userID);
+        List<string> GetUserConnectionId(string UserId);
+        List<string> GetUserConnectionId(string[] userIds);
+        List<UserProfile> GetAllUsers();
+        List<OnlineUserDetails> GetOnlineFriends(string userId);
+        UserProfile GetUserById(string userId);
+        List<UserSearchResult> SearchUsers(string name, string userId);
+        List<FriendRequests> GetSentFriendRequests(string userId);
+        List<FriendRequests> GetReceivedFriendRequests(string userId);
+        void SendFriendRequest(string endUserId, string loggedInUserId);
+        int SaveUserNotification(string notificationType, string fromUserId, string toUserId);
+        FriendMapping GetFriendRequestStatus(string userId);
+        int ResponseToFriendRequest(string requestorId, string requestResponse, string endUserId);
+        List<UserNotificationList> GetUserNotifications(string toUserId);
+        int GetUserNotificationCounts(string toUserId);
+        void ChangeNotificationStatus(int[] notificationIds);
+        FriendMapping RemoveFriendMapping(int friendMappingId);
+        List<UserProfile> GetUsersByLinqQuery(Expression<Func<UserProfile, bool>> where);
+        List<OnlineUserDetails> GetRecentChats(string currentUserId);
+        OnlineUserDetails GetUserOnlineStatus(string userId);
+        void UpdateUserProfilePicture(string userId, string imagePath);
+        void SaveUserImage(string userId, string imagePath, bool isProfilePicture);
+        List<OnlineUserDetails> GetFriends(string userId);
     }
 }

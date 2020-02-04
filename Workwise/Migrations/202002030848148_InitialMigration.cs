@@ -11,9 +11,9 @@ namespace Workwise.Migrations
                 "dbo.ChatMessages",
                 c => new
                     {
-                        ChatMessageID = c.Int(nullable: false, identity: true),
-                        FromUserID = c.Int(nullable: false),
-                        ToUserID = c.Int(nullable: false),
+                        ChatMessageId = c.Int(nullable: false, identity: true),
+                        FromUserId = c.Int(nullable: false),
+                        ToUserId = c.Int(nullable: false),
                         Message = c.String(),
                         Status = c.String(),
                         CreatedOn = c.DateTime(nullable: false),
@@ -21,35 +21,35 @@ namespace Workwise.Migrations
                         ViewedOn = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.ChatMessageID);
+                .PrimaryKey(t => t.ChatMessageId);
             
             CreateTable(
                 "dbo.FriendMappings",
                 c => new
                     {
-                        FriendMappingID = c.Int(nullable: false, identity: true),
-                        RequestorUserID = c.Int(nullable: false),
-                        EndUserID = c.Int(nullable: false),
+                        FriendMappingId = c.Int(nullable: false, identity: true),
+                        RequestorUserId = c.Int(nullable: false),
+                        EndUserId = c.Int(nullable: false),
                         RequestStatus = c.String(),
                         CreatedOn = c.DateTime(nullable: false),
                         UpdatedOn = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.FriendMappingID);
+                .PrimaryKey(t => t.FriendMappingId);
             
             CreateTable(
                 "dbo.OnlineUsers",
                 c => new
                     {
-                        OnlineUserID = c.Int(nullable: false, identity: true),
-                        UserID = c.Int(nullable: false),
-                        ConnectionID = c.String(),
+                        OnlineUserId = c.Int(nullable: false, identity: true),
+                        UserId = c.Int(nullable: false),
+                        ConnectionId = c.String(),
                         IsOnline = c.Boolean(nullable: false),
                         CreatedOn = c.DateTime(nullable: false),
                         UpdatedOn = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.OnlineUserID);
+                .PrimaryKey(t => t.OnlineUserId);
             
             CreateTable(
                 "dbo.Posts",
@@ -153,35 +153,35 @@ namespace Workwise.Migrations
                 "dbo.UserImages",
                 c => new
                     {
-                        ImageID = c.Int(nullable: false, identity: true),
-                        UserID = c.Int(nullable: false),
+                        ImageId = c.Int(nullable: false, identity: true),
+                        UserId = c.Int(nullable: false),
                         ImagePath = c.String(),
                         IsProfilePicture = c.Boolean(nullable: false),
                         CreatedOn = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.ImageID);
+                .PrimaryKey(t => t.ImageId);
             
             CreateTable(
                 "dbo.UserNotifications",
                 c => new
                     {
-                        NotificationID = c.Int(nullable: false, identity: true),
-                        ToUserID = c.Int(nullable: false),
-                        FromUserID = c.Int(nullable: false),
+                        NotificationId = c.Int(nullable: false, identity: true),
+                        ToUserId = c.Int(nullable: false),
+                        FromUserId = c.Int(nullable: false),
                         NotificationType = c.String(),
                         Status = c.String(),
                         CreatedOn = c.DateTime(nullable: false),
                         UpdatedOn = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.NotificationID);
+                .PrimaryKey(t => t.NotificationId);
             
             CreateTable(
                 "dbo.Users",
                 c => new
                     {
-                        UserID = c.Int(nullable: false, identity: true),
+                        UserId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
                         UserName = c.String(),
                         Password = c.String(),
@@ -193,7 +193,7 @@ namespace Workwise.Migrations
                         UpdatedOn = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.UserID);
+                .PrimaryKey(t => t.UserId);
             
             CreateTable(
                 "dbo.AspNetUsers",

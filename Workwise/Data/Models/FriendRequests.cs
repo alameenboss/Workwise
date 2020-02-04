@@ -8,9 +8,9 @@ namespace Workwise.Data.Models
 {
     public class FriendRequests
     {
-        public User UserInfo { get; set; }
+        public UserProfile UserInfo { get; set; }
         public string RequestStatus { get; set; }
-        public int RequestorUserID { get; set; }
-        public int EndUserID { get; set; }
+        public string RequestorUserId { get; set; }
+        public string EndUserId { get; set; }
     }
 }

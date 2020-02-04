@@ -10,9 +10,9 @@ namespace Workwise.Data.Models
     public class UserNotification
     {
         [Key]
-        public int NotificationID { get; set; }
-        public int ToUserID { get; set; }
-        public int FromUserID { get; set; }
+        public int NotificationId { get; set; }
+        public string ToUserId { get; set; }
+        public string FromUserId { get; set; }
         public string NotificationType { get; set; }
         public string Status { get; set; }
         public DateTime CreatedOn { get; set; }

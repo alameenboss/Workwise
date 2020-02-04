@@ -8,8 +8,8 @@ namespace Workwise.Data.Models
 {
     public class OnlineUserDetails
     {
-        public int UserID { get; set; }
-        public List<string> ConnectionID { get; set; }
+        public string UserId { get; set; }
+        public List<string> ConnectionId { get; set; }
         public string Name { get; set; }
         public string ProfilePicture { get; set; }
         public string Gender { get; set; }

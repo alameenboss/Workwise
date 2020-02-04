@@ -28,7 +28,7 @@ namespace Workwise.Data.Models
 
         public DbSet<Comment> PostComment { get; set; }
 
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<OnlineUser> OnlineUsers { get; set; }
         public DbSet<FriendMapping> FriendMappings { get; set; }
         public DbSet<UserNotification> UserNotifications { get; set; }

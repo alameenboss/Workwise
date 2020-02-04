@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNet.SignalR.Transports;
+using Workwise.Data;
+using Workwise.Data.Models;
+using Workwise.Helper;
 
 namespace Workwise.Hubs
 {
@@ -19,50 +23,157 @@ namespace Workwise.Hubs
     [HubName("chat")]
     public class ChatHub : Hub
     {
-        public void Send(string name, string message,string userImage, string connId,string myConnectionId)
+        UserRepository _UserRepo = new UserRepository();
+        MessageRepository _MessageRepo = new MessageRepository();
+        public override Task OnConnected()
         {
-            var msg = $"<div class='main-message-box ta-right'><div class='message-dt'><div class='message-inner-dt'>" +
-                $"<p>{message}</p></div><span>{DateTime.Now}</span></div><div class='messg-usr-img'>" +
-                $"<img src='{userImage}' alt='' class='mCS_img_loaded'></div></div>";
-            Clients.Client(connId).addNewMessageToPage(name, msg, myConnectionId);
-        }
-
-        static List<Users> SignalRUsers = new List<Users>();
-
-        public void Connect(string userName,string userImage)
-        {
-            var id = Context.ConnectionId;
-
-            if (SignalRUsers.Count(x => x.UserName == userName) == 0)
+            var userId = Context.QueryString["UserId"];
+            if (userId != null)
             {
-                SignalRUsers.Add(new Users { ConnectionId = id, UserName = userName, UserImage = userImage });
+                string uId = userId;
+                _UserRepo.SaveUserOnlineStatus(new OnlineUser { UserId = uId, ConnectionId = Context.ConnectionId, IsOnline = true });
+                RefreshOnlineUsers(uId);
+            }
+            return base.OnConnected();
+        }
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            var userId = Context.QueryString["UserId"];
+            if (userId != null)
+            {
+                string uId = userId;
+                _UserRepo.SaveUserOnlineStatus(new OnlineUser { UserId = uId, ConnectionId = Context.ConnectionId, IsOnline = false });
+                RefreshOnlineUsers(uId);
+            }
+            return base.OnDisconnected(stopCalled);
+        }
+        public List<string> GetActiveConnectionIds(List<string> connectionIds)
+        {
+            var heartBeat = GlobalHost.DependencyResolver.Resolve<ITransportHeartbeat>();
+            var connections = heartBeat.GetConnections();
+            if (connections != null && connectionIds != null)
+            {
+                var filterdConnectionIds = connections.Where(m => connectionIds.Contains(m.ConnectionId)).Select(m => m.ConnectionId).ToList();
+                return filterdConnectionIds;
+            }
+            return connectionIds;
+        }
+        public void RefreshOnlineUsers(string userId)
+        {
+            var users = _UserRepo.GetOnlineFriends(userId);
+            RefreshOnlineUsersByConnectionIds(users.SelectMany(m => m.ConnectionId).ToList(), userId);
+        }
+        public void RefreshOnlineUsersByConnectionIds(List<string> connectionIds, string userId = "")
+        {
+            Clients.Clients(connectionIds).RefreshOnlineUsers();
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var onlineStatus = _UserRepo.GetUserOnlineStatus(userId);
+                if (onlineStatus != null)
+                {
+                    Clients.Clients(connectionIds).RefreshOnlineUserByUserId(userId, onlineStatus.IsOnline, Convert.ToString(onlineStatus.LastUpdationTime));
+                }
+            }
+        }
+        public void SendRequest(string userId, string loggedInUserId)
+        {
+            _UserRepo.SendFriendRequest(userId, loggedInUserId);
+            SendNotification(loggedInUserId, userId, "FriendRequest");
+        }
+        public void SendNotification(string fromUserId, string toUserId, string notificationType)
+        {
+            int notificationId = _UserRepo.SaveUserNotification(notificationType, fromUserId, toUserId);
+            var connectionId = _UserRepo.GetUserConnectionId(toUserId);
+            if (connectionId != null && connectionId.Count() > 0)
+            {
+                var userInfo = DefaultsHelper.GetUserModel(fromUserId);
+                int notificationCounts = _UserRepo.GetUserNotificationCounts(toUserId);
+                Clients.Clients(connectionId).ReceiveNotification(notificationType, userInfo, notificationId, notificationCounts);
+            }
+        }
+        public void SendResponseToRequest(string requestorId, string requestResponse, string endUserId)
+        {
+            var notificationId = _UserRepo.ResponseToFriendRequest(requestorId, requestResponse, endUserId);
+            if (notificationId > 0)
+            {
+                var connectionId = _UserRepo.GetUserConnectionId(endUserId);
+                if (connectionId != null && connectionId.Count() > 0)
+                {
+                    Clients.Clients(connectionId).RemoveNotification(notificationId);
+                }
+            }
+            if (requestResponse == "Accepted")
+            {
+                SendNotification(endUserId, requestorId, "FriendRequestAccepted");
+                List<string> connectionIds = _UserRepo.GetUserConnectionId(new string[] { endUserId, requestorId });
+                RefreshOnlineUsersByConnectionIds(connectionIds);
+            }
+        }
+        public void RefreshNotificationCounts(string toUserId)
+        {
+            var connectionId = _UserRepo.GetUserConnectionId(toUserId);
+            if (connectionId != null && connectionId.Count() > 0)
+            {
+                int notificationCounts = _UserRepo.GetUserNotificationCounts(toUserId);
+                Clients.Clients(connectionId).RefreshNotificationCounts(notificationCounts);
+            }
+        }
+        public void ChangeNotitficationStatus(string notificationIds, string toUserId)
+        {
+            if (!string.IsNullOrEmpty(notificationIds))
+            {
+                string[] arrNotificationIds = notificationIds.Split(',');
+                int[] ids = arrNotificationIds.Select(m => Convert.ToInt32(m)).ToArray();
+                _UserRepo.ChangeNotificationStatus(ids);
+                RefreshNotificationCounts(toUserId);
+            }
+        }
+        public void UnfriendUser(int friendMappingId)
+        {
+            var friendMapping = _UserRepo.RemoveFriendMapping(friendMappingId);
+            if (friendMapping != null)
+            {
+                List<string> connectionIds = _UserRepo.GetUserConnectionId(new string[] { friendMapping.EndUserId, friendMapping.RequestorUserId });
+                RefreshOnlineUsersByConnectionIds(connectionIds);
+            }
+        }
+        public void SendMessage(string fromUserId, string toUserId, string message, string fromUserName, string fromUserProfilePic, string toUserName, string toUserProfilePic)
+        {
+            ChatMessage objentity = new ChatMessage();
+            objentity.CreatedOn = System.DateTime.Now;
+            objentity.FromUserId = fromUserId;
+            objentity.IsActive = true;
+            objentity.Message = message;
+            objentity.ViewedOn = System.DateTime.Now;
+            objentity.Status = "Sent";
+            objentity.ToUserId = toUserId;
+            objentity.UpdatedOn = System.DateTime.Now;
+            var obj = _MessageRepo.SaveChatMessage(objentity);
+            var messageRow = DefaultsHelper.GetMessageModel(obj);
+            List<string> connectionIds = _UserRepo.GetUserConnectionId(new string[] { fromUserId, toUserId });
+            Clients.Clients(connectionIds).AddNewChatMessage(messageRow, fromUserId, toUserId, fromUserName, fromUserProfilePic, toUserName, toUserProfilePic);
+        }
+        public void SendUserTypingStatus(string toUserId, string fromUserId)
+        {
+            List<string> connectionIds = _UserRepo.GetUserConnectionId(new string[] { toUserId });
+            if (connectionIds.Count > 0)
+            {
+                Clients.Clients(connectionIds).UserIsTyping(fromUserId);
+            }
+        }
+        public void UpdateMessageStatus(int messageId, string currentUserId, string fromUserId)
+        {
+            if (messageId > 0)
+            {
+                _MessageRepo.UpdateMessageStatusByMessageId(messageId);
             }
             else
             {
-                SignalRUsers.FirstOrDefault(x => x.UserName == userName).ConnectionId = id;
+                _MessageRepo.UpdateMessageStatusByUserId(fromUserId, currentUserId);
             }
+            List<string> connectionIds = _UserRepo.GetUserConnectionId(new string[] { currentUserId, fromUserId });
+            Clients.Clients(connectionIds).UpdateMessageStatusInChatWindow(messageId, currentUserId, fromUserId);
         }
-
-        //public override Task OnConnected()
-        //{
-        //    return base.OnConnected();
-        //}
-
-        public override Task OnDisconnected(bool stopCalled)
-        {
-            var item = SignalRUsers.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
-            if (item != null)
-            {
-                SignalRUsers.Remove(item);
-            }
-
-            return base.OnDisconnected(stopCalled);
-        }
-
-        public List<Users> GetAllActiveConnections()
-        {
-            return SignalRUsers.ToList();
-        }
-
     }
+
 }

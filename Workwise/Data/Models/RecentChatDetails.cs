@@ -9,6 +9,6 @@ namespace Workwise.Data.Models
     public class RecentChatDetails
     {
         public List<OnlineUserDetails> Users { get; set; }
-        public int LastUserID { get; set; }
+        public int LastUserId { get; set; }
     }
 }

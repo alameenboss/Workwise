@@ -10,8 +10,8 @@ namespace Workwise.Data.Models
     public class UserImage
     {
         [Key]
-        public int ImageID { get; set; }
-        public int UserID { get; set; }
+        public int ImageId { get; set; }
+        public string UserId { get; set; }
         public string ImagePath { get; set; }
         public bool IsProfilePicture { get; set; }
         public DateTime CreatedOn { get; set; }

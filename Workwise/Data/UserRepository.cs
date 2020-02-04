@@ -11,42 +11,15 @@ namespace Workwise.Data
     public class UserRepository : IUser
     {
         ApplicationDbContext _context = new ApplicationDbContext();
-        public Tuple<User, string> SaveUser(User objentity)
-        {
-            var obj = _context.Users.Where(m => m.UserID == objentity.UserID).FirstOrDefault();
-            if (obj != null)
-            {
-                obj.Name = objentity.Name;
-                obj.Gender = objentity.Gender;
-                obj.DOB = objentity.DOB;
-                obj.Bio = objentity.Bio;
-                obj.UpdatedOn = System.DateTime.Now;
-            }
-            else
-            {
-                var existUserName = _context.Users.Where(m => m.UserName == objentity.UserName && m.IsActive == true).FirstOrDefault();
-                if (existUserName != null)
-                {
-                    return new Tuple<User, string>(objentity, "User name is already exist. Please try with another user name.");
-                }
-                _context.Users.Add(objentity);
-            }
-            _context.SaveChanges();
-            return new Tuple<User, string>(objentity, "");
-        }
-        public User CheckLogin(string userName, string password)
-        {
-            var obj = _context.Users.Where(m => m.UserName == userName && m.Password == password && m.IsActive == true).FirstOrDefault();
-            return obj;
-        }
+       
         public void SaveUserOnlineStatus(OnlineUser objentity)
         {
-            var obj = _context.OnlineUsers.Where(m => m.UserID == objentity.UserID).FirstOrDefault();
+            var obj = _context.OnlineUsers.Where(m => m.UserId == objentity.UserId).FirstOrDefault();
             if (obj != null)
             {
                 obj.IsOnline = objentity.IsOnline;
                 obj.UpdatedOn = System.DateTime.Now;
-                obj.ConnectionID = objentity.ConnectionID;
+                obj.ConnectionId = objentity.ConnectionId;
             }
             else
             {
@@ -57,77 +30,77 @@ namespace Workwise.Data
             }
             _context.SaveChanges();
         }
-        public List<string> GetUserConnectionID(int UserID)
+        public List<string> GetUserConnectionId(string UserId)
         {
-            var obj = _context.OnlineUsers.Where(m => m.UserID == UserID && m.IsActive == true && m.IsOnline == true).Select(m => m.ConnectionID).ToList();
+            var obj = _context.OnlineUsers.Where(m => m.UserId == UserId && m.IsActive == true && m.IsOnline == true).Select(m => m.ConnectionId).ToList();
             return obj;
         }
-        public List<string> GetUserConnectionID(int[] userIDs)
+        public List<string> GetUserConnectionId(string[] userIds)
         {
-            var obj = _context.OnlineUsers.Where(m => userIDs.Contains(m.UserID) && m.IsActive == true && m.IsOnline == true).Select(m => m.ConnectionID).ToList();
+            var obj = _context.OnlineUsers.Where(m => userIds.Contains(m.UserId) && m.IsActive == true && m.IsOnline == true).Select(m => m.ConnectionId).ToList();
             return obj;
         }
-        public List<User> GetAllUsers()
+        public List<UserProfile> GetAllUsers()
         {
-            var objList = _context.Users.ToList();
+            var objList = _context.UserProfiles.ToList();
             return objList;
         }
-        public List<OnlineUserDetails> GetOnlineFriends(int userID)
+        public List<OnlineUserDetails> GetOnlineFriends(string userId)
         {
-            int[] friends = GetFriendUserIds(userID);
-            var friendOnlineDetails = _context.OnlineUsers.Where(m => friends.Contains(m.UserID) && m.IsActive == true && m.IsOnline == true).ToList();
-            var obj = (from v in _context.Users
-                       where friends.Contains(v.UserID)
+            string[] friends = GetFriendUserIds(userId);
+            var friendOnlineDetails = _context.OnlineUsers.Where(m => friends.Contains(m.UserId) && m.IsActive == true && m.IsOnline == true).ToList();
+            var obj = (from v in _context.UserProfiles
+                       where friends.Contains(v.UserId)
                        select new OnlineUserDetails
                        {
-                           UserID = v.UserID,
-                           Name = v.Name,
-                           ProfilePicture = v.ProfilePicture,
+                           UserId = v.UserId,
+                           Name = v.FirstName,
+                           ProfilePicture = v.ImageUrl,
                            Gender = v.Gender
                        }).OrderBy(m => m.Name).ToList();
-            var onlineUserIds = friendOnlineDetails.Select(m => m.UserID).ToArray();
-            obj = obj.Where(m => onlineUserIds.Contains(m.UserID)).ToList();
+            var onlineUserIds = friendOnlineDetails.Select(m => m.UserId).ToArray();
+            obj = obj.Where(m => onlineUserIds.Contains(m.UserId)).ToList();
             obj.ForEach(m =>
             {
-                m.ConnectionID = friendOnlineDetails.Where(x => x.UserID == m.UserID).Select(x => x.ConnectionID).ToList();
+                m.ConnectionId = friendOnlineDetails.Where(x => x.UserId == m.UserId).Select(x => x.ConnectionId).ToList();
             });
             return obj;
         }
-        public User GetUserById(int userId)
+        public UserProfile GetUserById(string userId)
         {
-            var obj = _context.Users.Where(m => m.UserID == userId).FirstOrDefault();
+            var obj = _context.UserProfiles.Where(m => m.UserId == userId).FirstOrDefault();
             return obj;
         }
-        public int[] GetFriendUserIds(int userID)
+        public string[] GetFriendUserIds(string userId)
         {
-            var arr = _context.FriendMappings.Where(m => (m.RequestorUserID == userID || m.EndUserID == userID) && m.RequestStatus == "Accepted" && m.IsActive == true).Select(m => m.RequestorUserID == userID ? m.EndUserID : m.RequestorUserID).ToArray();
+            var arr = _context.FriendMappings.Where(m => (m.RequestorUserId == userId || m.EndUserId == userId) && m.RequestStatus == "Accepted" && m.IsActive == true).Select(m => m.RequestorUserId == userId ? m.EndUserId : m.RequestorUserId).ToArray();
             return arr;
         }
-        public List<FriendRequests> GetSentFriendRequests(int userID)
+        public List<FriendRequests> GetSentFriendRequests(string userId)
         {
             var list = (from u in _context.FriendMappings
-                        join v in _context.Users on u.EndUserID equals v.UserID
-                        where u.RequestorUserID == userID && u.RequestStatus == "Sent" && u.IsActive == true
+                        join v in _context.UserProfiles on u.EndUserId equals v.UserId
+                        where u.RequestorUserId == userId && u.RequestStatus == "Sent" && u.IsActive == true
                         select new FriendRequests()
                         {
                             UserInfo = v,
                             RequestStatus = u.RequestStatus,
-                            EndUserID = u.EndUserID,
-                            RequestorUserID = u.RequestorUserID
+                            EndUserId = u.EndUserId,
+                            RequestorUserId = u.RequestorUserId
                         }).ToList();
             return list;
         }
-        public List<FriendRequests> GetReceivedFriendRequests(int userID)
+        public List<FriendRequests> GetReceivedFriendRequests(string userId)
         {
             var list = (from u in _context.FriendMappings
-                        join v in _context.Users on u.RequestorUserID equals v.UserID
-                        where u.EndUserID == userID && u.RequestStatus == "Sent" && u.IsActive == true
+                        join v in _context.UserProfiles on u.RequestorUserId equals v.UserId
+                        where u.EndUserId == userId && u.RequestStatus == "Sent" && u.IsActive == true
                         select new FriendRequests()
                         {
                             UserInfo = v,
                             RequestStatus = u.RequestStatus,
-                            EndUserID = u.EndUserID,
-                            RequestorUserID = u.RequestorUserID
+                            EndUserId = u.EndUserId,
+                            RequestorUserId = u.RequestorUserId
                         }).ToList();
             return list;
         }
@@ -135,28 +108,28 @@ namespace Workwise.Data
         public List<FriendRequests> GetAllSentFriendRequests()
         {
             var list = (from u in _context.FriendMappings
-                        join v in _context.Users on u.EndUserID equals v.UserID
+                        join v in _context.UserProfiles on u.EndUserId equals v.UserId
                         where u.RequestStatus == "Sent" && u.IsActive == true
                         select new FriendRequests()
                         {
                             UserInfo = v,
                             RequestStatus = u.RequestStatus,
-                            EndUserID = u.EndUserID,
-                            RequestorUserID = u.RequestorUserID
+                            EndUserId = u.EndUserId,
+                            RequestorUserId = u.RequestorUserId
                         }).ToList();
             return list;
         }
-        public List<UserSearchResult> SearchUsers(string name, int userID)
+        public List<UserSearchResult> SearchUsers(string name, string userId)
         {
-            int[] friendIds = GetFriendUserIds(userID);
-            var objList = _context.Users.Where(m => m.Name.ToLower().Contains(name.ToLower()) && m.UserID != userID && !friendIds.Contains(m.UserID)).ToList();
-            var receivedRequests = GetReceivedFriendRequests(userID);
-            var sentRequests = GetSentFriendRequests(userID);
+            string[] friendIds = GetFriendUserIds(userId);
+            var objList = _context.UserProfiles.Where(m => m.FirstName.ToLower().Contains(name.ToLower()) && m.UserId != userId && !friendIds.Contains(m.UserId)).ToList();
+            var receivedRequests = GetReceivedFriendRequests(userId);
+            var sentRequests = GetSentFriendRequests(userId);
             List<UserSearchResult> list = new List<UserSearchResult>();
             foreach (var item in objList)
             {
                 bool isReceived = false;
-                var receivedRequest = receivedRequests.Where(x => x.UserInfo.UserID == item.UserID).FirstOrDefault();
+                var receivedRequest = receivedRequests.Where(x => x.UserInfo.UserId == item.UserId).FirstOrDefault();
                 if (receivedRequest != null)
                 {
                     isReceived = true;
@@ -164,7 +137,7 @@ namespace Workwise.Data
                 var userInfo = new UserSearchResult();
                 userInfo.IsRequestReceived = isReceived;
                 userInfo.UserInfo = item;
-                var sentRequest = sentRequests.Where(m => m.UserInfo.UserID == item.UserID).FirstOrDefault();
+                var sentRequest = sentRequests.Where(m => m.UserInfo.UserId == item.UserId).FirstOrDefault();
                 if (sentRequest != null)
                 {
                     userInfo.FriendRequestStatus = sentRequest.RequestStatus; ;
@@ -173,64 +146,64 @@ namespace Workwise.Data
             }
             return list;
         }
-        public void SendFriendRequest(int endUserID, int loggedInUserID)
+        public void SendFriendRequest(string endUserId, string loggedInUserId)
         {
             FriendMapping objentity = new FriendMapping();
             objentity.CreatedOn = System.DateTime.Now;
-            objentity.EndUserID = endUserID;
+            objentity.EndUserId = endUserId;
             objentity.IsActive = true;
-            objentity.RequestorUserID = loggedInUserID;
+            objentity.RequestorUserId = loggedInUserId;
             objentity.RequestStatus = "Sent";
             objentity.UpdatedOn = System.DateTime.Now;
             _context.FriendMappings.Add(objentity);
             _context.SaveChanges();
         }
-        public int SaveUserNotification(string notificationType, int fromUserID, int toUserID)
+        public int SaveUserNotification(string notificationType, string fromUserId, string toUserId)
         {
             UserNotification notification = new UserNotification();
             notification.CreatedOn = System.DateTime.Now;
             notification.IsActive = true;
             notification.NotificationType = notificationType;
-            notification.FromUserID = fromUserID;
+            notification.FromUserId = fromUserId;
             notification.Status = "New";
             notification.UpdatedOn = System.DateTime.Now;
-            notification.ToUserID = toUserID;
+            notification.ToUserId = toUserId;
             _context.UserNotifications.Add(notification);
             _context.SaveChanges();
-            return notification.NotificationID;
+            return notification.NotificationId;
         }
-        public FriendMapping GetFriendRequestStatus(int userID)
+        public FriendMapping GetFriendRequestStatus(string userId)
         {
-            var obj = _context.FriendMappings.Where(m => (m.EndUserID == userID || m.RequestorUserID == userID) && m.IsActive == true).FirstOrDefault();
+            var obj = _context.FriendMappings.Where(m => (m.EndUserId == userId || m.RequestorUserId == userId) && m.IsActive == true).FirstOrDefault();
             return obj;
         }
-        public int ResponseToFriendRequest(int requestorID, string requestResponse, int endUserID)
+        public int ResponseToFriendRequest(string requestorId, string requestResponse, string endUserId)
         {
-            var request = _context.FriendMappings.Where(m => m.EndUserID == endUserID && m.RequestorUserID == requestorID && m.IsActive == true).FirstOrDefault();
+            var request = _context.FriendMappings.Where(m => m.EndUserId == endUserId && m.RequestorUserId == requestorId && m.IsActive == true).FirstOrDefault();
             if (request != null)
             {
                 request.RequestStatus = requestResponse;
                 request.UpdatedOn = System.DateTime.Now;
                 _context.SaveChanges();
             }
-            var notification = _context.UserNotifications.Where(m => m.ToUserID == endUserID && m.FromUserID == requestorID && m.IsActive == true && m.NotificationType == "FriendRequest").FirstOrDefault();
+            var notification = _context.UserNotifications.Where(m => m.ToUserId == endUserId && m.FromUserId == requestorId && m.IsActive == true && m.NotificationType == "FriendRequest").FirstOrDefault();
             if (notification != null)
             {
                 notification.IsActive = false;
                 notification.UpdatedOn = System.DateTime.Now;
                 _context.SaveChanges();
-                return notification.NotificationID;
+                return notification.NotificationId;
             }
             return 0;
         }
-        public List<UserNotificationList> GetUserNotifications(int toUserID)
+        public List<UserNotificationList> GetUserNotifications(string toUserId)
         {
             var listQuery = (from u in _context.UserNotifications
-                             join v in _context.Users on u.FromUserID equals v.UserID
-                             where u.ToUserID == toUserID && u.IsActive == true
+                             join v in _context.UserProfiles on u.FromUserId equals v.UserId
+                             where u.ToUserId == toUserId && u.IsActive == true
                              select new UserNotificationList()
                              {
-                                 NotificationID = u.NotificationID,
+                                 NotificationId = u.NotificationId,
                                  NotificationType = u.NotificationType,
                                  User = v,
                                  NotificationStatus = u.Status,
@@ -241,19 +214,19 @@ namespace Workwise.Data
             list.ForEach(m => m.TotalNotifications = totalNotifications);
             return list;
         }
-        public int GetUserNotificationCounts(int toUserID)
+        public int GetUserNotificationCounts(string toUserId)
         {
-            int count = _context.UserNotifications.Where(m => m.Status == "New" && m.ToUserID == toUserID && m.IsActive == true).Count();
+            int count = _context.UserNotifications.Where(m => m.Status == "New" && m.ToUserId == toUserId && m.IsActive == true).Count();
             return count;
         }
-        public void ChangeNotificationStatus(int[] notificationIDs)
+        public void ChangeNotificationStatus(int[] notificationIds)
         {
-            _context.UserNotifications.Where(m => notificationIDs.Contains(m.NotificationID)).ToList().ForEach(m => m.Status = "Read");
+            _context.UserNotifications.Where(m => notificationIds.Contains(m.NotificationId)).ToList().ForEach(m => m.Status = "Read");
             _context.SaveChanges();
         }
-        public FriendMapping RemoveFriendMapping(int friendMappingID)
+        public FriendMapping RemoveFriendMapping(int friendMappingId)
         {
-            var obj = _context.FriendMappings.Where(m => m.FriendMappingID == friendMappingID).FirstOrDefault();
+            var obj = _context.FriendMappings.Where(m => m.FriendMappingId == friendMappingId).FirstOrDefault();
             if (obj != null)
             {
                 obj.IsActive = false;
@@ -261,48 +234,48 @@ namespace Workwise.Data
             }
             return obj;
         }
-        public void UpdateProfilePicture(int userID, string profilePicturePath)
+        public void UpdateProfilePicture(string userId, string profilePicturePath)
         {
 
         }
-        public List<User> GetUsersByLinqQuery(Expression<Func<User, bool>> where)
+        public List<UserProfile> GetUsersByLinqQuery(Expression<Func<UserProfile, bool>> where)
         {
-            var objList = _context.Users.Where(where).ToList();
+            var objList = _context.UserProfiles.Where(where).ToList();
             return objList;
         }
-        public List<OnlineUserDetails> GetRecentChats(int currentUserID)
+        public List<OnlineUserDetails> GetRecentChats(string currentUserId)
         {
-            int[] friends = GetFriendUserIds(currentUserID);
-            var recentMessages = _context.ChatMessages.Where(m => m.IsActive == true && (m.ToUserID == currentUserID || m.FromUserID == currentUserID)).OrderByDescending(m => m.CreatedOn).ToList();
-            var userIds = recentMessages.Select(m => (m.ToUserID == currentUserID ? m.FromUserID : m.ToUserID)).Distinct().ToArray();
+            string[] friends = GetFriendUserIds(currentUserId);
+            var recentMessages = _context.ChatMessages.Where(m => m.IsActive == true && (m.ToUserId == currentUserId || m.FromUserId == currentUserId)).OrderByDescending(m => m.CreatedOn).ToList();
+            var userIds = recentMessages.Select(m => (m.ToUserId == currentUserId ? m.FromUserId : m.ToUserId)).Distinct().ToArray();
             var userIdsList = userIds.ToList();
-            var messagesByUserId = recentMessages.Where(m => m.ToUserID == currentUserID && m.Status == "Sent").ToList();
+            var messagesByUserId = recentMessages.Where(m => m.ToUserId == currentUserId && m.Status == "Sent").ToList();
             var newMessagesCount = (from p in messagesByUserId
-                                    group p by p.FromUserID into g
-                                    select new { FromUserID = g.Key, Count = g.Count() }).ToList();
-            var onlineUserIDs = _context.OnlineUsers.Where(m => friends.Contains(m.UserID) && userIds.Contains(m.UserID) && m.IsActive == true && m.IsOnline == true).Select(m => m.UserID).ToArray();
-            var users = (from m in _context.Users
-                         join v in userIdsList on m.UserID equals v
+                                    group p by p.FromUserId into g
+                                    select new { FromUserId = g.Key, Count = g.Count() }).ToList();
+            var onlineUserIds = _context.OnlineUsers.Where(m => friends.Contains(m.UserId) && userIds.Contains(m.UserId) && m.IsActive == true && m.IsOnline == true).Select(m => m.UserId).ToArray();
+            var users = (from m in _context.UserProfiles
+                         join v in userIdsList on m.UserId equals v
                          select new OnlineUserDetails
                          {
-                             UserID = m.UserID,
-                             Name = m.Name,
-                             ProfilePicture = m.ProfilePicture,
+                             UserId = m.UserId,
+                             Name = m.FirstName,
+                             ProfilePicture = m.ImageUrl,
                              Gender = m.Gender,
-                             IsOnline = onlineUserIDs.Contains(m.UserID) ? true : false
+                             IsOnline = onlineUserIds.Contains(m.UserId) ? true : false
                          }).ToList();
             users.ForEach(m =>
             {
-                m.UnReadMessageCount = newMessagesCount.Where(x => x.FromUserID == m.UserID).Select(x => x.Count).FirstOrDefault();
+                m.UnReadMessageCount = newMessagesCount.Where(x => x.FromUserId == m.UserId).Select(x => x.Count).FirstOrDefault();
             });
-            users = users.OrderBy(d => userIdsList.IndexOf(d.UserID)).ToList();
+            users = users.OrderBy(d => userIdsList.IndexOf(d.UserId)).ToList();
             return users;
         }
-        public OnlineUserDetails GetUserOnlineStatus(int userID)
+        public OnlineUserDetails GetUserOnlineStatus(string userId)
         {
             OnlineUserDetails obj = new OnlineUserDetails();
-            obj.UserID = userID;
-            var objList = _context.OnlineUsers.Where(m => m.UserID == userID && m.IsActive == true).ToList();
+            obj.UserId = userId;
+            var objList = _context.OnlineUsers.Where(m => m.UserId == userId && m.IsActive == true).ToList();
             if (objList != null && objList.Count > 0)
             {
                 obj.IsOnline = false;
@@ -320,22 +293,22 @@ namespace Workwise.Data
             }
             return obj;
         }
-        public void UpdateUserProfilePicture(int userID, string imagePath)
+        public void UpdateUserProfilePicture(string userId, string imagePath)
         {
-            var obj = _context.Users.Where(m => m.UserID == userID).FirstOrDefault();
+            var obj = _context.UserProfiles.Where(m => m.UserId == userId).FirstOrDefault();
             if (obj != null)
             {
-                obj.ProfilePicture = imagePath;
+                obj.ImageUrl = imagePath;
                 obj.UpdatedOn = System.DateTime.Now;
                 _context.SaveChanges();
-                SaveUserImage(userID, imagePath, true);
+                SaveUserImage(userId, imagePath, true);
             }
         }
-        public void SaveUserImage(int userID, string imagePath, bool isProfilePicture)
+        public void SaveUserImage(string userId, string imagePath, bool isProfilePicture)
         {
             if (isProfilePicture)
             {
-                var existingProfilePicture = _context.UserImages.Where(m => m.UserID == userID && m.IsActive == true && m.IsProfilePicture == true).FirstOrDefault();
+                var existingProfilePicture = _context.UserImages.Where(m => m.UserId == userId && m.IsActive == true && m.IsProfilePicture == true).FirstOrDefault();
                 if (existingProfilePicture != null)
                 {
                     existingProfilePicture.IsProfilePicture = false;
@@ -347,21 +320,21 @@ namespace Workwise.Data
             objentity.ImagePath = imagePath;
             objentity.IsActive = true;
             objentity.IsProfilePicture = isProfilePicture;
-            objentity.UserID = userID;
+            objentity.UserId = userId;
             _context.UserImages.Add(objentity);
             _context.SaveChanges();
         }
-        public List<OnlineUserDetails> GetFriends(int userID)
+        public List<OnlineUserDetails> GetFriends(string userId)
         {
-            var friendIds = GetFriendUserIds(userID);
-            var onlineUserIDs = _context.OnlineUsers.Where(m => friendIds.Contains(m.UserID) && m.IsActive == true && m.IsOnline == true).Select(m => m.UserID).ToArray();
-            var users = _context.Users.Where(m => friendIds.Contains(m.UserID)).Select(m => new OnlineUserDetails
+            var friendIds = GetFriendUserIds(userId);
+            var onlineUserIds = _context.OnlineUsers.Where(m => friendIds.Contains(m.UserId) && m.IsActive == true && m.IsOnline == true).Select(m => m.UserId).ToArray();
+            var users = _context.UserProfiles.Where(m => friendIds.Contains(m.UserId)).Select(m => new OnlineUserDetails
             {
-                UserID = m.UserID,
-                Name = m.Name,
-                ProfilePicture = m.ProfilePicture,
+                UserId = m.UserId,
+                Name = m.FirstName,
+                ProfilePicture = m.ImageUrl,
                 Gender = m.Gender,
-                IsOnline = onlineUserIDs.Contains(m.UserID) ? true : false
+                IsOnline = onlineUserIds.Contains(m.UserId) ? true : false
             }).ToList();
             return users;
         }

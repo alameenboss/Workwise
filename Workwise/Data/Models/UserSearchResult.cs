@@ -8,7 +8,7 @@ namespace Workwise.Data.Models
 {
     public class UserSearchResult
     {
-        public User UserInfo { get; set; }
+        public UserProfile UserInfo { get; set; }
         public string FriendRequestStatus { get; set; }
         public bool IsRequestReceived { get; set; }
     }

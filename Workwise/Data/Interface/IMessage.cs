@@ -10,8 +10,8 @@ namespace Workwise.Data.Interface
     public interface IMessage
     {
         ChatMessage SaveChatMessage(ChatMessage objentity);
-        MessageRecords GetChatMessagesByUserID(int currentUserID, int toUserID, int lastMessageID = 0);
-        void UpdateMessageStatusByUserID(int fromUserID, int currentUserID);
-        void UpdateMessageStatusByMessageID(int messageID);
+        MessageRecords GetChatMessagesByUserId(string currentUserId, string toUserId, int lastMessageId = 0);
+        void UpdateMessageStatusByUserId(string fromUserId, string currentUserId);
+        void UpdateMessageStatusByMessageId(int messageId);
     }
 }

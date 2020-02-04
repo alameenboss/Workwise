@@ -10,9 +10,9 @@ namespace Workwise.Data.Models
     public class FriendMapping
     {
         [Key]
-        public int FriendMappingID { get; set; }
-        public int RequestorUserID { get; set; }
-        public int EndUserID { get; set; }
+        public int FriendMappingId { get; set; }
+        public string RequestorUserId { get; set; }
+        public string EndUserId { get; set; }
         public string RequestStatus { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }

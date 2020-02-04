@@ -10,7 +10,7 @@ namespace Workwise.Data.Models
     public class User
     {
         [Key]
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         public string Name { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
