@@ -16,14 +16,10 @@ namespace Workwise.Helper
         private const string userName = "UserName";
 
         private const string userImage = "UserImageUrl";
-
+        private const string userId = "UserId";
         #endregion
 
-        #region Private Static Member Variables
 
-        private static HttpContext thisContext;
-
-        #endregion
 
         #region Public Static Methods
         /// <summary>
@@ -74,8 +70,20 @@ namespace Workwise.Helper
                     return HttpContext.Current.Session[userImage].ToString();
             }
             set { HttpContext.Current.Session[userImage] = value; }
-        } 
-        
+        }
+
+        public static string UserId
+        {
+            get
+            {
+                
+                if (HttpContext.Current.Session[userId] == null)
+                    return "";
+                else
+                    return HttpContext.Current.Session[userId].ToString();
+            }
+            set { HttpContext.Current.Session[userId] = value; }
+        }
 
         public static T Get<T>(string key)
         {
@@ -93,9 +101,9 @@ namespace Workwise.Helper
 
             if (SessionHelper.Get<UserProfile>(userid) == null)
             {
-                var repo = new UserProfileRepository();
+                var repo = new UserRepository();
                 var model = repo.GetByUserId(userid);
-                if (!(model?.Id > 0))
+                if (model == null)
                 {
                     model = new UserProfile()
                     {
@@ -106,6 +114,7 @@ namespace Workwise.Helper
                 SessionHelper.Set<UserProfile>(userid, model);
                 SessionHelper.UserImage = model.ImageUrl;
                 SessionHelper.UserName = model.FirstName;
+                SessionHelper.UserId = userid;
             }
 
             return SessionHelper.Get<UserProfile>(userid);

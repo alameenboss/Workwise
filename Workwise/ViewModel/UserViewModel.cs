@@ -31,8 +31,8 @@ namespace Workwise.ViewModel
         public string Bio { get; set; }
         public string Age { get; set; }
         public string FriendRequestStatus { get; set; }
-        public int FriendRequestorId { get; set; }
-        public int FriendEndUserId { get; set; }
+        public string FriendRequestorId { get; set; }
+        public string FriendEndUserId { get; set; }
         public bool IsRequestReceived { get; set; }
         public int FriendMappingId { get; set; }
         public bool IsOnline { get; set; }

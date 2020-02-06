@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
+using System.Threading.Tasks;
 using Workwise.Data.Interface;
 using Workwise.Data.Models;
 
 namespace Workwise.Data
 {
-    public class UserRepository : IUser
+    public class UserRepository : IUserRepository
     {
         ApplicationDbContext _context = new ApplicationDbContext();
        
@@ -73,34 +74,34 @@ namespace Workwise.Data
         }
         public string[] GetFriendUserIds(string userId)
         {
-            var arr = _context.FriendMappings.Where(m => (m.RequestorUserId == userId || m.EndUserId == userId) && m.RequestStatus == "Accepted" && m.IsActive == true).Select(m => m.RequestorUserId == userId ? m.EndUserId : m.RequestorUserId).ToArray();
+            var arr = _context.FriendMappings.Where(m => (m.UserId == userId || m.EndUserId == userId) && m.RequestStatus == "Accepted" && m.IsActive == true).Select(m => m.UserId == userId ? m.EndUserId : m.UserId).ToArray();
             return arr;
         }
         public List<FriendRequests> GetSentFriendRequests(string userId)
         {
             var list = (from u in _context.FriendMappings
                         join v in _context.UserProfiles on u.EndUserId equals v.UserId
-                        where u.RequestorUserId == userId && u.RequestStatus == "Sent" && u.IsActive == true
+                        where u.UserId == userId && u.RequestStatus == "Sent" && u.IsActive == true
                         select new FriendRequests()
                         {
                             UserInfo = v,
                             RequestStatus = u.RequestStatus,
                             EndUserId = u.EndUserId,
-                            RequestorUserId = u.RequestorUserId
+                            UserId = u.UserId
                         }).ToList();
             return list;
         }
         public List<FriendRequests> GetReceivedFriendRequests(string userId)
         {
             var list = (from u in _context.FriendMappings
-                        join v in _context.UserProfiles on u.RequestorUserId equals v.UserId
+                        join v in _context.UserProfiles on u.UserId equals v.UserId
                         where u.EndUserId == userId && u.RequestStatus == "Sent" && u.IsActive == true
                         select new FriendRequests()
                         {
                             UserInfo = v,
                             RequestStatus = u.RequestStatus,
                             EndUserId = u.EndUserId,
-                            RequestorUserId = u.RequestorUserId
+                            UserId = u.UserId
                         }).ToList();
             return list;
         }
@@ -115,7 +116,7 @@ namespace Workwise.Data
                             UserInfo = v,
                             RequestStatus = u.RequestStatus,
                             EndUserId = u.EndUserId,
-                            RequestorUserId = u.RequestorUserId
+                            UserId = u.UserId
                         }).ToList();
             return list;
         }
@@ -152,7 +153,7 @@ namespace Workwise.Data
             objentity.CreatedOn = System.DateTime.Now;
             objentity.EndUserId = endUserId;
             objentity.IsActive = true;
-            objentity.RequestorUserId = loggedInUserId;
+            objentity.UserId = loggedInUserId;
             objentity.RequestStatus = "Sent";
             objentity.UpdatedOn = System.DateTime.Now;
             _context.FriendMappings.Add(objentity);
@@ -174,12 +175,12 @@ namespace Workwise.Data
         }
         public FriendMapping GetFriendRequestStatus(string userId)
         {
-            var obj = _context.FriendMappings.Where(m => (m.EndUserId == userId || m.RequestorUserId == userId) && m.IsActive == true).FirstOrDefault();
+            var obj = _context.FriendMappings.Where(m => (m.EndUserId == userId || m.UserId == userId) && m.IsActive == true).FirstOrDefault();
             return obj;
         }
         public int ResponseToFriendRequest(string requestorId, string requestResponse, string endUserId)
         {
-            var request = _context.FriendMappings.Where(m => m.EndUserId == endUserId && m.RequestorUserId == requestorId && m.IsActive == true).FirstOrDefault();
+            var request = _context.FriendMappings.Where(m => m.EndUserId == endUserId && m.UserId == requestorId && m.IsActive == true).FirstOrDefault();
             if (request != null)
             {
                 request.RequestStatus = requestResponse;
@@ -338,5 +339,86 @@ namespace Workwise.Data
             }).ToList();
             return users;
         }
+
+        public UserProfile GetByUserId(string UserId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                return db.UserProfiles.FirstOrDefault(x => x.UserId == UserId);
+
+            }
+        }
+
+        public void SaveUserImage(string userid, string imgPath)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var model = db.UserProfiles.FirstOrDefault(x => x.UserId == userid); ;
+                if (model != null)
+                {
+                    model.ImageUrl = imgPath;
+                }
+                else
+                {
+                    db.UserProfiles.Add(new UserProfile()
+                    {
+                        UserId = userid,
+                        ImageUrl = imgPath
+                    });
+                }
+                db.SaveChanges();
+            }
+        }
+
+
+        public void SaveProfile(UserProfile profile)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+
+                var user = db.UserProfiles.FirstOrDefault(x => x.UserId == profile.UserId);
+
+                if (user == null)
+                {
+                    user = new UserProfile()
+                    {
+                        UserId = profile.UserId,
+                        FirstName = profile.FirstName,
+                        Designation = profile.Designation
+                    };
+
+                    db.UserProfiles.Add(user);
+                }
+
+                db.SaveChanges();
+            }
+        }
+
+        //public List<UserProfile> GetAllUsers()
+        //{
+        //    using (var db = new ApplicationDbContext())
+        //    {
+        //        return db.UserProfiles.ToList();
+
+        //    }
+        //}
+
+        public async Task CreateUserProfileAsync(string userId, string userName)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                db.UserProfiles.Add(new UserProfile()
+                {
+                    UserId = userId,
+                    FirstName = userName,
+                    ImageUrl = @"/images/DefaultPhoto.png",
+                    CreatedOn = DateTime.Now,
+                    UpdatedOn = DateTime.Now
+
+                });
+                await db.SaveChangesAsync();
+            }
+        }
+
     }
 }

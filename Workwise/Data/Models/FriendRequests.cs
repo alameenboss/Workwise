@@ -10,7 +10,7 @@ namespace Workwise.Data.Models
     {
         public UserProfile UserInfo { get; set; }
         public string RequestStatus { get; set; }
-        public string RequestorUserId { get; set; }
+        public string UserId { get; set; }
         public string EndUserId { get; set; }
     }
 }

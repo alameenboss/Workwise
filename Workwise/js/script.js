@@ -318,4 +318,71 @@ $(".user-info").on("click", function(){$("#users").hide();
 
 });
 
+$('#btnSearch').click(function () {
+    searchFriends();
+});
+//$('.dropdown-menu').click(function () {
+//    return false;
+//});
+$('.not-box-open').click(function () {
+    $('.nott-list').load('/User/_UserNotifications', function () {
+
+    });
+})
+$(document).on("click", 'input[class$="btnCloseNotification"]', function () {
+    $(this).parent(".divNotification").animate({ "opacity": "hide", top: "100" }, 500);
+});
+$(document).on("click", '.sendRequest', function () {
+    var userID = $(this).attr('data-user-id');
+    var loggedInUserID = $('#hdfLoggedInUserID').val();
+    sendFriendRequest(userID, loggedInUserID);
+    $(this).removeClass('sendRequest').addClass('disabled').val('Request Sent');
+});
+$(document).on("click", 'input[class$="request-response"]', function () {
+    var userid = $(this).attr('data-user-id');
+    var requestResponse = $(this).attr('data-value');
+    sendResponseToRequest(userid, requestResponse, $('#hdfLoggedInUserID').val());
+    $(this).val(requestResponse);
+    $(this).addClass('disabled');
+    $(this).siblings().addClass('disabled');
+});
+$(document).on('click', '.divNotificationPopup', function () {
+    var status = $(this).attr('data-status');
+    if (status != "Read") {
+        $(this).attr('data-status', 'Read');
+        var notificationID = $(this).attr('data-notificationID');
+        changeUserNotificationStatus(notificationID);
+    }
+});
+$(document).on('click', '.btn-send-chat-message', function () {
+    sendChatMessage();
+});
+$(document).on('keypress', '.txt-chat-message', function (e) {
+    if (e.which == 13) {
+        sendChatMessage();
+    }
+    else {
+        sendUserTypingStatus();
+    }
+});
+$(document).on('click', '.chat-user', function () {
+    $(this).siblings('a').removeClass('active');
+    $(this).addClass('active');
+    var userID = $(this).attr('data-user-id');
+    initiateChat(userID);
+});
+function searchFriends() {
+    var searchText = $('#txtSearch').val();
+    if (searchText != null && searchText != '') {
+        $("#divBody").html('');
+        $("#divBody").load('/User/_UserSearchResult?name=' + searchText + '', function () {
+
+        });
+        $("#divBody").animate({ "opacity": "show", top: "100" }, 500);
+    }
+    else {
+        $("#divBody").animate({ "opacity": "hide", top: "100" }, 500);
+    }
+}
+
 

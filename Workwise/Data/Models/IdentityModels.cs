@@ -15,6 +15,8 @@ namespace Workwise.Data.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public virtual UserProfile UserProfile { get; set; }
     }
 
   

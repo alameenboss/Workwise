@@ -9,9 +9,9 @@ namespace Workwise.Controllers
     [Authorize]
     public class FileUploadController : BaseController
     {
-        private readonly IUserProfileRepository _userProfileRepo;
+        private readonly IUserRepository _userProfileRepo;
 
-        public FileUploadController(IUserProfileRepository userProfileRepo)
+        public FileUploadController(IUserRepository userProfileRepo)
         {
             _userProfileRepo = userProfileRepo;
 
@@ -28,6 +28,7 @@ namespace Workwise.Controllers
         {
             var profilePicUrl = ImageHelper.SaveBaseEnCodedToImage(image, Server.MapPath("~/Images/Upload"));
             _userProfileRepo.SaveUserImage(User.Identity.GetUserId(), profilePicUrl);
+
             SessionHelper.Get<UserProfile>(User.Identity.GetUserId()).ImageUrl = profilePicUrl;
             SessionHelper.UserImage = profilePicUrl;
             return Json(new { success = true, imageUrl = profilePicUrl }, JsonRequestBehavior.AllowGet);

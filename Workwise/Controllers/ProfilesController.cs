@@ -6,9 +6,9 @@ namespace Workwise.Controllers
     [Authorize]
     public class ProfilesController : BaseController
     {
-        private readonly IUserProfileRepository _userProfileRepo;
+        private readonly IUserRepository _userProfileRepo;
        
-        public ProfilesController(IUserProfileRepository userProfileRepo)
+        public ProfilesController(IUserRepository userProfileRepo)
         {
             _userProfileRepo = userProfileRepo;
         }

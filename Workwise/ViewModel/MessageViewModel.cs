@@ -38,4 +38,14 @@ namespace Workwise.ViewModel
         public string Status { get; set; }
         public DateTime CreatedOn { get; set; }
     }
+
+    public class UserNotificationViewModel
+    {
+        public string NotificationType { get; set; }
+        public int NotificationId { get; set; }
+        public UserViewModel User { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public string NotificationStatus { get; set; }
+        public int TotalNotifications { get; set; }
+    }
 }

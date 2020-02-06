@@ -20,7 +20,7 @@ namespace Workwise.Hubs
 
     }
 
-    [HubName("chat")]
+    //[HubName("chat")]
     public class ChatHub : Hub
     {
         UserRepository _UserRepo = new UserRepository();
@@ -133,7 +133,7 @@ namespace Workwise.Hubs
             var friendMapping = _UserRepo.RemoveFriendMapping(friendMappingId);
             if (friendMapping != null)
             {
-                List<string> connectionIds = _UserRepo.GetUserConnectionId(new string[] { friendMapping.EndUserId, friendMapping.RequestorUserId });
+                List<string> connectionIds = _UserRepo.GetUserConnectionId(new string[] { friendMapping.EndUserId, friendMapping.UserId });
                 RefreshOnlineUsersByConnectionIds(connectionIds);
             }
         }

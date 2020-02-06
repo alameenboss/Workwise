@@ -190,16 +190,18 @@
     <Compile Include="Controllers\ProfileAccountSettingController.cs" />
     <Compile Include="Controllers\ProfilesController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
+    <Compile Include="Data\CompanyRepository.cs" />
     <Compile Include="Data\Interface\IMessage.cs" />
     <Compile Include="Data\Interface\IPostRepository.cs" />
-    <Compile Include="Data\Interface\IUser.cs" />
-    <Compile Include="Data\Interface\IUserProfileRepository.cs" />
+    <Compile Include="Data\Interface\IUserRepository.cs" />
     <Compile Include="Data\MessageRepository.cs" />
     <Compile Include="Data\Models\ApplicationDbContext.cs" />
     <Compile Include="Data\Models\ChatMessage.cs" />
     <Compile Include="Data\Models\Comment.cs" />
     <Compile Include="Data\Models\CompanyViewModel.cs" />
+    <Compile Include="Data\Models\Configuration\UserProfileConfigMap.cs" />
     <Compile Include="Data\Models\Enum.cs" />
     <Compile Include="Data\Models\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="Data\Models\ExternalLoginListViewModel.cs" />
@@ -226,10 +228,8 @@
     <Compile Include="Data\Models\UserProfile.cs" />
     <Compile Include="Data\Models\UserSearchResult.cs" />
     <Compile Include="Data\Models\VerifyCodeViewModel.cs" />
-    <Compile Include="Data\PostRepository.cs" />
-    <Compile Include="Data\UserProfileRepository.cs" />
-    <Compile Include="Data\CompanyRepository.cs" />
     <Compile Include="Data\Interface\ICompanyRepository.cs" />
+    <Compile Include="Data\PostRepository.cs" />
     <Compile Include="Data\UserRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -242,13 +242,13 @@
     <Compile Include="Helper\SessionHelper.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
-    <Compile Include="Migrations\202002030848148_InitialMigration.cs" />
-    <Compile Include="Migrations\202002030848148_InitialMigration.Designer.cs">
-      <DependentUpon>202002030848148_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202002060308224_UserConfig.cs" />
+    <Compile Include="Migrations\202002060308224_UserConfig.Designer.cs">
+      <DependentUpon>202002060308224_UserConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202002040251472_InitialMigration2.cs" />
-    <Compile Include="Migrations\202002040251472_InitialMigration2.Designer.cs">
-      <DependentUpon>202002040251472_InitialMigration2.cs</DependentUpon>
+    <Compile Include="Migrations\202002060317104_UserProfile.cs" />
+    <Compile Include="Migrations\202002060317104_UserProfile.Designer.cs">
+      <DependentUpon>202002060317104_UserProfile.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -563,13 +563,14 @@
     <Content Include="Views\Messages\RemovedHtml.cshtml" />
     <Content Include="Views\Index\_SuggestedUsers.cshtml" />
     <Content Include="Views\Messages\_UserPartial.cshtml" />
+    <Content Include="Views\Shared\_UserNotifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202002030848148_InitialMigration.resx">
-      <DependentUpon>202002030848148_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202002060308224_UserConfig.resx">
+      <DependentUpon>202002060308224_UserConfig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202002040251472_InitialMigration2.resx">
-      <DependentUpon>202002040251472_InitialMigration2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202002060317104_UserProfile.resx">
+      <DependentUpon>202002060317104_UserProfile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

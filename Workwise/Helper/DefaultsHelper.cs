@@ -52,7 +52,7 @@ namespace Workwise.Helper
                 objmodel.Name = user.FirstName;
                 objmodel.ProfilePicture = DefaultsHelper.GetProfilePicture(user.ImageUrl, user.Gender);
                 objmodel.Gender = user.Gender;
-                objmodel.DOB = user.DOB.ToShortDateString();
+                objmodel.DOB = user.DOB?.ToShortDateString();
                 if (user.DOB != null)
                 {
                     objmodel.Age = Convert.ToString(Math.Floor(DateTime.Now.Subtract(Convert.ToDateTime(user.DOB)).TotalDays / 365.0)) + " Years";

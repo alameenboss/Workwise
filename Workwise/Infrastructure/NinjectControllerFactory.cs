@@ -25,9 +25,9 @@ namespace Workwise.Infrastructure
         private void AddBindgs()
         {
             ninjectKernel.Bind<IPostRepository>().To<PostRepository>();
-            ninjectKernel.Bind<IUserProfileRepository>().To<UserProfileRepository>();
+            ninjectKernel.Bind<IUserRepository>().To<UserRepository>();
             ninjectKernel.Bind<ICompanyRepository>().To<CompanyRepository>();
-
+            ninjectKernel.Bind<IMessage>().To<MessageRepository>();
         }
     }
 }

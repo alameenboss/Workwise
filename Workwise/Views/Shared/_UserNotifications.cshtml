@@ -1,0 +1,55 @@
+﻿@using Workwise.ViewModel
+@model List<UserNotificationViewModel>
+@{
+    int totalNotifications = 0;
+}
+@if (Model != null)
+{
+    if (Model.Count > 0)
+    {
+        //totalNotifications = Model.Select(m => m.TotalNotifications).FirstOrDefault();
+        @*<input type="hidden" id="hdfNotificationIdsInWindow" value="@(string.Join(",",Model.Where(m=>m.NotificationStatus=="New").Select(m=>m.NotificationId).ToArray()))" />*@
+
+        foreach (var notification in Model)
+        {
+            <div class="notfication-details">
+                <div class="noty-user-img">
+                    <img src="@notification.User.ProfilePicture" alt="">
+                </div>
+                <div class="notification-info">
+                    <h3><a href="#" title="">@notification.User.Name</a></h3>
+                    @if (notification.NotificationType == "FriendRequest")
+                    {
+                        <span class="pull-right">
+                            <span style="font-size:11px;">Friend Request</span> &nbsp;&nbsp;
+                            <input type="button" class="btn btn-success btn-xs request-response" data-user-id="@notification.User.UserId" data-value="Accepted" value="Accept" />
+                            &nbsp;&nbsp;
+                            <input type="button" class="btn btn-danger btn-xs request-response" data-user-id="@notification.User.UserId" data-value="Rejected" value="Reject" />
+                        </span>
+                    }
+                    else if (notification.NotificationType == "FriendRequestAccepted")
+                    {
+                        <span class="pull-right">
+                            <span style="font-size:12px;">Accepted your request</span>
+                        </span>
+                    }
+                    @*<span>@notification.TotalNotifications</span>*@
+                </div><!--notification-info -->
+            </div>
+        }
+        if (totalNotifications > 3)
+        {
+            <div class="view-all-nots">
+                <a href="#" title="">View All Notification</a>
+            </div>
+        }
+
+    }
+}
+
+<script type="text/javascript">
+    var ids = $('#hdfNotificationIdsInWindow').val()
+    if (ids != null && ids != '' && ids != undefined) {
+        changeUserNotificationStatus(ids);
+    }
+</script>

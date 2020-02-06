@@ -19,11 +19,11 @@ namespace Workwise.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private readonly IUserProfileRepository _userProfileRepo;
+        private readonly IUserRepository _userProfileRepo;
         public AccountController()
         {
         }
-        public AccountController(IUserProfileRepository userProfileRepo)
+        public AccountController(IUserRepository userProfileRepo)
         {
             _userProfileRepo = userProfileRepo;
         }
@@ -431,8 +431,7 @@ namespace Workwise.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            Session.Abandon();
-            Session.Clear();
+            SessionHelper.Abandon();
             return RedirectToAction("Login");
         }
 

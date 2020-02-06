@@ -7,13 +7,13 @@ namespace Workwise.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class InitialMigration : IMigrationMetadata
+    public sealed partial class UserConfig : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UserConfig));
         
         string IMigrationMetadata.Id
         {
-            get { return "202002030848148_InitialMigration"; }
+            get { return "202002060308224_UserConfig"; }
         }
         
         string IMigrationMetadata.Source

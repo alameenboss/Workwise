@@ -13,9 +13,9 @@ namespace Workwise.Controllers
     [Authorize]
     public class IndexController : BaseController
     {
-        private readonly IUserProfileRepository _userProfileRepo;
+        private readonly IUserRepository _userProfileRepo;
         private readonly IPostRepository _postrepository;
-        public IndexController(IUserProfileRepository userProfileRepo, IPostRepository postrepository)
+        public IndexController(IUserRepository userProfileRepo, IPostRepository postrepository)
         {
             _userProfileRepo = userProfileRepo;
             _postrepository = postrepository;

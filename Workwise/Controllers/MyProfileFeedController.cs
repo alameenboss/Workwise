@@ -13,7 +13,7 @@ namespace Workwise.Controllers
     [Authorize]
     public class MyProfileFeedController : BaseController
     {
-        private readonly IUserProfileRepository _userProfileRepo;
+        private readonly IUserRepository _userProfileRepo;
         private readonly IPostRepository _postrepository;
 
 
@@ -22,7 +22,7 @@ namespace Workwise.Controllers
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
         }
 
-        public MyProfileFeedController(IUserProfileRepository userProfileRepo, IPostRepository postrepository)
+        public MyProfileFeedController(IUserRepository userProfileRepo, IPostRepository postrepository)
         {
             _userProfileRepo = userProfileRepo;
             _postrepository = postrepository;
@@ -50,13 +50,8 @@ namespace Workwise.Controllers
 
         public ActionResult SaveUserInfo(UserProfile profile)
         {
-            var user = _userProfileRepo.GetByUserId(User.Identity.GetUserId());
-            if (user == null)
-                user = new UserProfile(); 
-
-            user.FirstName = profile.FirstName;
-            user.Designation = profile.Designation;
-            _userProfileRepo.SaveProfile(user);
+            profile.UserId = User.Identity.GetUserId();
+            _userProfileRepo.SaveProfile(profile);
 
             return RedirectToAction("Index");
         }

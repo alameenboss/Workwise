@@ -8,7 +8,7 @@ using Workwise.Data.Models;
 
 namespace Workwise.Data.Interface
 {
-    public interface IUser
+    public interface IUserRepository
     {
         //Tuple<UserProfile, string> SaveUser(UserProfile objentity);
         //UserProfile CheckLogin(string userName, string password);
@@ -35,5 +35,9 @@ namespace Workwise.Data.Interface
         void UpdateUserProfilePicture(string userId, string imagePath);
         void SaveUserImage(string userId, string imagePath, bool isProfilePicture);
         List<OnlineUserDetails> GetFriends(string userId);
+        UserProfile GetByUserId(string UserId);
+        void SaveUserImage(string userid, string imgPath);
+        void SaveProfile(UserProfile profile);
+        Task CreateUserProfileAsync(string userId, string userName);
     }
 }

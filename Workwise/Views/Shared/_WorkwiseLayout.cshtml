@@ -32,7 +32,11 @@
         @Html.Partial("_Header")
         <div class="content-seperator"></div>
         @RenderBody()
-
+        <input type="hidden" id="hdfLoggedInUserID" value="@SessionHelper.UserId" />
+        <input type="hidden" id="hdfLoggedInUserName" value="@SessionHelper.UserName" />
+        <input type="hidden" id="hdfLoggedInUserProfilePicture" value="@SessionHelper.UserImage" />
+        <input type="hidden" id="hdfWindowIsActiveOrNot" value="True" />
+        <input type="hidden" id="hdfPendingMessageID" />
         @Html.Partial("_Loading")
 
         @Html.Partial("_Footer")
@@ -50,8 +54,11 @@
     <script type="text/javascript" src="/js/flatpickr.min.js"></script>
     <script type="text/javascript" src="~/js/exif.js"></script>
     <script type="text/javascript" src="~/js/croppie.js"></script>
-
+    <script src="~/Scripts/jquery.signalR-2.4.1.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/js/chat.js"></script>
     <script type="text/javascript" src="/js/script.js"></script>
+
     @RenderSection("scripts", required: false)
 </body>
 

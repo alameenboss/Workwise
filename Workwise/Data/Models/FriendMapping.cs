@@ -11,7 +11,7 @@ namespace Workwise.Data.Models
     {
         [Key]
         public int FriendMappingId { get; set; }
-        public string RequestorUserId { get; set; }
+        public string UserId { get; set; }
         public string EndUserId { get; set; }
         public string RequestStatus { get; set; }
         public DateTime CreatedOn { get; set; }

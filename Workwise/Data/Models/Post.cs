@@ -25,7 +25,9 @@ namespace Workwise.Data.Models
         public DateTime PostedOn { get; set; }
         public string Location { get; set; }
         public string Description { get; set; }
-        public UserProfile PostedBy { get; set; }
+
+        public string PostedById { get; set; }
+        public virtual UserProfile PostedBy { get; set; }
 
         public List<UserProfile> LikedBy { get; set; }
         public List<UserProfile> ViewedBy { get; set; }
