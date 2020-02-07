@@ -230,6 +230,7 @@
     <Compile Include="Data\Models\VerifyCodeViewModel.cs" />
     <Compile Include="Data\Interface\ICompanyRepository.cs" />
     <Compile Include="Data\PostRepository.cs" />
+    <Compile Include="Data\RandomUser.cs" />
     <Compile Include="Data\UserRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -564,6 +565,7 @@
     <Content Include="Views\Index\_SuggestedUsers.cshtml" />
     <Content Include="Views\Messages\_UserPartial.cshtml" />
     <Content Include="Views\Shared\_UserNotifications.cshtml" />
+    <Content Include="Views\Profiles\Randomuser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202002060308224_UserConfig.resx">

@@ -19,6 +19,22 @@ namespace Workwise.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+
+            //var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            //var PasswordHash = new PasswordHasher();
+            //if (!context.Users.Any(u => u.UserName == "admin@admin.net"))
+            //{
+            //    var user = new ApplicationUser
+            //    {
+            //        UserName = "admin@admin.net",
+            //        Email = "admin@admin.net",
+            //        PasswordHash = PasswordHash.HashPassword("123456")
+            //    };
+
+            //    UserManager.Create(user);
+            //    UserManager.AddToRole(user.Id, Const.getRoles()[0]);
+            //}
+
         }
     }
 }

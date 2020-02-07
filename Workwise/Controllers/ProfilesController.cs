@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Workwise.Data;
 using Workwise.Data.Interface;
 
 namespace Workwise.Controllers
@@ -17,6 +18,12 @@ namespace Workwise.Controllers
         public ActionResult Index()
         {
             var model = _userProfileRepo.GetAllUsers();
+            return View(model);
+        }
+
+        public ActionResult Randomuser(int count)
+        {
+            var model =  RandomUserGenerator.GetManyDummyUser(count);
             return View(model);
         }
     }
