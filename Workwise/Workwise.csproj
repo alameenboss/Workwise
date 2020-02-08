@@ -442,6 +442,8 @@
     <Content Include="js\jquery.mousewheel.min.js" />
     <Content Include="js\jquery.range-min.js" />
     <Content Include="js\popper.js" />
+    <Content Include="js\prettydate.js" />
+    <Content Include="js\prettydate.min.js" />
     <Content Include="js\script.js" />
     <Content Include="js\scrollbar.js" />
     <Content Include="js\slick.min.js" />
@@ -566,6 +568,8 @@
     <Content Include="Views\Messages\_UserPartial.cshtml" />
     <Content Include="Views\Shared\_UserNotifications.cshtml" />
     <Content Include="Views\Profiles\Randomuser.cshtml" />
+    <Content Include="Views\Messages\_ChatPartial.cshtml" />
+    <Content Include="Views\Messages\_Messages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202002060308224_UserConfig.resx">

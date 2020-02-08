@@ -329,6 +329,11 @@ $('.not-box-open').click(function () {
 
     });
 })
+$(document).find(".prettydate").prettydate({
+    autoUpdate: true,
+    dateFormat: "DD-MM-YYYY hh:mm:ss",
+    duration: 30000
+});
 $(document).on("click", 'input[class$="btnCloseNotification"]', function () {
     $(this).parent(".divNotification").animate({ "opacity": "hide", top: "100" }, 500);
 });
@@ -365,11 +370,17 @@ $(document).on('keypress', '.txt-chat-message', function (e) {
         sendUserTypingStatus();
     }
 });
-$(document).on('click', '.chat-user', function () {
-    $(this).siblings('a').removeClass('active');
+$(document).on('click', '.usr-list-item', function () {
+    var userID = $(this).attr('data-userid');
+    $(this).siblings('li').removeClass('active');
     $(this).addClass('active');
-    var userID = $(this).attr('data-user-id');
+    $('.hdf-current-chat-user-id').val(userID);
+    $('.hdf-current-chat-user-profile-picture').val($(this).attr('data-userimg'));
+    $('.hdf-current-chat-user-name').val($(this).attr('data-username'));
+    $('.hdf-current-chat-user-id').val($(this).attr('data-userid'));
+    $('.hdf-current-chat-user-id').val($(this).attr('data-userid'));
     initiateChat(userID);
+
 });
 function searchFriends() {
     var searchText = $('#txtSearch').val();

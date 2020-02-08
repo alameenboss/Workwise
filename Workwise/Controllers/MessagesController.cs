@@ -44,7 +44,7 @@ namespace Workwise.Controllers
                 objmodel.IsOnline = onlineStatus.IsOnline;
                 objmodel.LastSeen = Convert.ToString(onlineStatus.LastUpdationTime);
             }
-            return View(objmodel);
+            return PartialView(objmodel);
         }
         public ActionResult GetRecentMessages(string Id, int lastChatMessageId)
         {

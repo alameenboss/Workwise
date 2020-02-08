@@ -51,11 +51,12 @@ chat.client.addNewChatMessage = function (messageRow, fromUserId, toUserId, from
 chat.client.userIsTyping = function (fromUserId) {
     var currentChatUserID = $(document).find('.hdf-current-chat-user-id').val();
     if (currentChatUserID == fromUserId) {
-        $(document).find('div.chat-user-status').html('typing...');
+        $(document).find('#user-is-typing').show();
         setTimeout(function () {
-            $(document).find('div.chat-user-status').html('');
+            $(document).find('#user-is-typing').hide();
         }, 1000);
     }
+    $(document).find(".messages-line").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 1 });
 }
 chat.client.updateMessageStatusInChatWindow = function (messageID, currentUserID, fromUserID) {
     if (messageID > 0) {
@@ -171,12 +172,11 @@ function unfriendUser(friendMappingID) {
     chat.server.unfriendUser(friendMappingID);
 }
 function initiateChat(toUserID) {
-    $("#divBody").html('');
-    $("#divBody").load('/Chat/_Messages/' + toUserID, function () {
-        $("#divBody").animate({ "opacity": "show", top: "100" }, 500);
+    $(".main-conversation-place-holder").load('/Messages/_Messages/' + toUserID, function () {
+        $(".main-conversation-place-holder").animate({ "opacity": "show", top: "100" }, 500);
         var currentChatUserID = $(document).find('.hdf-current-chat-user-id').val();
         UpdateChatMessageStatus(0, currentChatUserID);
-        var recentChat = $(document).find('.recent-chats').find('a[data-user-id="' + toUserID + '"]');
+        var recentChat = $(document).find('.recent-chats').find('li[data-userid="' + toUserID + '"]');
         if (recentChat.length > 0) {
             var badge = $(recentChat).find('span');
             if ($(badge).hasClass('chat-message-count') && !$(badge).hasClass('hide')) {
@@ -184,6 +184,13 @@ function initiateChat(toUserID) {
                 $(badge).addClass('hide');
             }
         }
+        $(".chat-hist, .messages-line").mCustomScrollbar();
+        $(document).find(".messages-line").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 1 });
+        $(document).find(".prettydate").prettydate({
+            autoUpdate: true,
+            dateFormat: "DD-MM-YYYY hh:mm:ss",
+            duration: 30000
+        });
     });
 }
 function createNewMessageBlockHtml(name, profilePicture, createOn, message, align, chatMessageID, status) {
@@ -211,6 +218,7 @@ function sendUserTypingStatus() {
     var toUserID = $(document).find('.hdf-current-chat-user-id').val();
     var fromUserID = $('#hdfLoggedInUserID').val();
     chat.server.sendUserTypingStatus(toUserID, fromUserID);
+    
 }
 function refreshRecentChats() {
     $('.recent-chats').load('/User/_RecentChats', function () {
