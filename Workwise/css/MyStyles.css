@@ -28,9 +28,9 @@ header nav {
         margin-top: 150px;
     }
 
-    #msg-list-container, .message-bar-head {
+    /*#msg-list-container, .message-bar-head {
         display: none;
-    }
+    }*/
     
 }
 

@@ -5082,18 +5082,18 @@ a:hover {
 	margin-left: 15px;
 	cursor: pointer;
 }
-.message-send-area form > ul {
+.message-send-area ul.icons {
 	float: left;
 	width: 100%;
 	margin-top: 15px;
 }
-.message-send-area form > ul li {
-	display: inline-block;
-	margin-right: 20px;
+.message-send-area ul.more-option-icons li {
+    display: inline-block;
+    margin-right: 20px;
 }
-.message-send-area form > ul li a {
-	color: #b2b2b2;
-	font-size: 18px;
+.message-send-area ul.more-option-icons li a {
+    color: #b2b2b2;
+    font-size: 18px;
 }
 
 

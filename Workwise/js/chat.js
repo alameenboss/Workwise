@@ -1,4 +1,6 @@
-﻿
+﻿let sentSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 15" width="16" height="15"><path fill="#a6a0a0" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path></svg>';
+let viewedSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="18" height="18"><path fill="#4FC3F7" d="M17.394 5.035l-.57-.444a.434.434 0 0 0-.609.076l-6.39 8.198a.38.38 0 0 1-.577.039l-.427-.388a.381.381 0 0 0-.578.038l-.451.576a.497.497 0 0 0 .043.645l1.575 1.51a.38.38 0 0 0 .577-.039l7.483-9.602a.436.436 0 0 0-.076-.609zm-4.892 0l-.57-.444a.434.434 0 0 0-.609.076l-6.39 8.198a.38.38 0 0 1-.577.039l-2.614-2.556a.435.435 0 0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 3.8a.38.38 0 0 0 .577-.039l7.483-9.602a.435.435 0 0 0-.075-.609z"></path></svg>';
+
 var chat = $.connection.chatHub;
 
 chat.client.refreshOnlineUsers = function () {
@@ -62,7 +64,7 @@ chat.client.updateMessageStatusInChatWindow = function (messageID, currentUserID
     if (messageID > 0) {
         var message = $(document).find('span[class="chat-message-status"][data-chat-message-id="' + messageID + '"]');
         if (message.length > 0) {
-            $(message).text('Viewed');
+            $(message).html(viewedSvg);
         }
     }
     else {
@@ -70,7 +72,7 @@ chat.client.updateMessageStatusInChatWindow = function (messageID, currentUserID
         if (currentChatUserID == currentUserID) {
             var messages = $(document).find('span[class="chat-message-status"]');
             $(messages).each(function (index, item) {
-                $(item).text('Viewed');
+                $(item).html(viewedSvg);
             });
         }
     }
@@ -194,7 +196,23 @@ function initiateChat(toUserID) {
     });
 }
 function createNewMessageBlockHtml(name, profilePicture, createOn, message, align, chatMessageID, status) {
-    var html = '<li class="' + align + '" data-chat-message-id="' + chatMessageID + '"><img src="' + profilePicture + '" alt="' + name + '" class="avatar"><span class="message"><span class="arrow"></span><span class="from">' + name + '</span>&nbsp;<span class="time">' + createOn + '</span>' + (align == 'right' ? '<span data-chat-message-id="' + chatMessageID + '" class="chat-message-status">' + status + '</span>' : '') + '<br /><span class="text">' + message + '</span></span></li>';
+    let className = "ta-right";
+    let status1 = "";
+    if (align == "left") {
+        className = "st3"
+       
+    }
+    if (align == "right") {
+        status1 = '<span data-chat-message-id="' + chatMessageID + '" class="chat-message-status">' + sentSvg + '</span>';
+        if (status == "Viewed") {
+            status1 = '<span data-chat-message-id="' + chatMessageID + '" class="chat-message-status">' + viewedSvg + '</span>';
+        }
+    }
+    var html = '<div class="main-message-box ' + className + '" data-chat-message-id="' + chatMessageID + '">' +
+        '<div class="message-dt ' + className + '">' +
+        '<div class="message-inner-dt" data-chat-message-id="' + chatMessageID + '">' +
+        '<p>' + message + '</p></div><span><span class="prettydate">' + createOn + '</span>' +  status1 +
+        '</span></div><div class="messg-usr-img"><img src="' + profilePicture + '" alt="' + name + '" class="mCS_img_loaded"></div></div>';
     return html;
 }
 function sendChatMessage() {
@@ -211,8 +229,8 @@ function sendChatMessage() {
     }
 }
 function createNewMessageBlock(name, profilePicture, createOn, message, align, chatMessageID, status) {
-    $(document).find('ul.chat').append(createNewMessageBlockHtml(name, profilePicture, createOn, message, align, chatMessageID, status));
-    $(document).find("div.right-chat-panel").animate({ scrollTop: $(document).find("div.right-chat-panel")[0].scrollHeight }, 500);
+    $(document).find('.chat').append(createNewMessageBlockHtml(name, profilePicture, createOn, message, align, chatMessageID, status));
+    $(document).find(".messages-line").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 1 });
 }
 function sendUserTypingStatus() {
     var toUserID = $(document).find('.hdf-current-chat-user-id').val();
@@ -289,9 +307,9 @@ function GetOldMessages() {
                         html += createNewMessageBlockHtml(toUserName, toUserProfilePic, item.CreatedOn, item.Message, "left", item.ChatMessageID, item.Status);
                     }
                 });
-                var firstMsg = $('ul.chat li:first');
-                $(document).find('ul.chat').prepend(html);
-                $(document).find("div.right-chat-panel").scrollTop(firstMsg.offset().top);
+                var firstMsg = $('.chat li:first');
+                $(document).find('.chat').prepend(html);
+                $(document).find(".messages-line").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 1 });
             }
             else {
                 $(isOldMessageExsit).val("False");

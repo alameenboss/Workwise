@@ -369,6 +369,7 @@ $(document).on('keypress', '.txt-chat-message', function (e) {
     else {
         sendUserTypingStatus();
     }
+    return;
 });
 $(document).on('click', '.usr-list-item', function () {
     var userID = $(this).attr('data-userid');
