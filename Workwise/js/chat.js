@@ -78,13 +78,19 @@ chat.client.updateMessageStatusInChatWindow = function (messageID, currentUserID
     }
 }
 chat.client.refreshOnlineUserByUserID = function (userID, isOnline, lastSeen) {
+    if (isOnline == true) {
+        $(document).find('.usr-list-item[data-userid="' + userID + '"]').find('.msg-status').removeClass('display-none');
+    } else {
+        $(document).find('.usr-list-item[data-userid="' + userID + '"]').find('.msg-status').addClass('display-none');
+
+    }
     var currentChatUserID = $(document).find('.hdf-current-chat-user-id').val();
     if (currentChatUserID == userID) {
         if (isOnline == true) {
-            $(document).find('span[class="spn-chat-user-online-status"]').html('<i class="fa fa-circle online-circle chat-user-online-status"></i>Online');
+            $(document).find('.message-bar-head .online-status').html('Online');
         }
         else {
-            $(document).find('span[class="spn-chat-user-online-status"]').text('Last seen : ' + lastSeen + '');
+            $(document).find('.message-bar-head .online-status').html('Last seen : <span class="prettydate">' + lastSeen +'</span>');
         }
     }
 }
@@ -127,18 +133,15 @@ function changeUserNotificationStatus(notificationID) {
     chat.server.changeNotitficationStatus(notificationID, $('#hdfLoggedInUserID').val());
 }
 function refreshOnlineUsers() {
-    $(document).find('.online-friends').load('/User/_OnlineFriends', function () {
-        var recentChats = $(document).find('.recent-chats').find('a');
-        $(recentChats).each(function (cIndex, cItem) {
-            changeUserOnlineStatus(cItem);
-        });
-        var friends = $('.user-friends');
-        if (friends.length > 0) {
-            var friendList = $(friends).find('li');
-            console.log(friendList);
-            $(friendList).each(function (cIndex, cItem) {
-                changeUserOnlineStatus(cItem);
-            });
+
+    $.ajax({
+        url: '/User/_OnlineFriends',
+        method: 'GET',
+        success: function (response) {
+            response.forEach(function (v) {
+                $(document).find('.usr-list-item[data-userid="' + v.UserId + '"]').find('.msg-status').removeClass('display-none');
+            })
+            
         }
     });
 }
@@ -244,13 +247,14 @@ function refreshRecentChats() {
     });
 }
 function addChatMessageCount(currentUserId, fromUserId, fromUserName, fromUserProfilePic, toUserId, toUserName, toUserProfilePic) {
+    debugger;
     var recentChatWindow = $(document).find('.recent-chats');
-    var recentChatItem = $(recentChatWindow).find('a[data-user-id="' + ((currentUserId != fromUserId) ? fromUserId : toUserId) + '"]');
+    var recentChatItem = $(recentChatWindow).find('li[data-userid="' + ((currentUserId != fromUserId) ? fromUserId : toUserId) + '"] .usr-mg-info > p');
     if (recentChatItem.length > 0) {
         $(recentChatItem).parent().prepend(recentChatItem);
         var currentChatUserID = $(document).find('.hdf-current-chat-user-id').val();
         if (currentUserId != fromUserId && (currentChatUserID != fromUserId)) {
-            var messageCountItem = $(recentChatItem).find('span[data-user-id="' + fromUserId + '"]');
+            var messageCountItem = $(recentChatItem).find('li[data-userid="' + fromUserId + '"] .msg-notifc');
             var count = messageCountItem.text();
             if (count.match(/^\d+$/)) {
                 $(messageCountItem).text(parseInt(count) + 1);

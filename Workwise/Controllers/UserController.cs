@@ -79,7 +79,7 @@ namespace Workwise.Controllers
                 Name = m.Name,
                 ProfilePicture = DefaultsHelper.GetProfilePicture(m.ProfilePicture, m.Gender)
             }).ToList();
-            return PartialView(objmodel);
+            return Json(objmodel, JsonRequestBehavior.AllowGet);
         }
         public ActionResult _UserNotifications()
         {
