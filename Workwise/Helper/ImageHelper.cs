@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Web;
 
 namespace Workwise.Helper
@@ -25,6 +26,20 @@ namespace Workwise.Helper
             var imgUrl = @"/Images/Upload/" + fileName;
             postedFile.SaveAs(path);
             return imgUrl;
+        }
+
+        public static string SaveImagefromWeb(string url, string serverPath)
+        {
+            var fileName = Guid.NewGuid().ToString().Replace("-", "").Replace(" ", "") + ".png";
+
+            var path = Path.Combine(serverPath, fileName);
+
+            using (WebClient client = new WebClient())
+            {
+                client.DownloadFileAsync(new Uri(url), path);
+            }
+
+            return @"/Images/Upload/" + fileName;
         }
 
     }

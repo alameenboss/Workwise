@@ -48,17 +48,21 @@ chat.client.addNewChatMessage = function (messageRow, fromUserId, toUserId, from
             document.title = "Message received from " + fromUserName;
         }
     }
-    addChatMessageCount(currentUserId, fromUserId, fromUserName, fromUserProfilePic, toUserId, toUserName, toUserProfilePic)
+    addChatMessageCount(currentUserId, fromUserId, fromUserName, fromUserProfilePic, toUserId, toUserName, toUserProfilePic, messageRow.Message, messageRow.CreatedOn)
 }
 chat.client.userIsTyping = function (fromUserId) {
     var currentChatUserID = $(document).find('.hdf-current-chat-user-id').val();
     if (currentChatUserID == fromUserId) {
-        $(document).find('#user-is-typing').show();
+        //$(document).find('#user-is-typing').show();
+        //setTimeout(function () {
+        //    $(document).find('#user-is-typing').hide();
+        //}, 1000);
+        $(document).find('.online-status').html("Typing.....")
         setTimeout(function () {
-            $(document).find('#user-is-typing').hide();
+            $(document).find('.online-status').html("Online")
         }, 1000);
     }
-    $(document).find(".messages-line").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 1 });
+    //$(document).find(".messages-line").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 1 });
 }
 chat.client.updateMessageStatusInChatWindow = function (messageID, currentUserID, fromUserID) {
     if (messageID > 0) {
@@ -155,10 +159,10 @@ function changeUserOnlineStatus(cItem) {
 }
 function changeUserNotificationCounts(notificationCounts) {
     if (notificationCounts != null && notificationCounts != '' && notificationCounts != 0 && notificationCounts != '0') {
-        $('.user-notification-count').text(notificationCounts);
+        $('.user-notification-count').text(notificationCounts).show();
     }
     else {
-        $('.user-notification-count').text('');
+        $('.user-notification-count').text('').hide();
     }
 }
 function removeHtmlElement(ele) {
@@ -181,13 +185,14 @@ function initiateChat(toUserID) {
         $(".main-conversation-place-holder").animate({ "opacity": "show", top: "100" }, 500);
         var currentChatUserID = $(document).find('.hdf-current-chat-user-id').val();
         UpdateChatMessageStatus(0, currentChatUserID);
-        var recentChat = $(document).find('.recent-chats').find('li[data-userid="' + toUserID + '"]');
-        if (recentChat.length > 0) {
-            var badge = $(recentChat).find('span');
-            if ($(badge).hasClass('chat-message-count') && !$(badge).hasClass('hide')) {
-                $(badge).text('');
-                $(badge).addClass('hide');
-            }
+        var chatUser = $(document).find('li[data-userid="' + toUserID + '"]');
+        
+        if (chatUser.length > 0) {
+            var badge = $(chatUser).find('.msg-notifc');
+            $(badge).text('');
+            $(badge).addClass('display-none');
+            $(chatUser).find('.usr-mg-info > p').html('');
+            $(chatUser).find('.posted_time').text('');
         }
         $(".chat-hist, .messages-line").mCustomScrollbar();
         $(document).find(".messages-line").mCustomScrollbar("scrollTo", "bottom", { scrollInertia: 1 });
@@ -246,40 +251,43 @@ function refreshRecentChats() {
 
     });
 }
-function addChatMessageCount(currentUserId, fromUserId, fromUserName, fromUserProfilePic, toUserId, toUserName, toUserProfilePic) {
+function addChatMessageCount(currentUserId, fromUserId, fromUserName, fromUserProfilePic, toUserId, toUserName, toUserProfilePic,lastMessage,createdOn) {
     debugger;
-    var recentChatWindow = $(document).find('.recent-chats');
-    var recentChatItem = $(recentChatWindow).find('li[data-userid="' + ((currentUserId != fromUserId) ? fromUserId : toUserId) + '"] .usr-mg-info > p');
-    if (recentChatItem.length > 0) {
-        $(recentChatItem).parent().prepend(recentChatItem);
+    //var recentChatWindow = $(document).find('.recent-chats');
+    var chatUser = $(document).find('li[data-userid="' + ((currentUserId != fromUserId) ? fromUserId : toUserId) + '"]');
+    if (chatUser.length > 0) {
+        //$(chatUser).parent().prepend(chatUser);
+
         var currentChatUserID = $(document).find('.hdf-current-chat-user-id').val();
         if (currentUserId != fromUserId && (currentChatUserID != fromUserId)) {
-            var messageCountItem = $(recentChatItem).find('li[data-userid="' + fromUserId + '"] .msg-notifc');
+            var messageCountItem = $(chatUser).find('.msg-notifc');
             var count = messageCountItem.text();
             if (count.match(/^\d+$/)) {
                 $(messageCountItem).text(parseInt(count) + 1);
             }
             else {
-                $(messageCountItem).removeClass('hide');
+                $(messageCountItem).removeClass('display-none');
                 $(messageCountItem).text(1);
             }
+            $(chatUser).find('.usr-mg-info p').text(lastMessage);
+            $(chatUser).find('.posted_time ').text(createdOn);
         }
     }
-    else {
-        var html = '';
-        if (currentUserId != fromUserId) {
-            var uName = fromUserName.split(' ');
-            html = '<a href="javascript:;" data-user-id="' + fromUserId + '" class="list-group-item chat-user"><img src="' + fromUserProfilePic + '" class="profilePictureCircle online-user-profile-pic" />&nbsp;&nbsp;&nbsp;' + uName[0] + '<span class="custom-badge chat-message-count" data-user-id="' + fromUserId + '">1</span></a>';
-        }
-        else {
-            var uName = toUserName.split(' ');
-            html = '<a href="javascript:;" data-user-id="' + toUserId + '" class="list-group-item chat-user"><img src="' + toUserProfilePic + '" class="profilePictureCircle online-user-profile-pic" />&nbsp;&nbsp;&nbsp;' + uName[0] + '<span class="custom-badge chat-message-count hide" data-user-id="' + toUserId + '"></span></a>';
-        }
-        if ($('.no-recent-chats').length > 0) {
-            $('.no-recent-chats').remove();
-        }
-        $(recentChatWindow).prepend(html);
-    }
+    //else {
+    //    var html = '';
+    //    if (currentUserId != fromUserId) {
+    //        var uName = fromUserName.split(' ');
+    //        html = '<a href="javascript:;" data-user-id="' + fromUserId + '" class="list-group-item chat-user"><img src="' + fromUserProfilePic + '" class="profilePictureCircle online-user-profile-pic" />&nbsp;&nbsp;&nbsp;' + uName[0] + '<span class="custom-badge chat-message-count" data-user-id="' + fromUserId + '">1</span></a>';
+    //    }
+    //    else {
+    //        var uName = toUserName.split(' ');
+    //        html = '<a href="javascript:;" data-user-id="' + toUserId + '" class="list-group-item chat-user"><img src="' + toUserProfilePic + '" class="profilePictureCircle online-user-profile-pic" />&nbsp;&nbsp;&nbsp;' + uName[0] + '<span class="custom-badge chat-message-count hide" data-user-id="' + toUserId + '"></span></a>';
+    //    }
+    //    if ($('.no-recent-chats').length > 0) {
+    //        $('.no-recent-chats').remove();
+    //    }
+    //    $(recentChatWindow).prepend(html);
+    //}
 }
 function UpdateChatMessageStatus(messageID, fromUserID) {
     var currentUserID = $('#hdfLoggedInUserID').val();

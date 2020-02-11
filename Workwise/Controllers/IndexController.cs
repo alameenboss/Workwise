@@ -89,13 +89,13 @@ namespace Workwise.Controllers
 
         public ActionResult SuggestedUser()
         {
-            var model = _userProfileRepo.GetAllUsers().Where(x => x.UserId != User.Identity.GetUserId()).ToList();
+            var model = _userProfileRepo.GetAllUsers(5, User.Identity.GetUserId()).ToList();
             //var model = RandomUserGenerator.GetManyDummyUser(10);
             return PartialView(@"~\Views\Index\_SuggestedUsers.cshtml", model);
         }
         public ActionResult TopProfiles()
         {
-            var model = _userProfileRepo.GetAllUsers().Where(x => x.UserId != User.Identity.GetUserId()).ToList();
+            var model = _userProfileRepo.GetAllUsers(5, User.Identity.GetUserId());
             //var model = RandomUserGenerator.GetManyDummyUser(10);
             return PartialView(@"~\Views\Index\_TopProfiles.cshtml", model);
         }

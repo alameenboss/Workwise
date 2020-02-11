@@ -1,17 +1,18 @@
 ﻿
 
-<section class="messages-page">
-    <div class="container">
+    <section class="messages-page">
+        <div class="container">
 
-        <div class="messages-sec">
-            <div class="row">
+            <div class="messages-sec">
+                <div class="row">
 
-                @Html.Action("GetUsers")
-                @Html.Partial("_ChatPartial")
+                    @Html.Action("GetUsers")
+                    @Html.Partial("_ChatPartial")
+                </div>
             </div>
         </div>
-    </div>
-</section>
+        <input type="hidden" id="hdfWindowIsActiveOrNot" value="True" />
+    </section>
 @section scripts {
 
 }

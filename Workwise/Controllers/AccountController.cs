@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using Workwise.Helper;
 using Workwise.Data.Models;
 using Workwise.Data.Interface;
+using Workwise.Data;
 
 namespace Workwise.Controllers
 {
@@ -186,7 +187,27 @@ namespace Workwise.Controllers
             return View(model);
         }
 
-        
+        [HttpPost]
+        public async Task<ActionResult> GenerateUser()
+        {
+            var userList = RandomUserGenerator.GetManyUser(5000);
+            foreach(var model in userList)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = model.login.username,
+                    Email = model.email
+                };
+                var result = await UserManager.CreateAsync(user, "Test@123");
+                if (result.Succeeded)
+                {
+                    var pofilePic = ImageHelper.SaveImagefromWeb(model.picture.medium, Server.MapPath("~/Images/Upload"));
+                    await _userProfileRepo.CreateUserProfileAsync(user.Id, model.name.first + " " + model.name.last, pofilePic);
+                }
+            }
+            
+            return RedirectToAction("Index","Index");
+        }
 
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

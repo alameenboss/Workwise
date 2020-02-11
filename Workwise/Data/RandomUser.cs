@@ -158,6 +158,17 @@ namespace Workwise.Data
 
         }
 
+        public static List<Result> GetManyUser(int take)
+        {
+            var users = new List<Result>();
+            string url = "http://api.randomuser.me/?results=" + take;
+
+            var data = FetchJson(url);
+
+            return data.results;
+
+        }
+
         private static UserResult FetchJson(string url)
         {
             var data = new UserResult();

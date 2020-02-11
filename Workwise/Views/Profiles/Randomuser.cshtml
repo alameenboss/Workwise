@@ -8,6 +8,13 @@
         </div><!--company-title end-->
         <div class="companies-list">
             <div class="row">
+                @using (Html.BeginForm("GenerateUser", "Account", FormMethod.Post))
+                {
+                    <input type="submit" value="Generate User" class="btn btn-primary" />
+                }
+
+            </div>
+            <div class="row">
                 @foreach (var user in Model)
                 {
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12">

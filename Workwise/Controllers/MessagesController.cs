@@ -26,7 +26,7 @@ namespace Workwise.Controllers
 
         public ActionResult GetUsers()
         {
-            var model = _userProfileRepo.GetAllUsers().Where(x => x.UserId != User.Identity.GetUserId()).ToList();
+            var model = _userProfileRepo.GetAllUsers(10, User.Identity.GetUserId()).ToList();
             return PartialView(@"~\Views\Messages\_UserPartial.cshtml", model);
         }
 

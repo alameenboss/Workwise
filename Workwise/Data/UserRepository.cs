@@ -41,10 +41,38 @@ namespace Workwise.Data
             var obj = _context.OnlineUsers.Where(m => userIds.Contains(m.UserId) && m.IsActive == true && m.IsOnline == true).Select(m => m.ConnectionId).ToList();
             return obj;
         }
-        public List<UserProfile> GetAllUsers()
+        public List<UserProfile> GetAllUsers(int count,string userId)
         {
-            var objList = _context.UserProfiles.ToList();
+            var objList = _context.UserProfiles.Where(x => x.UserId != userId).Take(count).ToList();
             return objList;
+        }
+        public List<UserProfile> FollowersList(string UserId)
+        {
+           
+            var followerList = (from p in _context.UserProfiles
+                                 join e in _context.FriendMappings
+                                 on p.UserId equals e.EndUserId
+                                 select new UserProfile()
+                                 {
+                                     UserId = p.UserId,
+                                     FirstName = p.FirstName,
+                                     ImageUrl = p.ImageUrl
+                                 }).ToList();
+            return followerList;
+        }
+        public List<UserProfile> FollowingList(string UserId)
+        {
+            var followingList = (from p in _context.UserProfiles
+                          join e in _context.FriendMappings
+                          on p.UserId equals e.UserId
+                          //where p.FirstName == "KEN"
+                          select new UserProfile()
+                          {
+                              UserId = p.UserId,
+                              FirstName = p.FirstName,
+                              ImageUrl = p.ImageUrl
+                          }).ToList();
+            return followingList;
         }
         public List<OnlineUserDetails> GetOnlineFriends(string userId)
         {
@@ -403,7 +431,7 @@ namespace Workwise.Data
         //    }
         //}
 
-        public async Task CreateUserProfileAsync(string userId, string userName)
+        public async Task CreateUserProfileAsync(string userId, string userName,string userImage="")
         {
             using (var db = new ApplicationDbContext())
             {
@@ -411,7 +439,7 @@ namespace Workwise.Data
                 {
                     UserId = userId,
                     FirstName = userName,
-                    ImageUrl = @"/images/DefaultPhoto.png",
+                    ImageUrl = !string.IsNullOrEmpty(userImage) ? userImage : @"/images/DefaultPhoto.png" ,
                     CreatedOn = DateTime.Now,
                     UpdatedOn = DateTime.Now
 
