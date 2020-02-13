@@ -27,11 +27,11 @@
         }
     <ul class="flw-status">
         <li>
-            <a href="/profiles/Following"><h4>Following</h4></a>
+            <a href="@("/profiles/Following/" + Model.UserId )"><h4>Following</h4></a>
             <span>@Model.Following.Count</span>
         </li>
         <li>
-            <a href="/profiles/Followers"><h4>Followers</h4></a>
+            <a href="@("/profiles/Followers/" + Model.UserId )"><h4>Followers</h4></a>
             <span>@Model.Followers.Count</span>
         </li>
     </ul>

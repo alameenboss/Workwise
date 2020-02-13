@@ -5,8 +5,12 @@
 <section class="companies-info">
     <div class="container">
         <div class="company-title">
-            <h3>All User Profile</h3>
+            <div class="user-pro-img">
+                <img src="@ViewBag.Image">
+            </div>
+            <h3>@ViewBag.Text</h3>
         </div><!--company-title end-->
+
         <div class="companies-list">
             <div class="row">
                 @foreach (var user in Model)
@@ -18,7 +22,7 @@
                                 <h3>@user.FirstName</h3>
                                 <h4>@user.Designation</h4>
                                 <ul>
-                                    <li><a href="#" title="" class="follow">Follow</a></li>
+                                    <li><a href="#" title="" class="follow sendRequest " data-user-id="@user.UserId">Follow</a></li>
                                     <li><a href="#" title="" class="message-us"><i class="fa fa-envelope"></i></a></li>
                                     <li><a href="#" title="" class="hire-us">Hire</a></li>
                                 </ul>

@@ -51,14 +51,23 @@ namespace Workwise.Controllers
             var model = _userProfileRepo.GetAllUsers(100, User.Identity.GetUserId());
             return View(model);
         }
-        public ActionResult Following()
+        public ActionResult Following(string id)
         {
-            var model = _userProfileRepo.FollowingList(User.Identity.GetUserId());
+            var userid = string.IsNullOrEmpty(id) ? User.Identity.GetUserId() : id;
+            var model = _userProfileRepo.FollowingList(userid);
+            var userModel = _userProfileRepo.GetByUserId(userid);
+            ViewBag.Image = userModel.ImageUrl;
+            ViewBag.Text = userModel.FirstName + " is following " + model.Count + " person.";
+           
             return View("Index",model);
         }
-        public ActionResult Followers()
+        public ActionResult Followers(string id)
         {
-            var model = _userProfileRepo.FollowersList(User.Identity.GetUserId());
+            var userid = string.IsNullOrEmpty(id) ? User.Identity.GetUserId() : id;
+            var model = _userProfileRepo.FollowersList(userid);
+            var userModel = _userProfileRepo.GetByUserId(userid);
+            ViewBag.Image = userModel.ImageUrl;
+            ViewBag.Text =  userModel.FirstName + " has " + model.Count + " followers.";
             return View("Index", model);
         }
         public ActionResult Randomuser(int id)

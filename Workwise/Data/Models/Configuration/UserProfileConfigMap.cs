@@ -14,6 +14,14 @@ namespace Workwise.Data.Models.Configuration
                 .WithRequired(x => x.PostedBy)
                 .HasForeignKey(x => x.PostedById);
 
+            //HasMany(u => u.Following)
+            //    .WithMany()
+            //    .Map(x => {
+            //        x.MapLeftKey("UserId");
+            //        x.MapRightKey("FriendId");
+            //        x.ToTable("FollowerMapping");
+            //    });
+           
         }
     }
     public class UserConfigMap : EntityTypeConfiguration<ApplicationUser>

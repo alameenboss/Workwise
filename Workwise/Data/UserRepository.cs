@@ -54,18 +54,19 @@ namespace Workwise.Data
         public List<UserProfile> FollowersList(string userId)
         {
             var followerList = (from f in _context.FriendMappings
-                                join u in _context.UserProfiles on f.EndUserId equals u.UserId
+                                join up in _context.UserProfiles on f.UserId equals up.UserId
                                 where f.EndUserId == userId
-                                select u
-                                 ).ToList();
+                                select up
+                                ).ToList();
             return followerList;
         }
         public List<UserProfile> FollowingList(string userId)
         {
-            var followingList = (from u in _context.FriendMappings
-                                 join v in _context.UserProfiles on u.EndUserId equals v.UserId
-                                 where u.UserId == userId
-                                 select v).ToList();
+            var followingList = (from f in _context.FriendMappings
+                                 join up in _context.UserProfiles on f.EndUserId equals up.UserId 
+                                 where f.UserId == userId
+                                 select up).ToList();
+
             return followingList;
         }
         public List<OnlineUserDetails> GetOnlineFriends(string userId)
