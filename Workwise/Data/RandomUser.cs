@@ -131,11 +131,11 @@ namespace Workwise.Data
             return user;
         }
 
-        public static List<UserProfile> GetManyDummyUser(int take)
+        public static List<UserProfile> GetManyDummyUser(int pageNo, int pageSize)
         {
             var users = new List<UserProfile>();
-            string url = "http://api.randomuser.me/?results=" + take;
-
+            string url = string.Format("https://randomuser.me/api/?page={0}&results={1}&seed=workwise", pageNo, pageSize);
+            //
             var data = FetchJson(url);
 
             if (data.results != null)
@@ -158,11 +158,11 @@ namespace Workwise.Data
 
         }
 
-        public static List<Result> GetManyUser(int take)
+        public static List<Result> GetManyUser(int pageNo, int take)
         {
             var users = new List<Result>();
-            string url = "http://api.randomuser.me/?results=" + take;
-
+            //string url = "http://api.randomuser.me/?results=" + take;
+            string url = string.Format("https://randomuser.me/api/?page={0}&results={1}&seed=workwise", pageNo, take);
             var data = FetchJson(url);
 
             return data.results;

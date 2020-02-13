@@ -10,6 +10,7 @@
             <div class="row">
                 @using (Html.BeginForm("GenerateUser", "Account", FormMethod.Post))
                 {
+                    <input type="text" name="pagenumber" value="1" />
                     <input type="submit" value="Generate User" class="btn btn-primary" />
                 }
 

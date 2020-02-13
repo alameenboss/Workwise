@@ -63,7 +63,7 @@ namespace Workwise.Controllers
         }
         public ActionResult Randomuser(int id)
         {
-            var model =  RandomUserGenerator.GetManyDummyUser(id);
+            var model =  RandomUserGenerator.GetManyDummyUser(1, id);
             return View(model);
         }
 
