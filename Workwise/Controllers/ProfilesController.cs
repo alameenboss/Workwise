@@ -51,7 +51,16 @@ namespace Workwise.Controllers
             var model = _userProfileRepo.GetAllUsers(100, User.Identity.GetUserId());
             return View(model);
         }
-
+        public ActionResult Following()
+        {
+            var model = _userProfileRepo.FollowingList(User.Identity.GetUserId());
+            return View("Index",model);
+        }
+        public ActionResult Followers()
+        {
+            var model = _userProfileRepo.FollowersList(User.Identity.GetUserId());
+            return View("Index", model);
+        }
         public ActionResult Randomuser(int id)
         {
             var model =  RandomUserGenerator.GetManyDummyUser(id);

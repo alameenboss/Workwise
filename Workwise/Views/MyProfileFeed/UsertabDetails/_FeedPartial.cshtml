@@ -1,10 +1,10 @@
 ﻿@using Workwise.Data.Models;
-@model List<Post>
+@model UserProfile
 <div class="product-feed-tab current" id="feed-dd">
     <div class="posts-section">
         @*@Html.Action("GetPosts", "Index")*@
 
-        @foreach (var post in Model)
+        @foreach (var post in Model.Posts)
         {
             @Html.Partial(@"~\Views\Index\_PostDetail.cshtml", post)
         }

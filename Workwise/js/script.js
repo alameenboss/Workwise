@@ -337,11 +337,12 @@ $(document).find(".prettydate").prettydate({
 $(document).on("click", 'input[class$="btnCloseNotification"]', function () {
     $(this).parent(".divNotification").animate({ "opacity": "hide", top: "100" }, 500);
 });
-$(document).on("click", '.sendRequest', function () {
+$(document).on("click", '.sendRequest', function (e) {
+    e.preventDefault();
     var userID = $(this).attr('data-user-id');
     var loggedInUserID = $('#hdfLoggedInUserID').val();
     sendFriendRequest(userID, loggedInUserID);
-    $(this).removeClass('sendRequest').addClass('disabled').val('Request Sent');
+    $('.sendRequest[data-user-id="' + userID + '"]').removeClass('sendRequest').addClass('disabled').html('Pending');
 });
 $(document).on("click", 'input[class$="request-response"]', function () {
     var userid = $(this).attr('data-user-id');

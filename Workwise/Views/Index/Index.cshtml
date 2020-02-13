@@ -1,6 +1,6 @@
 ﻿@using Workwise.Data.Models;
 @using Microsoft.AspNet.Identity;
-@model List<Post>
+@model UserProfile
 <main>
     <div class="main-section">
         <div class="container">
@@ -22,12 +22,12 @@
                                 </div><!--user-profile end-->
                                 <ul class="user-fw-status">
                                     <li>
-                                        <h4>Following</h4>
-                                        <span>0</span>
+                                        <a href="/profiles/Following"><h4>Following</h4></a>
+                                        <span>@Model.Following.Count</span>
                                     </li>
                                     <li>
-                                        <h4>Followers</h4>
-                                        <span>0</span>
+                                        <a href="/profiles/Followers"><h4>Followers</h4></a>
+                                        <span>@Model.Followers.Count</span>
                                     </li>
                                     <li>
                                         <a href="/MyProfileFeed/" title="">View Profile</a>
@@ -90,11 +90,15 @@
                                 @Html.Action("TopProfiles")
 
                                 @*@Html.Action("GetPosts", "Index")
-                                @Html.Action("GetPosts", "Index")*@
-                                @foreach (var item in Model)
+                                  @Html.Action("GetPosts", "Index")*@
+                                @if (Model.Posts != null)
                                 {
-                                    @Html.Partial(@"~\Views\Index\_PostDetail.cshtml", item)
+                                    foreach (var post in Model.Posts)
+                                    {
+                                        @Html.Partial(@"~\Views\Index\_PostDetail.cshtml", post)
+                                    }
                                 }
+
 
                             </div><!--posts-section end-->
                         </div><!--main-ws-sec end-->

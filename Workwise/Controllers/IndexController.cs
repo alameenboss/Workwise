@@ -24,11 +24,13 @@ namespace Workwise.Controllers
 
         public ActionResult Index()
         {
-            var model = _postrepository.GetLatestPostByUser(User.Identity.GetUserId());
-            if (model == null)
-            {
-                model = new List<Post>();
-            }
+            var myuserId = User.Identity.GetUserId();
+
+            var model = _userProfileRepo.GetUserById(myuserId);
+            model.Posts = _postrepository.GetLatestPostByUser(myuserId).ToList();
+            model.Following = _userProfileRepo.FollowingList(myuserId);
+            model.Followers = _userProfileRepo.FollowersList(myuserId);
+
             return View(model);
         }
 

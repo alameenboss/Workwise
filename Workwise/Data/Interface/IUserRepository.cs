@@ -16,6 +16,8 @@ namespace Workwise.Data.Interface
         List<string> GetUserConnectionId(string UserId);
         List<string> GetUserConnectionId(string[] userIds);
         List<UserProfile> GetAllUsers(int count, string UserId);
+        List<UserProfile> FollowersList(string UserId);
+        List<UserProfile> FollowingList(string UserId);
         List<OnlineUserDetails> GetOnlineFriends(string userId);
         UserProfile GetUserById(string userId);
         List<UserSearchResult> SearchUsers(string name, string userId);

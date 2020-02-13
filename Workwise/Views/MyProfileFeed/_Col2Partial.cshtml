@@ -1,5 +1,6 @@
-﻿
-@using Microsoft.AspNet.Identity;
+﻿@using Microsoft.AspNet.Identity;
+@using Workwise.Data.Models;
+@model UserProfile
 @{
     var username = ViewData["username"] != null ? ViewData["username"].ToString() : string.Empty;
     var firstName = ViewData["firstname"] != null ? ViewData["firstname"].ToString() : string.Empty;

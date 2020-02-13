@@ -251,6 +251,10 @@
     <Compile Include="Migrations\202002060317104_UserProfile.Designer.cs">
       <DependentUpon>202002060317104_UserProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002122359247_FollowersList.cs" />
+    <Compile Include="Migrations\202002122359247_FollowersList.Designer.cs">
+      <DependentUpon>202002122359247_FollowersList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\CompanyService.cs" />
@@ -577,6 +581,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002060317104_UserProfile.resx">
       <DependentUpon>202002060317104_UserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002122359247_FollowersList.resx">
+      <DependentUpon>202002122359247_FollowersList.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

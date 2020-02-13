@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Workwise.Data.Models;
+@model UserProfile
+@{
     var username = ViewData["username"] != null ? ViewData["username"].ToString() : string.Empty;
     var userImage = ViewData["userimage"] != null ? ViewData["userimage"].ToString() : string.Empty;
      
@@ -23,16 +25,16 @@
                 <li><a href="#" title="" class="hre">Hire</a></li>
             </ul>
         }
-        <ul class="flw-status">
-            <li>
-                <span>Following</span>
-                <b>0</b>
-            </li>
-            <li>
-                <span>Followers</span>
-                <b>0</b>
-            </li>
-        </ul>
+    <ul class="flw-status">
+        <li>
+            <a href="/profiles/Following"><h4>Following</h4></a>
+            <span>@Model.Following.Count</span>
+        </li>
+        <li>
+            <a href="/profiles/Followers"><h4>Followers</h4></a>
+            <span>@Model.Followers.Count</span>
+        </li>
+    </ul>
     </div><!--user_pro_status end-->
     <ul class="social_links">
         <li><a href="#" title=""><i class="fa fa-globe"></i> www.example.com</a></li>

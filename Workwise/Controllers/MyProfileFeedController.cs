@@ -30,17 +30,21 @@ namespace Workwise.Controllers
 
         public ActionResult Index(string id)
         {
-            var model = new List<Post>();
-            if (string.IsNullOrEmpty(id)) id = User.Identity.GetUserId();
+            var myuserId = User.Identity.GetUserId();
+            if (string.IsNullOrEmpty(id)) id = myuserId;
+            var model = _userProfileRepo.GetUserById(id);
+            model.Posts = _postrepository.GetLatestPostByUser(id).ToList();
+            model.Following = _userProfileRepo.FollowingList(id);
+            model.Followers = _userProfileRepo.FollowersList(id);
+
+            
+
             var user = UserManager.FindById(id);
             if (user != null)
             {
-                model = _postrepository.GetLatestPostByUser(user.Id).ToList();
                 ViewData["username"] = user.UserName;
-                var userprofile = _userProfileRepo;
-                var _user = userprofile.GetByUserId(user.Id);
-                ViewData["userimage"] = string.IsNullOrEmpty(_user?.ImageUrl) ? @"\images\DefaultPhoto.png" : _user?.ImageUrl;
-                ViewData["firstname"] = string.IsNullOrEmpty(_user?.FirstName) ? "FirstName" : _user?.FirstName;
+                ViewData["userimage"] = string.IsNullOrEmpty(model?.ImageUrl) ? @"\images\DefaultPhoto.png" : model?.ImageUrl;
+                ViewData["firstname"] = string.IsNullOrEmpty(model?.FirstName) ? "FirstName" : model?.FirstName;
             }
             
             

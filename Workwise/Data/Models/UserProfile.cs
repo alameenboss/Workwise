@@ -27,5 +27,6 @@ namespace Workwise.Data.Models
         public virtual List<UserProfile> Following { get; set; }
 
         public virtual ApplicationUser User { get; set; }
+        public virtual List<UserProfile> Followers { get; internal set; }
     }
 }

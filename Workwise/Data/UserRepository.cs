@@ -43,35 +43,29 @@ namespace Workwise.Data
         }
         public List<UserProfile> GetAllUsers(int count,string userId)
         {
-            var objList = _context.UserProfiles.Where(x => x.UserId != userId).Take(count).ToList();
-            return objList;
+            var v = new List<UserProfile>();
+            v.AddRange(FollowersList(userId));
+            v.AddRange(FollowingList(userId));
+            var ids = v.Select(x => x.UserId).ToList();
+            
+            var list = _context.UserProfiles.Where(x => !ids.Contains( x.UserId) ).Take(count).ToList();
+            return list;
         }
-        public List<UserProfile> FollowersList(string UserId)
+        public List<UserProfile> FollowersList(string userId)
         {
-           
-            var followerList = (from p in _context.UserProfiles
-                                 join e in _context.FriendMappings
-                                 on p.UserId equals e.EndUserId
-                                 select new UserProfile()
-                                 {
-                                     UserId = p.UserId,
-                                     FirstName = p.FirstName,
-                                     ImageUrl = p.ImageUrl
-                                 }).ToList();
+            var followerList = (from f in _context.FriendMappings
+                                join u in _context.UserProfiles on f.EndUserId equals u.UserId
+                                where f.EndUserId == userId
+                                select u
+                                 ).ToList();
             return followerList;
         }
-        public List<UserProfile> FollowingList(string UserId)
+        public List<UserProfile> FollowingList(string userId)
         {
-            var followingList = (from p in _context.UserProfiles
-                          join e in _context.FriendMappings
-                          on p.UserId equals e.UserId
-                          //where p.FirstName == "KEN"
-                          select new UserProfile()
-                          {
-                              UserId = p.UserId,
-                              FirstName = p.FirstName,
-                              ImageUrl = p.ImageUrl
-                          }).ToList();
+            var followingList = (from u in _context.FriendMappings
+                                 join v in _context.UserProfiles on u.EndUserId equals v.UserId
+                                 where u.UserId == userId
+                                 select v).ToList();
             return followingList;
         }
         public List<OnlineUserDetails> GetOnlineFriends(string userId)
