@@ -188,9 +188,9 @@ namespace Workwise.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GenerateUser()
+        public async Task<ActionResult> GenerateUser(int pagenumber)
         {
-            var userList = RandomUserGenerator.GetManyUser(5000);
+            var userList = RandomUserGenerator.GetManyUser(pagenumber,1000);
             foreach(var model in userList)
             {
                 var user = new ApplicationUser
