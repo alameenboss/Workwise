@@ -443,5 +443,13 @@ namespace Workwise.Data
             }
         }
 
+        public List<UserProfile> SerachUser(string userName)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                return db.UserProfiles.Where(x => x.FirstName.Contains(userName)).ToList();
+            }
+        }
+
     }
 }

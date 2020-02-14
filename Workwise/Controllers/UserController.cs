@@ -64,6 +64,12 @@ namespace Workwise.Controllers
             return RedirectToAction("Profile");
         }
 
+        public ActionResult SerachUser(string search)
+        {
+            var userList = _userProfileRepo.SerachUser(search);
+            return View(@"~\Views\Profiles\Index.cshtml",userList);
+        }
+
         public ActionResult _UserSearchResult(string name)
         {
             var userList = _userProfileRepo.SearchUsers(name, User.Identity.GetUserId());

@@ -41,5 +41,7 @@ namespace Workwise.Data.Interface
         void SaveUserImage(string userid, string imgPath);
         void SaveProfile(UserProfile profile);
         Task CreateUserProfileAsync(string userId, string userName,string image="");
+
+        List<UserProfile> SerachUser(string userName);
     }
 }
