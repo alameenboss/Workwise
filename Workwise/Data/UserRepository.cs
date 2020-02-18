@@ -12,7 +12,7 @@ namespace Workwise.Data
     public class UserRepository : IUserRepository
     {
         ApplicationDbContext _context = new ApplicationDbContext();
-       
+
         public void SaveUserOnlineStatus(OnlineUser objentity)
         {
             var obj = _context.OnlineUsers.Where(m => m.UserId == objentity.UserId).FirstOrDefault();
@@ -41,31 +41,90 @@ namespace Workwise.Data
             var obj = _context.OnlineUsers.Where(m => userIds.Contains(m.UserId) && m.IsActive == true && m.IsOnline == true).Select(m => m.ConnectionId).ToList();
             return obj;
         }
-        public List<UserProfile> GetAllUsers(int count,string userId)
+        public List<UserProfile> GetAllUsers(int count, string userId)
         {
-            var v = new List<UserProfile>();
-            v.AddRange(FollowersList(userId));
-            v.AddRange(FollowingList(userId));
-            var ids = v.Select(x => x.UserId).ToList();
-            
-            var list = _context.UserProfiles.Where(x => !ids.Contains( x.UserId) ).Take(count).ToList();
+            var v = new List<UserSearchResult>();
+            v.AddRange(FollowersList(userId, userId));
+            v.AddRange(FollowingList(userId, userId));
+            var ids = v.Select(x => x.UserInfo.UserId).ToList();
+
+            var list = _context.UserProfiles.Where(x => !ids.Contains(x.UserId)).Take(count).ToList();
             return list;
         }
-        public List<UserProfile> FollowersList(string userId)
+        public List<UserProfile> MyFriendsList(string userId)
         {
-            var followerList = (from f in _context.FriendMappings
-                                join up in _context.UserProfiles on f.UserId equals up.UserId
-                                where f.EndUserId == userId
-                                select up
-                                ).ToList();
-            return followerList;
+            
+            var following = _context.FriendMappings.Where(m => (m.UserId == userId)).Select(x => new { id = x.EndUserId});
+            var follower = _context.FriendMappings.Where(m => (m.EndUserId == userId)).Select(x => new { id = x.UserId });
+            var myfriends =  following.Union(follower).ToList().Select(x=>x.id).ToList();
+
+           return _context.UserProfiles.Where(x => myfriends.Contains(x.UserId)).ToList();
         }
-        public List<UserProfile> FollowingList(string userId)
+        public List<UserSearchResult> FollowersList(string userId,string currentUserId)
+        {
+           
+            var myFollowers = (from f in _context.FriendMappings
+                                join up in _context.UserProfiles on f.UserId equals up.UserId
+                                where f.EndUserId == currentUserId
+                                select new UserSearchResult {
+                                    UserInfo = up,
+                                    FriendRequestStatus = f.RequestStatus
+                                }
+                              ).ToList();
+
+           
+
+            List<UserSearchResult> userFollower;
+            if (userId == currentUserId)
+            {
+                userFollower = myFollowers;
+            }
+            else
+            {
+                userFollower = (from f in _context.FriendMappings
+                                join up in _context.UserProfiles on f.UserId equals up.UserId
+                                where f.EndUserId == userId && f.RequestStatus == "Accepted"
+                                select new UserSearchResult
+                                {
+                                    UserInfo = up,
+                                    FriendRequestStatus = f.RequestStatus
+                                }
+                               ).ToList();
+                userFollower.ForEach(x =>
+                {
+                    var friend = myFollowers.FirstOrDefault(y => y == x);
+                    if (friend != null)
+                    {
+                        x.FriendRequestStatus = friend.FriendRequestStatus;
+                    }
+                    else
+                    {
+                        x.FriendRequestStatus = "Follow";
+                    }
+
+                       
+                });
+
+
+            }
+
+
+            userFollower.ForEach(x => { x.FriendRequestStatus = x.FriendRequestStatus == "Follow" ? "Follow" :
+                x.FriendRequestStatus == "Accepted" ? "Following" : "Pending"; });
+
+            return userFollower;
+
+        }
+        public List<UserSearchResult> FollowingList(string userId, string currentUserId)
         {
             var followingList = (from f in _context.FriendMappings
                                  join up in _context.UserProfiles on f.EndUserId equals up.UserId 
                                  where f.UserId == userId
-                                 select up).ToList();
+                                 select new UserSearchResult
+                                 {
+                                     UserInfo = up,
+                                     FriendRequestStatus = f.RequestStatus
+                                 }).ToList();
 
             return followingList;
         }
@@ -128,7 +187,6 @@ namespace Workwise.Data
                         }).ToList();
             return list;
         }
-
         public List<FriendRequests> GetAllSentFriendRequests()
         {
             var list = (from u in _context.FriendMappings
@@ -362,7 +420,6 @@ namespace Workwise.Data
             }).ToList();
             return users;
         }
-
         public UserProfile GetByUserId(string UserId)
         {
             using (var db = new ApplicationDbContext())
@@ -371,7 +428,6 @@ namespace Workwise.Data
 
             }
         }
-
         public void SaveUserImage(string userid, string imgPath)
         {
             using (var db = new ApplicationDbContext())
@@ -392,8 +448,6 @@ namespace Workwise.Data
                 db.SaveChanges();
             }
         }
-
-
         public void SaveProfile(UserProfile profile)
         {
             using (var db = new ApplicationDbContext())
@@ -416,7 +470,6 @@ namespace Workwise.Data
                 db.SaveChanges();
             }
         }
-
         //public List<UserProfile> GetAllUsers()
         //{
         //    using (var db = new ApplicationDbContext())
@@ -425,7 +478,6 @@ namespace Workwise.Data
 
         //    }
         //}
-
         public async Task CreateUserProfileAsync(string userId, string userName,string userImage="")
         {
             using (var db = new ApplicationDbContext())
@@ -442,12 +494,14 @@ namespace Workwise.Data
                 await db.SaveChangesAsync();
             }
         }
-
-        public List<UserProfile> SerachUser(string userName)
+        public List<UserSearchResult> SerachUser(string userName)
         {
             using (var db = new ApplicationDbContext())
             {
-                return db.UserProfiles.Where(x => x.FirstName.Contains(userName)).ToList();
+                return db.UserProfiles
+                    .Where(x => x.FirstName.Contains(userName))
+                    .Select(x=> new UserSearchResult { UserInfo = x})
+                    .ToList();
             }
         }
 

@@ -28,8 +28,8 @@ namespace Workwise.Controllers
 
             var model = _userProfileRepo.GetUserById(myuserId);
             model.Posts = _postrepository.GetLatestPostByUser(myuserId).ToList();
-            model.Following = _userProfileRepo.FollowingList(myuserId);
-            model.Followers = _userProfileRepo.FollowersList(myuserId);
+            model.Following = _userProfileRepo.FollowingList(myuserId, myuserId).Select(x => x.UserInfo).ToList();
+            model.Followers = _userProfileRepo.FollowersList(myuserId, myuserId).Select(x => x.UserInfo).ToList();
 
             return View(model);
         }

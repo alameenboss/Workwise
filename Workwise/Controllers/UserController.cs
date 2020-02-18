@@ -25,26 +25,6 @@ namespace Workwise.Controllers
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Profile(string Id)
-        {
-            if (string.IsNullOrWhiteSpace(Id))
-            {
-                Id = User.Identity.GetUserId();
-            }
-            var objmodel = DefaultsHelper.GetUserModel(Id);
-            if (Id != User.Identity.GetUserId())
-            {
-                var friendInfo = _userProfileRepo.GetFriendRequestStatus(Id);
-                if (friendInfo != null)
-                {
-                    objmodel.FriendRequestStatus = friendInfo.RequestStatus;
-                    objmodel.FriendEndUserId = friendInfo.EndUserId;
-                    objmodel.FriendRequestorId = friendInfo.UserId;
-                    objmodel.FriendMappingId = friendInfo.FriendMappingId;
-                }
-            }
-            return View(objmodel);
-        }
         [HttpGet]
         public ActionResult EditProfile()
         {
@@ -142,7 +122,7 @@ namespace Workwise.Controllers
                 }
                 return Json(new { success = false, filePath = "" }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return Json(new { success = false, filePath = "" }, JsonRequestBehavior.AllowGet);
             }

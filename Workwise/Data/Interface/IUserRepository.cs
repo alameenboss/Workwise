@@ -16,8 +16,9 @@ namespace Workwise.Data.Interface
         List<string> GetUserConnectionId(string UserId);
         List<string> GetUserConnectionId(string[] userIds);
         List<UserProfile> GetAllUsers(int count, string UserId);
-        List<UserProfile> FollowersList(string UserId);
-        List<UserProfile> FollowingList(string UserId);
+        List<UserProfile> MyFriendsList(string UserId);
+        List<UserSearchResult> FollowersList(string UserId, string currentUserId);
+        List<UserSearchResult> FollowingList(string UserId, string currentUserId);
         List<OnlineUserDetails> GetOnlineFriends(string userId);
         UserProfile GetUserById(string userId);
         List<UserSearchResult> SearchUsers(string name, string userId);
@@ -41,7 +42,6 @@ namespace Workwise.Data.Interface
         void SaveUserImage(string userid, string imgPath);
         void SaveProfile(UserProfile profile);
         Task CreateUserProfileAsync(string userId, string userName,string image="");
-
-        List<UserProfile> SerachUser(string userName);
+        List<UserSearchResult> SerachUser(string userName);
     }
 }

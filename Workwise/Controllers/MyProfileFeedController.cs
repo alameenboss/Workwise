@@ -34,8 +34,8 @@ namespace Workwise.Controllers
             if (string.IsNullOrEmpty(id)) id = myuserId;
             var model = _userProfileRepo.GetUserById(id);
             model.Posts = _postrepository.GetLatestPostByUser(id).ToList();
-            model.Following = _userProfileRepo.FollowingList(id);
-            model.Followers = _userProfileRepo.FollowersList(id);
+            model.Following = _userProfileRepo.FollowingList(id, myuserId).Select(x => x.UserInfo).ToList();
+            model.Followers = _userProfileRepo.FollowersList(id, myuserId).Select(x => x.UserInfo).ToList();
 
             
 

@@ -325,7 +325,7 @@ $('#btnSearch').click(function () {
 //    return false;
 //});
 $('.not-box-open').click(function () {
-    $('.nott-list').load('/User/_UserNotifications', function () {
+    $('#notification').find('.nott-list').load('/User/_UserNotifications', function () {
 
     });
 })
