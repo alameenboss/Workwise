@@ -9,9 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Workwise.Helper;
-using Workwise.Data.Models;
-using Workwise.Data.Interface;
-using Workwise.Data;
+using Workwise.Service.Interface;
+using Workwise.ViewModel;
 
 namespace Workwise.Controllers
 {
@@ -20,13 +19,13 @@ namespace Workwise.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private readonly IUserRepository _userProfileRepo;
+        private readonly IUserService _userService;
         public AccountController()
         {
         }
-        public AccountController(IUserRepository userProfileRepo)
+        public AccountController(IUserService userProfileRepo)
         {
-            _userProfileRepo = userProfileRepo;
+            _userService = userProfileRepo;
         }
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
@@ -170,7 +169,7 @@ namespace Workwise.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await _userProfileRepo.CreateUserProfileAsync(user.Id, user.UserName);
+                    await _userService.CreateUserProfileAsync(user.Id, user.UserName);
 
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
     
@@ -202,7 +201,7 @@ namespace Workwise.Controllers
                 if (result.Succeeded)
                 {
                     var pofilePic = ImageHelper.SaveImagefromWeb(model.picture.medium, Server.MapPath("~/Images/Upload"));
-                    await _userProfileRepo.CreateUserProfileAsync(user.Id, model.name.first + " " + model.name.last, pofilePic);
+                    await _userService.CreateUserProfileAsync(user.Id, model.name.first + " " + model.name.last, pofilePic);
                 }
             }
             

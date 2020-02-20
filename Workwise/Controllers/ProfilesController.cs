@@ -10,7 +10,7 @@ namespace Workwise.Controllers
     [Authorize]
     public class ProfilesController : BaseController
     {
-        private readonly IUserRepository _userProfileRepo;
+        private readonly IUserService _userService;
         public ProfilesController()
         {
         }
@@ -18,20 +18,20 @@ namespace Workwise.Controllers
         {
             UserManager = userManager;
         }
-        public ProfilesController(IUserRepository userProfileRepo)
+        public ProfilesController(IUserService userProfileRepo)
         {
-            _userProfileRepo = userProfileRepo;
+            _userService = userProfileRepo;
         }
         public ActionResult Index()
         {
-            var model = _userProfileRepo.GetAllUsers(100, User.Identity.GetUserId());
+            var model = _userService.GetAllUsers(100, User.Identity.GetUserId());
             return View(model);
         }
         public ActionResult Following(string id)
         {
             var userid = string.IsNullOrEmpty(id) ? User.Identity.GetUserId() : id;
-            var model = _userProfileRepo.FollowingList(userid, User.Identity.GetUserId());
-            var userModel = _userProfileRepo.GetByUserId(userid);
+            var model = _userService.FollowingList(userid, User.Identity.GetUserId());
+            var userModel = _userService.GetByUserId(userid);
             ViewBag.Image = userModel.ImageUrl;
             ViewBag.Text = userModel.FirstName + " is following " + model.Count + " person.";
            
@@ -40,8 +40,8 @@ namespace Workwise.Controllers
         public ActionResult Followers(string id)
         {
             var userid = string.IsNullOrEmpty(id) ? User.Identity.GetUserId() : id;
-            var model = _userProfileRepo.FollowersList(userid, User.Identity.GetUserId());
-            var userModel = _userProfileRepo.GetByUserId(userid);
+            var model = _userService.FollowersList(userid, User.Identity.GetUserId());
+            var userModel = _userService.GetByUserId(userid);
             ViewBag.Image = userModel.ImageUrl;
             ViewBag.Text =  userModel.FirstName + " has " + model.Count + " followers.";
             return View("Index", model);

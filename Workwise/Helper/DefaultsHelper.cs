@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Workwise.Data;
-using Workwise.Data.Models;
 using Workwise.ViewModel;
 
 namespace Workwise.Helper
@@ -31,16 +26,15 @@ namespace Workwise.Helper
             }
             return profilePicturePath;
         }
-        public static UserViewModel GetUserModel(string id, UserProfile objentity = null, string friendRequestStatus = "", bool isRequestReceived = false)
+        public static UserViewModel GetUserModel(string id, UserProfileViewModel objentity = null, string friendRequestStatus = "", bool isRequestReceived = false)
         {
-            var user = new UserProfile();
+            var user = new UserProfileViewModel();
             if (objentity != null)
             {
                 user = objentity;
             }
             else
             {
-                UserRepository _UserRepo = new UserRepository();
                 user = _UserRepo.GetUserById(id);
             }
             UserViewModel objmodel = new UserViewModel();

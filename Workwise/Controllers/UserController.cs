@@ -10,10 +10,10 @@ namespace Workwise.Controllers
 {
     public class UserController : BaseController
     {
-        private IUserRepository _userProfileRepo;
-        public UserController(IUserRepository UserProfileRepo)
+        private IUserService _userService;
+        public UserController(IUserService UserProfileRepo)
         {
-            this._userProfileRepo = UserProfileRepo;
+            this._userService = UserProfileRepo;
         }
         public ActionResult Chat()
         {
@@ -34,31 +34,31 @@ namespace Workwise.Controllers
         [HttpPost]
         public ActionResult EditProfile(UserViewModel model)
         {
-            var entity = _userProfileRepo.GetUserById(User.Identity.GetUserId());
+            var entity = _userService.GetUserById(User.Identity.GetUserId());
             entity.FirstName = model.Name;
             entity.Gender = model.Gender;
             entity.DOB = Convert.ToDateTime(model.DOB);
             entity.Bio = model.Bio;
             entity.UpdatedOn = System.DateTime.Now;
-            _userProfileRepo.SaveProfile(entity);
+            _userService.SaveProfile(entity);
             return RedirectToAction("Profile");
         }
 
         public ActionResult SerachUser(string search)
         {
-            var userList = _userProfileRepo.SerachUser(search);
+            var userList = _userService.SerachUser(search);
             return View(@"~\Views\Profiles\Index.cshtml",userList);
         }
 
         public ActionResult _UserSearchResult(string name)
         {
-            var userList = _userProfileRepo.SearchUsers(name, User.Identity.GetUserId());
+            var userList = _userService.SearchUsers(name, User.Identity.GetUserId());
             var objmodel = userList.Select(m => DefaultsHelper.GetUserModel(m.UserInfo.UserId, m.UserInfo, m.FriendRequestStatus, m.IsRequestReceived)).ToList();
             return PartialView(objmodel);
         }
         public ActionResult _OnlineFriends()
         {
-            var onlineFriends = _userProfileRepo.GetOnlineFriends(User.Identity.GetUserId());
+            var onlineFriends = _userService.GetOnlineFriends(User.Identity.GetUserId());
             var objmodel = onlineFriends.Select(m => new UserViewModel()
             {
                 UserId = m.UserId,
@@ -69,7 +69,7 @@ namespace Workwise.Controllers
         }
         public ActionResult _UserNotifications()
         {
-            var notifications = _userProfileRepo.GetUserNotifications(User.Identity.GetUserId());
+            var notifications = _userService.GetUserNotifications(User.Identity.GetUserId());
             var objmodel = notifications.Select(m => new UserNotificationViewModel()
             {
                 NotificationId = m.NotificationId,
@@ -83,7 +83,7 @@ namespace Workwise.Controllers
         }
         public ActionResult _RecentChats()
         {
-            var recentChats = _userProfileRepo.GetRecentChats(User.Identity.GetUserId());
+            var recentChats = _userService.GetRecentChats(User.Identity.GetUserId());
             var objmodel = recentChats.Select(m => new UserViewModel()
             {
                 UserId = m.UserId,
@@ -116,7 +116,7 @@ namespace Workwise.Controllers
                     int randomNo = r.Next();
                     filePath = "/Content/Images/ProfilePictures/" + randomNo + "_" + profilePicture.FileName;
                     profilePicture.SaveAs(Server.MapPath("~/Content/Images/ProfilePictures/" + randomNo + "_" + profilePicture.FileName));
-                    _userProfileRepo.UpdateUserProfilePicture(UserId, filePath);
+                    _userService.UpdateUserProfilePicture(UserId, filePath);
                     SessionHelper.UserImage = filePath;
                     return Json(new { success = true, filePath = filePath }, JsonRequestBehavior.AllowGet);
                 }
@@ -129,7 +129,7 @@ namespace Workwise.Controllers
         }
         public ActionResult Friends()
         {
-            var friendUsers = _userProfileRepo.GetFriends(User.Identity.GetUserId());
+            var friendUsers = _userService.GetFriends(User.Identity.GetUserId());
             var objmodel = friendUsers.Select(m => new UserViewModel()
             {
                 UserId = m.UserId,

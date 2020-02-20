@@ -7,7 +7,7 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Transports;
 using Workwise.Data;
-using Workwise.Data.Models;
+using Workwise.Model;
 using Workwise.Helper;
 
 namespace Workwise.Hubs
@@ -23,8 +23,8 @@ namespace Workwise.Hubs
     //[HubName("chat")]
     public class ChatHub : Hub
     {
-        UserRepository _UserRepo = new UserRepository();
-        MessageRepository _MessageRepo = new MessageRepository();
+        UserService _UserRepo = new UserService();
+        MessageService _MessageRepo = new MessageService();
         public override Task OnConnected()
         {
             var userId = Context.QueryString["UserId"];

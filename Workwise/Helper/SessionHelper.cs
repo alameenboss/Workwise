@@ -2,7 +2,7 @@
 using System.Security.Principal;
 using System.Web;
 using Workwise.Data;
-using Workwise.Data.Models;
+using Workwise.Model;
 namespace Workwise.Helper
 {
 
@@ -96,28 +96,28 @@ namespace Workwise.Helper
 
         }
 
-        public  static UserProfile GetUser(string userid)
+        public  static UserProfileViewModel GetUser(string userid)
         {
 
-            if (SessionHelper.Get<UserProfile>(userid) == null)
+            if (SessionHelper.Get<UserProfileViewModel>(userid) == null)
             {
-                var repo = new UserRepository();
+                var repo = new UserService();
                 var model = repo.GetByUserId(userid);
                 if (model == null)
                 {
-                    model = new UserProfile()
+                    model = new UserProfileViewModel()
                     {
                         FirstName = userid,
                         ImageUrl = @"\images\DefaultPhoto.png"
                     };
                 }
-                SessionHelper.Set<UserProfile>(userid, model);
+                SessionHelper.Set<UserProfileViewModel>(userid, model);
                 SessionHelper.UserImage = model.ImageUrl;
                 SessionHelper.UserName = model.FirstName;
                 SessionHelper.UserId = userid;
             }
 
-            return SessionHelper.Get<UserProfile>(userid);
+            return SessionHelper.Get<UserProfileViewModel>(userid);
 
         }
         #endregion

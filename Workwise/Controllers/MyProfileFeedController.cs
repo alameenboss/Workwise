@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Workwise.Data.Interface;
-using Workwise.Data.Models;
+using Workwise.Service.Interface;
 
 namespace Workwise.Controllers
 {
@@ -13,8 +11,8 @@ namespace Workwise.Controllers
     [Authorize]
     public class MyProfileFeedController : BaseController
     {
-        private readonly IUserRepository _userProfileRepo;
-        private readonly IPostRepository _postrepository;
+        private readonly IUserService _userService;
+        private readonly IPostService _postService;
 
 
         public MyProfileFeedController(ApplicationUserManager userManager)
@@ -22,20 +20,20 @@ namespace Workwise.Controllers
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
         }
 
-        public MyProfileFeedController(IUserRepository userProfileRepo, IPostRepository postrepository)
+        public MyProfileFeedController(IUserService userProfileRepo, IPostService postService)
         {
-            _userProfileRepo = userProfileRepo;
-            _postrepository = postrepository;
+            _userService = userProfileRepo;
+            _postService = postService;
         }
 
         public ActionResult Index(string id)
         {
             var myuserId = User.Identity.GetUserId();
             if (string.IsNullOrEmpty(id)) id = myuserId;
-            var model = _userProfileRepo.GetUserById(id);
-            model.Posts = _postrepository.GetLatestPostByUser(id).ToList();
-            model.Following = _userProfileRepo.FollowingList(id, myuserId).Select(x => x.UserInfo).ToList();
-            model.Followers = _userProfileRepo.FollowersList(id, myuserId).Select(x => x.UserInfo).ToList();
+            var model = _userService.GetUserById(id);
+            model.Posts = _postService.GetLatestPostByUser(id).ToList();
+            model.Following = _userService.FollowingList(id, myuserId).Select(x => x.UserInfo).ToList();
+            model.Followers = _userService.FollowersList(id, myuserId).Select(x => x.UserInfo).ToList();
 
             
 
@@ -52,10 +50,10 @@ namespace Workwise.Controllers
             return View(model);
         }
 
-        public ActionResult SaveUserInfo(UserProfile profile)
+        public ActionResult SaveUserInfo(UserProfileViewModel profile)
         {
             profile.UserId = User.Identity.GetUserId();
-            _userProfileRepo.SaveProfile(profile);
+            _userService.SaveProfile(profile);
 
             return RedirectToAction("Index");
         }

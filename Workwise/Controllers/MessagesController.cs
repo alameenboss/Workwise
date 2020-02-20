@@ -11,11 +11,11 @@ namespace Workwise.Controllers
     [Authorize]
     public class MessagesController : BaseController
     {
-        private readonly IUserRepository _userProfileRepo;      
+        private readonly IUserService _userService;      
         private readonly IMessage _MessageRepo;
-        public MessagesController(IUserRepository userProfileRepo, IMessage MessageRepo)
+        public MessagesController(IUserService userProfileRepo, IMessage MessageRepo)
         {
-            _userProfileRepo = userProfileRepo;
+            _userService = userProfileRepo;
             _MessageRepo = MessageRepo;
         }
 
@@ -27,7 +27,7 @@ namespace Workwise.Controllers
         public ActionResult GetUsers()
         {
 
-            var model = _userProfileRepo.MyFriendsList(User.Identity.GetUserId()).ToList();
+            var model = _userService.MyFriendsList(User.Identity.GetUserId()).ToList();
             return PartialView(@"~\Views\Messages\_UserPartial.cshtml", model);
         }
 
@@ -39,7 +39,7 @@ namespace Workwise.Controllers
             objmodel.UserDetail = userModel;
             objmodel.ChatMessages = messages.Messages.Select(m => DefaultsHelper.GetMessageModel(m)).ToList();
             objmodel.LastChatMessageId = messages.LastChatMessageId;
-            var onlineStatus = _userProfileRepo.GetUserOnlineStatus(Id);
+            var onlineStatus = _userService.GetUserOnlineStatus(Id);
             if (onlineStatus != null)
             {
                 objmodel.IsOnline = onlineStatus.IsOnline;
