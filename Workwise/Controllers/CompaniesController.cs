@@ -1,30 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using Workwise.Model;
-using Workwise.Service;
-using Workwise.Service.Interface;
+using Workwise.ServiceAgent.Interface;
 
 namespace Workwise.Controllers
 {
     [Authorize]
     public class CompaniesController : BaseController
     {
-        private readonly ICompanyService _companyService;
+        private readonly ICompanyServiceAgent _companyServiceAgent;
 
       
-        public CompaniesController()
+        public CompaniesController(ICompanyServiceAgent companyServiceAgent)
         {
-            _companyService = new CompanyService();
+            _companyServiceAgent = companyServiceAgent;
         }
 
 
         public ActionResult Index()
         {
 
-            var model = _companyService.GetAllCompanies().ToList();
+            var model = _companyServiceAgent.GetAllCompanies().ToList();
 
             return View(model);
         }

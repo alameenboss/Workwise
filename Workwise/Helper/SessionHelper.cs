@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNet.Identity;
-using System.Security.Principal;
-using System.Web;
-using Workwise.Data;
-using Workwise.Model;
+﻿using System.Web;
+using Workwise.ServiceAgent;
+using Workwise.ViewModel;
+
 namespace Workwise.Helper
 {
 
@@ -101,7 +100,7 @@ namespace Workwise.Helper
 
             if (SessionHelper.Get<UserProfileViewModel>(userid) == null)
             {
-                var repo = new UserService();
+                var repo = new UserServiceAgent();
                 var model = repo.GetByUserId(userid);
                 if (model == null)
                 {

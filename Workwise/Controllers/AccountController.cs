@@ -1,15 +1,13 @@
-﻿using System;
-using System.Globalization;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using Workwise.Helper;
-using Workwise.Service.Interface;
+using Workwise.ServiceAgent.Interface;
 using Workwise.ViewModel;
 
 namespace Workwise.Controllers
@@ -19,13 +17,13 @@ namespace Workwise.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private readonly IUserService _userService;
+        private readonly IUserServiceAgent _userServiceAgent;
         public AccountController()
         {
         }
-        public AccountController(IUserService userProfileRepo)
+        public AccountController(IUserServiceAgent userServiceAgent)
         {
-            _userService = userProfileRepo;
+            _userServiceAgent = userServiceAgent;
         }
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
@@ -169,7 +167,7 @@ namespace Workwise.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await _userService.CreateUserProfileAsync(user.Id, user.UserName);
+                    await _userServiceAgent.CreateUserProfileAsync(user.Id, user.UserName);
 
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
     
@@ -189,19 +187,19 @@ namespace Workwise.Controllers
         [HttpPost]
         public async Task<ActionResult> GenerateUser(int pagenumber)
         {
-            var userList = RandomUserGenerator.GetManyUser(pagenumber,1000);
+            var userList = _userServiceAgent.GetManyUser(pagenumber,1000);
             foreach(var model in userList)
             {
                 var user = new ApplicationUser
                 {
-                    UserName = model.login.username,
-                    Email = model.email
+                    UserName = model.UserName,
+                    Email = model.Email
                 };
                 var result = await UserManager.CreateAsync(user, "Test@123");
                 if (result.Succeeded)
                 {
-                    var pofilePic = ImageHelper.SaveImagefromWeb(model.picture.medium, Server.MapPath("~/Images/Upload"));
-                    await _userService.CreateUserProfileAsync(user.Id, model.name.first + " " + model.name.last, pofilePic);
+                    var profilePic = ImageHelper.SaveImagefromWeb(model.ProfilePicture, Server.MapPath("~/Images/Upload"));
+                    await _userServiceAgent.CreateUserProfileAsync(user.Id, model.Name , profilePic);
                 }
             }
             

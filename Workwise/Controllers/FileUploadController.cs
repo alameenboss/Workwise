@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 using Workwise.Helper;
-using Workwise.Service.Interface;
+using Workwise.ServiceAgent.Interface;
 using Workwise.ViewModel;
 
 namespace Workwise.Controllers
@@ -9,11 +9,11 @@ namespace Workwise.Controllers
     [Authorize]
     public class FileUploadController : BaseController
     {
-        private readonly IUserService _userService;
+        private readonly IUserServiceAgent _userServiceAgent;
 
-        public FileUploadController(IUserService userService)
+        public FileUploadController(IUserServiceAgent userService)
         {
-            _userService = userService;
+            _userServiceAgent = userService;
 
         }
         // GET: FileUpload
@@ -27,7 +27,7 @@ namespace Workwise.Controllers
         public ActionResult SaveImage(string image)
         {
             var profilePicUrl = ImageHelper.SaveBaseEnCodedToImage(image, Server.MapPath("~/Images/Upload"));
-            _userService.SaveUserImage(User.Identity.GetUserId(), profilePicUrl);
+            _userServiceAgent.SaveUserImage(User.Identity.GetUserId(), profilePicUrl);
 
             SessionHelper.Get<UserProfileViewModel>(User.Identity.GetUserId()).ImageUrl = profilePicUrl;
             SessionHelper.UserImage = profilePicUrl;

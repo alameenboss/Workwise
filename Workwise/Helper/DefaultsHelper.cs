@@ -1,4 +1,6 @@
 ﻿using System;
+using Workwise.ServiceAgent;
+using Workwise.ServiceAgent.Interface;
 using Workwise.ViewModel;
 
 namespace Workwise.Helper
@@ -6,6 +8,11 @@ namespace Workwise.Helper
 
     public static class DefaultsHelper
     {
+        private readonly static IUserServiceAgent _userServiceAgent;
+        static DefaultsHelper()
+        {
+            _userServiceAgent = new UserServiceAgent();
+        }
         public static string GetProfilePicture(string profilePicture, string gender)
         {
             string profilePicturePath = "";
@@ -35,7 +42,7 @@ namespace Workwise.Helper
             }
             else
             {
-                user = _UserRepo.GetUserById(id);
+                user = _userServiceAgent.GetUserById(id);
             }
             UserViewModel objmodel = new UserViewModel();
             if (user != null)
@@ -59,7 +66,7 @@ namespace Workwise.Helper
             }
             return objmodel;
         }
-        public static MessageViewModel GetMessageModel(ChatMessage objentity)
+        public static MessageViewModel GetMessageModel(ChatMessageViewModel objentity)
         {
             MessageViewModel objmodel = new MessageViewModel();
             objmodel.ChatMessageId = objentity.ChatMessageId;

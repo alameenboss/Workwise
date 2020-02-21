@@ -69,7 +69,6 @@ namespace Workwise.Service
         }
         public List<FriendRequestResultModel> GetAllSentFriendRequests()
         {
-            
             return _userProfileRepo.GetAllSentFriendRequests();
         }
         public List<UserSearchResultModel> SearchUsers(string name, string userId)

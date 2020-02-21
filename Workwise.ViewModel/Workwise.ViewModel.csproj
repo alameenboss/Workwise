@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FB4D3ABD-18B7-425F-B647-8D1EB69AA60E}</ProjectGuid>
+    <ProjectGuid>{C67B9A3B-5EBC-47B9-AAA3-33DAB20F0223}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Workwise.Service</RootNamespace>
-    <AssemblyName>Workwise.Service</AssemblyName>
+    <RootNamespace>Workwise.ViewModel</RootNamespace>
+    <AssemblyName>Workwise.ViewModel</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,11 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,31 +43,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompanyService.cs" />
-    <Compile Include="Interface\ICompanyService.cs" />
-    <Compile Include="Interface\IRandomUserService.cs" />
-    <Compile Include="Interface\IUserService.cs" />
-    <Compile Include="MessageService.cs" />
-    <Compile Include="PostRepository.cs" />
+    <Compile Include="ChatMessageViewModel.cs" />
+    <Compile Include="CommentViewModel.cs" />
+    <Compile Include="CompanyViewModel.cs" />
+    <Compile Include="Enum\Enum.cs" />
+    <Compile Include="ExternalLoginConfirmationViewModel.cs" />
+    <Compile Include="ExternalLoginListViewModel.cs" />
+    <Compile Include="ForgotPasswordViewModel.cs" />
+    <Compile Include="ForgotViewModel.cs" />
+    <Compile Include="FriendMapping.cs" />
+    <Compile Include="FriendRequestViewModel.cs" />
+    <Compile Include="ImageViewModel.cs" />
+    <Compile Include="LoginViewModel.cs" />
+    <Compile Include="MessageRecordResultModel.cs" />
+    <Compile Include="MessageViewModel.cs" />
+    <Compile Include="OnlineUser.cs" />
+    <Compile Include="OnlineUserDetailResultModel.cs" />
+    <Compile Include="PostViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Interface\IMessageService.cs" />
-    <Compile Include="Interface\IPostService.cs" />
-    <Compile Include="RandomUserGenerator.cs" />
-    <Compile Include="RandomUserService.cs" />
-    <Compile Include="UserService.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Workwise.Data\Workwise.Data.csproj">
-      <Project>{0b759a5e-57f4-45bc-9d6d-5fabd860ffbe}</Project>
-      <Name>Workwise.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Workwise.Model\Workwise.Model.csproj">
-      <Project>{3189ba84-4b81-41f6-b9a5-b88914c67bbf}</Project>
-      <Name>Workwise.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="RecentChatDetailViewModel.cs" />
+    <Compile Include="RegisterViewModel.cs" />
+    <Compile Include="ResetPasswordViewModel.cs" />
+    <Compile Include="UserImage.cs" />
+    <Compile Include="UserNotification.cs" />
+    <Compile Include="UserNotificationListResultModel.cs" />
+    <Compile Include="UserProfile.cs" />
+    <Compile Include="UserSearchResultModel.cs" />
+    <Compile Include="UserViewModel.cs" />
+    <Compile Include="VerifyCodeViewModel.cs" />
+    <Compile Include="TagsViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

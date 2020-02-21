@@ -1,16 +1,13 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using System.Web;
 using System.Web.Mvc;
-using Workwise.Data;
-using Workwise.Data.Interface;
+using Workwise.ServiceAgent.Interface;
 
 namespace Workwise.Controllers
 {
     [Authorize]
     public class ProfilesController : BaseController
     {
-        private readonly IUserService _userService;
+        private readonly IUserServiceAgent _userServiceAgent;
         public ProfilesController()
         {
         }
@@ -18,20 +15,20 @@ namespace Workwise.Controllers
         {
             UserManager = userManager;
         }
-        public ProfilesController(IUserService userProfileRepo)
+        public ProfilesController(IUserServiceAgent userProfileRepo)
         {
-            _userService = userProfileRepo;
+            _userServiceAgent = userProfileRepo;
         }
         public ActionResult Index()
         {
-            var model = _userService.GetAllUsers(100, User.Identity.GetUserId());
+            var model = _userServiceAgent.GetAllUsers(100, User.Identity.GetUserId());
             return View(model);
         }
         public ActionResult Following(string id)
         {
             var userid = string.IsNullOrEmpty(id) ? User.Identity.GetUserId() : id;
-            var model = _userService.FollowingList(userid, User.Identity.GetUserId());
-            var userModel = _userService.GetByUserId(userid);
+            var model = _userServiceAgent.FollowingList(userid, User.Identity.GetUserId());
+            var userModel = _userServiceAgent.GetByUserId(userid);
             ViewBag.Image = userModel.ImageUrl;
             ViewBag.Text = userModel.FirstName + " is following " + model.Count + " person.";
            
@@ -40,15 +37,15 @@ namespace Workwise.Controllers
         public ActionResult Followers(string id)
         {
             var userid = string.IsNullOrEmpty(id) ? User.Identity.GetUserId() : id;
-            var model = _userService.FollowersList(userid, User.Identity.GetUserId());
-            var userModel = _userService.GetByUserId(userid);
+            var model = _userServiceAgent.FollowersList(userid, User.Identity.GetUserId());
+            var userModel = _userServiceAgent.GetByUserId(userid);
             ViewBag.Image = userModel.ImageUrl;
             ViewBag.Text =  userModel.FirstName + " has " + model.Count + " followers.";
             return View("Index", model);
         }
         public ActionResult Randomuser(int id)
         {
-            var model =  RandomUserGenerator.GetManyDummyUser(1, id);
+            var model = _userServiceAgent.GetManyDummyUser(1, id);
             return View(model);
         }
 

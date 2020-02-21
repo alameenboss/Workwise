@@ -1,12 +1,9 @@
 ﻿using Ninject;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Workwise.Data.Interface;
-using Workwise.Data;
+using Workwise.ServiceAgent;
+using Workwise.ServiceAgent.Interface;
 
 namespace Workwise.Infrastructure
 {
@@ -24,10 +21,10 @@ namespace Workwise.Infrastructure
         }
         private void AddBindgs()
         {
-            ninjectKernel.Bind<IPostService>().To<PostService>();
-            ninjectKernel.Bind<IUserService>().To<UserService>();
-            ninjectKernel.Bind<ICompanyService>().To<CompanyService>();
-            ninjectKernel.Bind<IMessage>().To<MessageService>();
+            ninjectKernel.Bind<IPostServiceAgent>().To<PostServiceAgent>();
+            ninjectKernel.Bind<IUserServiceAgent>().To<UserServiceAgent>();
+            ninjectKernel.Bind<ICompanyServiceAgent>().To<CompanyServiceAgent>();
+            ninjectKernel.Bind<IMessageServiceAgent>().To<MessageServiceAgent>();
         }
     }
 }

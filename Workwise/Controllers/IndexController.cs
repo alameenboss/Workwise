@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Workwise.Helper;
-using Workwise.Service.Interface;
+using Workwise.ServiceAgent.Interface;
 using Workwise.ViewModel;
 
 namespace Workwise.Controllers
@@ -13,22 +13,22 @@ namespace Workwise.Controllers
     [Authorize]
     public class IndexController : BaseController
     {
-        private readonly IUserService _userService;
-        private readonly IPostService _postService;
-        public IndexController(IUserService userService, IPostService postService)
+        private readonly IUserServiceAgent _userServiceAgent;
+        private readonly IPostServiceAgent _postServiceAgent;
+        public IndexController(IUserServiceAgent userService, IPostServiceAgent postService)
         {
-            _userService = userService;
-            _postService = postService;
+            _userServiceAgent = userService;
+            _postServiceAgent = postService;
         }
 
         public ActionResult Index()
         {
             var myuserId = User.Identity.GetUserId();
 
-            var model = _userService.GetUserById(myuserId);
-            model.Posts = _postService.GetLatestPostByUser(myuserId).ToList();
-            model.Following = _userService.FollowingList(myuserId, myuserId).Select(x => x.UserInfo).ToList();
-            model.Followers = _userService.FollowersList(myuserId, myuserId).Select(x => x.UserInfo).ToList();
+            var model = _userServiceAgent.GetUserById(myuserId);
+            model.Posts = _postServiceAgent.GetLatestPostByUser(myuserId).ToList();
+            model.Following = _userServiceAgent.FollowingList(myuserId, myuserId).Select(x => x.UserInfo).ToList();
+            model.Followers = _userServiceAgent.FollowersList(myuserId, myuserId).Select(x => x.UserInfo).ToList();
 
             return View(model);
         }
@@ -42,7 +42,7 @@ namespace Workwise.Controllers
                 RandomGenerator.GenerateLockedRandom(1, 10), 
                 RandomGenerator.GenerateLockedRandom(10, 30));
              
-            var model = new Post()
+            var model = new PostViewModel()
             {
                 PostedOn = DateTime.Now.AddSeconds(-90),
                 PostedBy = SessionHelper.GetUser(User.Identity.GetUserId()),
@@ -78,7 +78,7 @@ namespace Workwise.Controllers
                         ImageUrl = ImageHelper.SavePostedFile(PostImage, Server.MapPath("~/Images/Upload"))
                     });
                 }   
-                _postService.SavePost(model, User.Identity.GetUserId());
+                _postServiceAgent.SavePost(model, User.Identity.GetUserId());
                 return RedirectToAction("Index");
             }
             catch (Exception)
@@ -90,13 +90,13 @@ namespace Workwise.Controllers
 
         public ActionResult SuggestedUser()
         {
-            var model = _userService.GetAllUsers(5, User.Identity.GetUserId()).ToList();
+            var model = _userServiceAgent.GetAllUsers(5, User.Identity.GetUserId()).ToList();
             //var model = RandomUserGenerator.GetManyDummyUser(10);
             return PartialView(@"~\Views\Index\_SuggestedUsers.cshtml", model);
         }
         public ActionResult TopProfiles()
         {
-            var model = _userService.GetAllUsers(5, User.Identity.GetUserId());
+            var model = _userServiceAgent.GetAllUsers(5, User.Identity.GetUserId());
             //var model = RandomUserGenerator.GetManyDummyUser(10);
             return PartialView(@"~\Views\Index\_TopProfiles.cshtml", model);
         }

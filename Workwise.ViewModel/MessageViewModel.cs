@@ -6,14 +6,7 @@ using System.Web;
 namespace Workwise.ViewModel
 {
 
-    public class ChatMessageViewModel
-    {
-        public UserViewModel UserDetail { get; set; }
-        public List<MessageViewModel> ChatMessages { get; set; }
-        public bool IsOnline { get; set; }
-        public string LastSeen { get; set; }
-        public int LastChatMessageId { get; set; }
-    }
+   
     public class MessageViewModel
     {
         public int ChatMessageId { get; set; }
@@ -39,13 +32,4 @@ namespace Workwise.ViewModel
         public DateTime CreatedOn { get; set; }
     }
 
-    public class UserNotificationViewModel
-    {
-        public string NotificationType { get; set; }
-        public int NotificationId { get; set; }
-        public UserViewModel User { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public string NotificationStatus { get; set; }
-        public int TotalNotifications { get; set; }
-    }
 }

@@ -4,14 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FB4D3ABD-18B7-425F-B647-8D1EB69AA60E}</ProjectGuid>
+    <ProjectGuid>{8235B31B-F49B-47D6-98BB-004389A91830}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Workwise.Service</RootNamespace>
-    <AssemblyName>Workwise.Service</AssemblyName>
+    <RootNamespace>Workwise.ServiceAgent</RootNamespace>
+    <AssemblyName>Workwise.ServiceAgent</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,27 +45,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompanyService.cs" />
-    <Compile Include="Interface\ICompanyService.cs" />
-    <Compile Include="Interface\IRandomUserService.cs" />
-    <Compile Include="Interface\IUserService.cs" />
-    <Compile Include="MessageService.cs" />
-    <Compile Include="PostRepository.cs" />
+    <Compile Include="CompanyServiceAgent.cs" />
+    <Compile Include="Interface\IHttpClientConfiguration.cs" />
+    <Compile Include="Interface\ICompanyServiceAgent.cs" />
+    <Compile Include="Interface\IMessageServiceAgent.cs" />
+    <Compile Include="Interface\IPostServiceAgent.cs" />
+    <Compile Include="Interface\IRandomUserServiceAgent.cs" />
+    <Compile Include="Interface\IUserServiceAgent.cs" />
+    <Compile Include="UserServiceAgent.cs" />
+    <Compile Include="MessageServiceAgent.cs" />
+    <Compile Include="PostServiceAgent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Interface\IMessageService.cs" />
-    <Compile Include="Interface\IPostService.cs" />
-    <Compile Include="RandomUserGenerator.cs" />
-    <Compile Include="RandomUserService.cs" />
-    <Compile Include="UserService.cs" />
+    <Compile Include="RandomUserServiceAgent.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Workwise.Data\Workwise.Data.csproj">
-      <Project>{0b759a5e-57f4-45bc-9d6d-5fabd860ffbe}</Project>
-      <Name>Workwise.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Workwise.Model\Workwise.Model.csproj">
-      <Project>{3189ba84-4b81-41f6-b9a5-b88914c67bbf}</Project>
-      <Name>Workwise.Model</Name>
+    <ProjectReference Include="..\Workwise.ViewModel\Workwise.ViewModel.csproj">
+      <Project>{C67B9A3B-5EBC-47B9-AAA3-33DAB20F0223}</Project>
+      <Name>Workwise.ViewModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
