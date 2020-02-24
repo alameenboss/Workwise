@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompanyServiceAgent.cs" />
-    <Compile Include="Interface\IHttpClientConfiguration.cs" />
+    <Compile Include="Interface\IHttpClient.cs" />
     <Compile Include="Interface\ICompanyServiceAgent.cs" />
     <Compile Include="Interface\IMessageServiceAgent.cs" />
     <Compile Include="Interface\IPostServiceAgent.cs" />
