@@ -6,14 +6,20 @@ namespace Workwise.ServiceAgent
 {
     public class PostServiceAgent : IPostServiceAgent
     {
+        private readonly IHttpClient _httpClient;
+        public PostServiceAgent(IHttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
         public IEnumerable<PostViewModel> GetLatestPostByUser(string UserId)
         {
-            throw new System.NotImplementedException();
+            return _httpClient.Get<IEnumerable<PostViewModel>>(string.Format(Constent.Post.GetLatestPostByUser, UserId));
         }
 
         public void SavePost(PostViewModel post, string UserId)
         {
-            throw new System.NotImplementedException();
+            _httpClient.PostData<PostViewModel, PostViewModel,string>(Constent.Message.SaveChatMessage, post, UserId);
         }
     }
 }
