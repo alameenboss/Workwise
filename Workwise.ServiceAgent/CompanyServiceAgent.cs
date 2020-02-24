@@ -6,10 +6,15 @@ namespace Workwise.ServiceAgent
 {
     public class CompanyServiceAgent : ICompanyServiceAgent
     {
+        private readonly IHttpClient _httpClient;
+        public CompanyServiceAgent(IHttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
         public IEnumerable<CompanyViewModel> GetAllCompanies()
         {
-            return new List<CompanyViewModel>();
+            return _httpClient.Get<IEnumerable<CompanyViewModel>>(Constent.Company.GetCompanies);
         }
     }
 }
