@@ -4,7 +4,7 @@
     {
         public static class Company
         {
-           public const string GetCompanies = "api/Company/GetAllCompanies";
+           public const string GetCompanies = "Company/GetAllCompanies";
         }
         public static class Message
         {

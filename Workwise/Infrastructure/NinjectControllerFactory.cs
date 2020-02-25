@@ -25,6 +25,7 @@ namespace Workwise.Infrastructure
             ninjectKernel.Bind<IUserServiceAgent>().To<UserServiceAgent>();
             ninjectKernel.Bind<ICompanyServiceAgent>().To<CompanyServiceAgent>();
             ninjectKernel.Bind<IMessageServiceAgent>().To<MessageServiceAgent>();
+            ninjectKernel.Bind<IHttpClient>().To<HttpClientWrapper>();
         }
     }
 }
