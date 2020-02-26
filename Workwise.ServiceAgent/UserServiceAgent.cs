@@ -11,6 +11,13 @@ namespace Workwise.ServiceAgent
 {
     public class UserServiceAgent : IUserServiceAgent
     {
+
+        private readonly IHttpClient _httpClient;
+        public UserServiceAgent(IHttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
         public void ChangeNotificationStatus(int[] notificationIds)
         {
             throw new NotImplementedException();
@@ -73,7 +80,7 @@ namespace Workwise.ServiceAgent
 
         public UserProfileViewModel GetUserById(string userId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<UserProfileViewModel>(string.Format(Constent.User.GetUserById,userId));
         }
 
         public List<string> GetUserConnectionId(string UserId)

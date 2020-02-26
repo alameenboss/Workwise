@@ -57,6 +57,7 @@
     <Compile Include="Interface\IPostServiceAgent.cs" />
     <Compile Include="Interface\IRandomUserServiceAgent.cs" />
     <Compile Include="Interface\IUserServiceAgent.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="UserServiceAgent.cs" />
     <Compile Include="MessageServiceAgent.cs" />
     <Compile Include="PostServiceAgent.cs" />

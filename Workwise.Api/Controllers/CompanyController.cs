@@ -14,6 +14,7 @@ namespace Workwise.Api.Controllers
             _companyService = companyService;
         }
         // GET api/values
+
         public IEnumerable<Company> GetAllCompanies()
         {
             return _companyService.GetAllCompanies();

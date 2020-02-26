@@ -28,7 +28,7 @@ namespace Workwise
             return userIdentity;
         }
 
-        public virtual UserProfileViewModel UserProfile { get; set; }
+        //public virtual UserProfileViewModel UserProfile { get; set; }
     }
 
 }
