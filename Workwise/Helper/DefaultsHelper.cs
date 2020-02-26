@@ -6,14 +6,15 @@ using Workwise.ViewModel;
 namespace Workwise.Helper
 {
 
-    public static class DefaultsHelper
+    public class DefaultsHelper : IDefaultsHelper
     {
-        private readonly static IUserServiceAgent _userServiceAgent;
-        static DefaultsHelper()
+        private readonly IUserServiceAgent _userServiceAgent = null;
+       
+        public DefaultsHelper(IUserServiceAgent userServiceAgent)
         {
-            _userServiceAgent = new UserServiceAgent();
+            _userServiceAgent = userServiceAgent;
         }
-        public static string GetProfilePicture(string profilePicture, string gender)
+        public  string GetProfilePicture(string profilePicture, string gender)
         {
             string profilePicturePath = "";
             if (string.IsNullOrEmpty(profilePicture))
@@ -33,7 +34,7 @@ namespace Workwise.Helper
             }
             return profilePicturePath;
         }
-        public static UserViewModel GetUserModel(string id, UserProfileViewModel objentity = null, string friendRequestStatus = "", bool isRequestReceived = false)
+        public  UserViewModel GetUserModel(string id, UserProfileViewModel objentity = null, string friendRequestStatus = "", bool isRequestReceived = false)
         {
             var user = new UserProfileViewModel();
             if (objentity != null)
@@ -51,7 +52,7 @@ namespace Workwise.Helper
                 objmodel.FriendRequestStatus = friendRequestStatus;
                 objmodel.UserId = user.UserId;
                 objmodel.Name = user.FirstName;
-                objmodel.ProfilePicture = DefaultsHelper.GetProfilePicture(user.ImageUrl, user.Gender);
+                objmodel.ProfilePicture = GetProfilePicture(user.ImageUrl, user.Gender);
                 objmodel.Gender = user.Gender;
                 objmodel.DOB = user.DOB?.ToShortDateString();
                 if (user.DOB != null)
@@ -66,7 +67,7 @@ namespace Workwise.Helper
             }
             return objmodel;
         }
-        public static MessageViewModel GetMessageModel(ChatMessageViewModel objentity)
+        public  MessageViewModel GetMessageModel(ChatMessageViewModel objentity)
         {
             MessageViewModel objmodel = new MessageViewModel();
             objmodel.ChatMessageId = objentity.ChatMessageId;
@@ -79,6 +80,30 @@ namespace Workwise.Helper
             objmodel.ViewedOn = Convert.ToString(objentity.ViewedOn);
             objmodel.IsActive = objentity.IsActive;
             return objmodel;
+        }
+
+        public UserProfileViewModel GetUser(string userid)
+        {
+
+            if (SessionHelper.Get<UserProfileViewModel>(userid) == null)
+            {
+                var model = _userServiceAgent.GetByUserId(userid);
+                if (model == null)
+                {
+                    model = new UserProfileViewModel()
+                    {
+                        FirstName = userid,
+                        ImageUrl = @"\images\DefaultPhoto.png"
+                    };
+                }
+                SessionHelper.Set<UserProfileViewModel>(userid, model);
+                SessionHelper.UserImage = model.ImageUrl;
+                SessionHelper.UserName = model.FirstName;
+                SessionHelper.UserId = userid;
+            }
+
+            return SessionHelper.Get<UserProfileViewModel>(userid);
+
         }
     }
 }

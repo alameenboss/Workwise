@@ -17,13 +17,15 @@ namespace Workwise.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly IDefaultsHelper _defaultHelper;
         private readonly IUserServiceAgent _userServiceAgent;
         public AccountController()
         {
         }
-        public AccountController(IUserServiceAgent userServiceAgent)
+        public AccountController(IUserServiceAgent userServiceAgent, IDefaultsHelper defaultHelper)
         {
             _userServiceAgent = userServiceAgent;
+            _defaultHelper = defaultHelper;
         }
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
@@ -87,7 +89,7 @@ namespace Workwise.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    SessionHelper.GetUser(UserManager.FindByName(model.Username).Id);
+                    _defaultHelper.GetUser(UserManager.FindByName(model.Username).Id);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -167,7 +169,7 @@ namespace Workwise.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await _userServiceAgent.CreateUserProfileAsync(user.Id, user.UserName);
+                    _userServiceAgent.CreateUserProfile(user.Id, user.UserName);
 
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
     
@@ -199,7 +201,7 @@ namespace Workwise.Controllers
                 if (result.Succeeded)
                 {
                     var profilePic = ImageHelper.SaveImagefromWeb(model.ProfilePicture, Server.MapPath("~/Images/Upload"));
-                    await _userServiceAgent.CreateUserProfileAsync(user.Id, model.Name , profilePic);
+                    _userServiceAgent.CreateUserProfile(user.Id, model.Name , profilePic);
                 }
             }
             
@@ -439,7 +441,7 @@ namespace Workwise.Controllers
         }
         public ActionResult LoginPartial()
         {
-            var model = SessionHelper.GetUser(User.Identity.GetUserId());
+            var model = _defaultHelper.GetUser(User.Identity.GetUserId());
             return PartialView("_LoginPartial", model);
         }
         //

@@ -12,9 +12,11 @@ namespace Workwise.Controllers
     public class UserController : BaseController
     {
         private IUserServiceAgent _userServiceAgent;
-        public UserController(IUserServiceAgent userServiceAgent)
+        private readonly IDefaultsHelper _defaultHelper;
+        public UserController(IUserServiceAgent userServiceAgent, IDefaultsHelper defaultHelper)
         {
             this._userServiceAgent = userServiceAgent;
+            _defaultHelper = defaultHelper;
         }
         public ActionResult Chat()
         {
@@ -29,7 +31,7 @@ namespace Workwise.Controllers
         [HttpGet]
         public ActionResult EditProfile()
         {
-            var objmodel = DefaultsHelper.GetUserModel(User.Identity.GetUserId());
+            var objmodel = _defaultHelper.GetUserModel(User.Identity.GetUserId());
             return View(objmodel);
         }
         [HttpPost]
@@ -54,7 +56,7 @@ namespace Workwise.Controllers
         public ActionResult _UserSearchResult(string name)
         {
             var userList = _userServiceAgent.SearchUsers(name, User.Identity.GetUserId());
-            var objmodel = userList.Select(m => DefaultsHelper.GetUserModel(m.UserInfo.UserId, m.UserInfo, m.FriendRequestStatus, m.IsRequestReceived)).ToList();
+            var objmodel = userList.Select(m => _defaultHelper.GetUserModel(m.UserInfo.UserId, m.UserInfo, m.FriendRequestStatus, m.IsRequestReceived)).ToList();
             return PartialView(objmodel);
         }
         public ActionResult _OnlineFriends()
@@ -64,7 +66,7 @@ namespace Workwise.Controllers
             {
                 UserId = m.UserId,
                 Name = m.Name,
-                ProfilePicture = DefaultsHelper.GetProfilePicture(m.ProfilePicture, m.Gender)
+                ProfilePicture = _defaultHelper.GetProfilePicture(m.ProfilePicture, m.Gender)
             }).ToList();
             return Json(objmodel, JsonRequestBehavior.AllowGet);
         }
@@ -75,7 +77,7 @@ namespace Workwise.Controllers
             {
                 NotificationId = m.NotificationId,
                 NotificationType = m.NotificationType,
-                User = DefaultsHelper.GetUserModel("", m.User),
+                User = _defaultHelper.GetUserModel("", m.User),
                 NotificationStatus = m.NotificationStatus,
                 CreatedOn = m.CreatedOn,
                 TotalNotifications = m.TotalNotifications
@@ -89,7 +91,7 @@ namespace Workwise.Controllers
             {
                 UserId = m.UserId,
                 Name = m.Name,
-                ProfilePicture = DefaultsHelper.GetProfilePicture(m.ProfilePicture, m.Gender),
+                ProfilePicture = _defaultHelper.GetProfilePicture(m.ProfilePicture, m.Gender),
                 IsOnline = m.IsOnline,
                 UnReadMessages = m.UnReadMessageCount > 0 ? Convert.ToString(m.UnReadMessageCount) : ""
             }).ToList();
@@ -135,7 +137,7 @@ namespace Workwise.Controllers
             {
                 UserId = m.UserId,
                 Name = m.Name,
-                ProfilePicture = DefaultsHelper.GetProfilePicture(m.ProfilePicture, m.Gender),
+                ProfilePicture = _defaultHelper.GetProfilePicture(m.ProfilePicture, m.Gender),
                 IsOnline = m.IsOnline,
             }).ToList();
             return View(objmodel);

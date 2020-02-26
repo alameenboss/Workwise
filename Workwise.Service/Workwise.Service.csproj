@@ -49,7 +49,7 @@
     <Compile Include="Interface\IRandomUserService.cs" />
     <Compile Include="Interface\IUserService.cs" />
     <Compile Include="MessageService.cs" />
-    <Compile Include="PostRepository.cs" />
+    <Compile Include="PostService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interface\IMessageService.cs" />
     <Compile Include="Interface\IPostService.cs" />

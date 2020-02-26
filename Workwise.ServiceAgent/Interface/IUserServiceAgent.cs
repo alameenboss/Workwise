@@ -28,7 +28,7 @@ namespace Workwise.ServiceAgent.Interface
         int GetUserNotificationCounts(string toUserId);
         void ChangeNotificationStatus(int[] notificationIds);
         FriendMappingViewModel RemoveFriendMapping(int friendMappingId);
-        List<UserProfileViewModel> GetUsersByLinqQuery(Expression<Func<UserProfileViewModel, bool>> where);
+        //List<UserProfileViewModel> GetUsersByLinqQuery(Expression<Func<UserProfileViewModel, bool>> where);
         List<OnlineUserDetailViewModel> GetRecentChats(string currentUserId);
         OnlineUserDetailViewModel GetUserOnlineStatus(string userId);
         void UpdateUserProfilePicture(string userId, string imagePath);
@@ -37,7 +37,7 @@ namespace Workwise.ServiceAgent.Interface
         UserProfileViewModel GetByUserId(string UserId);
         void SaveUserImage(string userid, string imgPath);
         void SaveProfile(UserProfileViewModel profile);
-        Task CreateUserProfileAsync(string userId, string userName, string image = "");
+        void CreateUserProfile(string userId, string userName, string image = "");
         List<UserSearchViewModel> SerachUser(string userName);
 
         List<UserProfileViewModel> GetManyDummyUser(int pageNo, int pageSize);

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Workwise.Data.Interface;
 using Workwise.Model;
 using Workwise.Service.Interface;
 
-namespace Workwise.Data
+namespace Workwise.Service
 {
     public class PostService : IPostService
     {

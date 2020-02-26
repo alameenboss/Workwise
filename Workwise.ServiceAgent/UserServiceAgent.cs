@@ -20,62 +20,72 @@ namespace Workwise.ServiceAgent
 
         public void ChangeNotificationStatus(int[] notificationIds)
         {
-            throw new NotImplementedException();
+            _httpClient.PostData<int[]>("User/ChangeNotificationStatus", notificationIds);
         }
 
-        public Task CreateUserProfileAsync(string userId, string userName, string image = "")
+        public void CreateUserProfile(string userId, string userName, string image = "")
         {
-            throw new NotImplementedException();
+            var request = new UserViewModel()
+            {
+                UserId = userId,
+                UserName = userName,
+                ProfilePicture = image
+            };
+            _httpClient.PostData<UserViewModel>("User/CreateUserProfile", request);
         }
 
         public List<UserSearchViewModel> FollowersList(string UserId, string currentUserId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<List<UserSearchViewModel>>("User/FollowersList?UserId=" + UserId + "&currentUserId="+ currentUserId);
         }
 
         public List<UserSearchViewModel> FollowingList(string UserId, string currentUserId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<List<UserSearchViewModel>>("User/FollowingList?UserId=" + UserId + "&currentUserId=" + currentUserId);
         }
 
         public List<UserProfileViewModel> GetAllUsers(int count, string UserId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<List<UserProfileViewModel>>("User/GetAllUsers?count=" + count + "&UserId=" + UserId);
         }
 
         public UserProfileViewModel GetByUserId(string UserId)
         {
-            throw new NotImplementedException();
+           return _httpClient.Get<UserProfileViewModel>("User/GetByUserId?UserId="+ UserId);
         }
 
         public FriendMappingViewModel GetFriendRequestStatus(string userId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<FriendMappingViewModel>("User/GetFriendRequestStatus?userId=" + userId);
+
         }
 
         public List<OnlineUserDetailViewModel> GetFriends(string userId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<List<OnlineUserDetailViewModel>>("User/GetFriends?userId=" + userId);
         }
 
         public List<OnlineUserDetailViewModel> GetOnlineFriends(string userId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<List<OnlineUserDetailViewModel>>("User/GetOnlineFriends?userId=" + userId);
         }
 
         public List<FriendRequestViewModel> GetReceivedFriendRequests(string userId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<List<FriendRequestViewModel>>("User/GetReceivedFriendRequests?userId=" + userId);
+
         }
 
         public List<OnlineUserDetailViewModel> GetRecentChats(string currentUserId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<List<OnlineUserDetailViewModel>>("User/GetRecentChats?currentUserId=" + currentUserId);
+
         }
 
         public List<FriendRequestViewModel> GetSentFriendRequests(string userId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<List<FriendRequestViewModel>>("User/GetSentFriendRequests?userId=" + userId);
+
         }
 
         public UserProfileViewModel GetUserById(string userId)
@@ -85,47 +95,54 @@ namespace Workwise.ServiceAgent
 
         public List<string> GetUserConnectionId(string UserId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<List<string>>("User/GetUserConnectionId?UserId=" + UserId);
+
         }
 
         public List<string> GetUserConnectionId(string[] userIds)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<List<string>>("User/GetUserConnectionId?UserId=" + userIds);
         }
 
         public int GetUserNotificationCounts(string toUserId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<int>("User/GetUserNotificationCounts?toUserId=" + toUserId);
         }
 
         public List<UserNotificationListViewModel> GetUserNotifications(string toUserId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<List<UserNotificationListViewModel>>("User/GetUserNotifications?toUserId=" + toUserId);
+
         }
 
         public OnlineUserDetailViewModel GetUserOnlineStatus(string userId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<OnlineUserDetailViewModel>("User/GetUserOnlineStatus?userId=" + userId);
+
         }
 
-        public List<UserProfileViewModel> GetUsersByLinqQuery(Expression<Func<UserProfileViewModel, bool>> where)
-        {
-            throw new NotImplementedException();
-        }
+        //public List<UserProfileViewModel> GetUsersByLinqQuery(Expression<Func<UserProfileViewModel, bool>> where)
+        //{
+        //    return _httpClient.Get<List<UserProfileViewModel>>("User/GetUsersByLinqQuery?userId=" + userId);
+
+        //}
 
         public List<UserProfileViewModel> MyFriendsList(string UserId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<List<UserProfileViewModel>>("User/MyFriendsList?UserId=" + UserId);
+
         }
 
         public FriendMappingViewModel RemoveFriendMapping(int friendMappingId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<FriendMappingViewModel>("User/RemoveFriendMapping?friendMappingId=" + friendMappingId);
+
         }
 
         public int ResponseToFriendRequest(string requestorId, string requestResponse, string endUserId)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<int>(string.Format("User/ResponseToFriendRequest?friendMappingId={0}&requestResponse={1}&endUserId={2}", requestorId, requestResponse,endUserId));
+
         }
 
         public void SaveProfile(UserProfileViewModel profile)
@@ -174,12 +191,14 @@ namespace Workwise.ServiceAgent
         }
         public List<UserProfileViewModel> GetManyDummyUser(int pageNo, int pageSize)
         {
-            throw new System.NotImplementedException();
+            return _httpClient.Get<List<UserProfileViewModel>>(string.Format("User/GetManyDummyUser?pageNo={0}&pageSize={1}", pageNo, pageSize));
+
         }
 
         public List<UserViewModel> GetManyUser(int pageNo, int take)
         {
-            throw new NotImplementedException();
+            return _httpClient.Get<List<UserViewModel>>(string.Format("User/GetManyUser?pageNo={0}&take={1}", pageNo, take));
+
         }
     }
 }

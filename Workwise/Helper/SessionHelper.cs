@@ -95,30 +95,7 @@ namespace Workwise.Helper
 
         }
 
-        public  static UserProfileViewModel GetUser(string userid)
-        {
 
-            if (SessionHelper.Get<UserProfileViewModel>(userid) == null)
-            {
-                var repo = new UserServiceAgent();
-                var model = repo.GetByUserId(userid);
-                if (model == null)
-                {
-                    model = new UserProfileViewModel()
-                    {
-                        FirstName = userid,
-                        ImageUrl = @"\images\DefaultPhoto.png"
-                    };
-                }
-                SessionHelper.Set<UserProfileViewModel>(userid, model);
-                SessionHelper.UserImage = model.ImageUrl;
-                SessionHelper.UserName = model.FirstName;
-                SessionHelper.UserId = userid;
-            }
-
-            return SessionHelper.Get<UserProfileViewModel>(userid);
-
-        }
         #endregion
     }
 

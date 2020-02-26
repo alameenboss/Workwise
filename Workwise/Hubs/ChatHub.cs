@@ -23,10 +23,12 @@ namespace Workwise.Hubs
     {
         private readonly IUserServiceAgent _userServiceAgent;
         private readonly IMessageServiceAgent _messageServiceAgent;
-        public ChatHub(IUserServiceAgent userServiceAgent, IMessageServiceAgent messageServiceAgent)
+        private readonly IDefaultsHelper _defaultHelper;
+        public ChatHub(IUserServiceAgent userServiceAgent, IMessageServiceAgent messageServiceAgent,IDefaultsHelper defaultHelper)
         {
             _userServiceAgent = userServiceAgent;
             _messageServiceAgent = messageServiceAgent;
+            _defaultHelper = defaultHelper;
         }
 
         public override Task OnConnected()
@@ -90,7 +92,7 @@ namespace Workwise.Hubs
             var connectionId = _userServiceAgent.GetUserConnectionId(toUserId);
             if (connectionId != null && connectionId.Count() > 0)
             {
-                var userInfo = DefaultsHelper.GetUserModel(fromUserId);
+                var userInfo = _defaultHelper.GetUserModel(fromUserId);
                 int notificationCounts = _userServiceAgent.GetUserNotificationCounts(toUserId);
                 Clients.Clients(connectionId).ReceiveNotification(notificationType, userInfo, notificationId, notificationCounts);
             }
@@ -153,7 +155,7 @@ namespace Workwise.Hubs
             objentity.ToUserId = toUserId;
             objentity.UpdatedOn = System.DateTime.Now;
             var obj = _messageServiceAgent.SaveChatMessage(objentity);
-            var messageRow = DefaultsHelper.GetMessageModel(obj);
+            var messageRow = _defaultHelper.GetMessageModel(obj);
             List<string> connectionIds = _userServiceAgent.GetUserConnectionId(new string[] { fromUserId, toUserId });
             Clients.Clients(connectionIds).AddNewChatMessage(messageRow, fromUserId, toUserId, fromUserName, fromUserProfilePic, toUserName, toUserProfilePic);
         }

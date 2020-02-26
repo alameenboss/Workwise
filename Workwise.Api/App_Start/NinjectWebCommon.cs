@@ -64,6 +64,10 @@ namespace Workwise.Api.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<ICompanyService>().To<CompanyService>();
+            kernel.Bind<IMessageService>().To<MessageService>();
+            kernel.Bind<IPostService>().To<PostService>();
+            kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<IRandomUserService>().To<RandomUserService>();
         }
     }
 }

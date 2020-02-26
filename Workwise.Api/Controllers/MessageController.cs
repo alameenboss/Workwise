@@ -1,35 +1,39 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
+﻿using System.Web.Http;
+using Workwise.Model;
+using Workwise.ResultModel;
+using Workwise.Service.Interface;
 
 namespace Workwise.Api.Controllers
 {
     public class MessageController : ApiController
     {
-        // GET api/values
-        public IEnumerable<string> Get()
+        private readonly IMessageService _messageService = null;
+        public MessageController(IMessageService messageService)
         {
-            return new string[] { "value1", "value2" };
+            _messageService = messageService;
         }
 
-        // GET api/values/5
-        public string Get(int id)
+        [HttpPost]
+        public ChatMessage SaveChatMessage(ChatMessage objentity)
         {
-            return "value";
+            return _messageService.SaveChatMessage(objentity);
         }
 
-        // POST api/values
-        public void Post([FromBody]string value)
+        public MessageRecordResultModel GetChatMessagesByUserId(string currentUserId, string toUserId, int lastMessageId = 0)
         {
+            return _messageService.GetChatMessagesByUserId(currentUserId, toUserId, lastMessageId);
         }
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPost]
+        public void UpdateMessageStatusByUserId(string fromUserId, string currentUserId)
         {
+            _messageService.UpdateMessageStatusByUserId(fromUserId, currentUserId);
         }
 
-        // DELETE api/values/5
-        public void Delete(int id)
+        [HttpPost]
+        public void UpdateMessageStatusByMessageId(int messageId)
         {
+            _messageService.UpdateMessageStatusByMessageId(messageId);
         }
     }
 }

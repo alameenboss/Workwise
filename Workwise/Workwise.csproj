@@ -198,6 +198,7 @@
     </Compile>
     <Compile Include="Helper\Base64Helper.cs" />
     <Compile Include="Helper\DefaultsHelper.cs" />
+    <Compile Include="Helper\IDefaultsHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="Helper\PrettyDate.cs" />
     <Compile Include="Helper\RandomGenerator.cs" />

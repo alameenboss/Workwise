@@ -44,5 +44,7 @@ namespace Workwise.Service.Interface
         void SaveProfile(UserProfile profile);
         Task CreateUserProfileAsync(string userId, string userName,string image="");
         List<UserSearchResultModel> SerachUser(string userName);
+        string[] GetFriendUserIds(string userId);
+        List<FriendRequestResultModel> GetAllSentFriendRequests();
     }
 }

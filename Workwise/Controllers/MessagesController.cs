@@ -13,10 +13,12 @@ namespace Workwise.Controllers
     {
         private readonly IUserServiceAgent _userServiceAgent;      
         private readonly IMessageServiceAgent _MessageServiceAgent;
-        public MessagesController(IUserServiceAgent userServiceAgent, IMessageServiceAgent MessageServiceAgent)
+        private readonly IDefaultsHelper _defaultHelper;
+        public MessagesController(IUserServiceAgent userServiceAgent, IMessageServiceAgent MessageServiceAgent, IDefaultsHelper defaultHelper)
         {
             _userServiceAgent = userServiceAgent;
             _MessageServiceAgent = MessageServiceAgent;
+            _defaultHelper = defaultHelper;
         }
 
         public ActionResult Index()
@@ -33,11 +35,11 @@ namespace Workwise.Controllers
 
         public ActionResult _Messages(string Id)
         {
-            var userModel = DefaultsHelper.GetUserModel(Id);
+            var userModel = _defaultHelper.GetUserModel(Id);
             var messages = _MessageServiceAgent.GetChatMessagesByUserId(User.Identity.GetUserId(), Id);
             var objmodel = new ChatMessageViewModel();
             objmodel.UserDetail = userModel;
-            objmodel.ChatMessages = messages.Messages.Select(m => DefaultsHelper.GetMessageModel(m)).ToList();
+            objmodel.ChatMessages = messages.Messages.Select(m => _defaultHelper.GetMessageModel(m)).ToList();
             objmodel.LastChatMessageId = messages.LastChatMessageId;
             var onlineStatus = _userServiceAgent.GetUserOnlineStatus(Id);
             if (onlineStatus != null)
@@ -51,7 +53,7 @@ namespace Workwise.Controllers
         {
             var messages = _MessageServiceAgent.GetChatMessagesByUserId(User.Identity.GetUserId(), Id, lastChatMessageId);
             var objmodel = new ChatMessageViewModel();
-            objmodel.ChatMessages = messages.Messages.Select(m => DefaultsHelper.GetMessageModel(m)).ToList();
+            objmodel.ChatMessages = messages.Messages.Select(m => _defaultHelper.GetMessageModel(m)).ToList();
             objmodel.LastChatMessageId = messages.LastChatMessageId;
             return Json(objmodel, JsonRequestBehavior.AllowGet);
         }

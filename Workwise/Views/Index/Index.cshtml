@@ -17,7 +17,7 @@
                                     </div><!--username-dt end-->
                                     <div class="user-specs">
                                         <h3>@SessionHelper.UserName</h3>
-                                        <span>@SessionHelper.GetUser(User.Identity.GetUserId()).Designation</span>
+                                        <span>Software Engineer</span>
                                     </div>
                                 </div><!--user-profile end-->
                                 <ul class="user-fw-status">
@@ -225,7 +225,7 @@
 </main>
 
 
-@Html.Partial("_PostProjectPopup",new Post())
+@Html.Partial("_PostProjectPopup",new PostViewModel())
 @Html.Partial("_PostJobPopup")
 @Html.Partial("_ChatListbox")
 

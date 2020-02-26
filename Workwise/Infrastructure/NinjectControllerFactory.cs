@@ -2,6 +2,7 @@
 using System;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Workwise.Helper;
 using Workwise.ServiceAgent;
 using Workwise.ServiceAgent.Interface;
 
@@ -26,6 +27,8 @@ namespace Workwise.Infrastructure
             ninjectKernel.Bind<ICompanyServiceAgent>().To<CompanyServiceAgent>();
             ninjectKernel.Bind<IMessageServiceAgent>().To<MessageServiceAgent>();
             ninjectKernel.Bind<IHttpClient>().To<HttpClientWrapper>();
+            ninjectKernel.Bind<IDefaultsHelper>().To<DefaultsHelper>();
+
         }
     }
 }
