@@ -12,7 +12,7 @@ namespace Workwise.Model
             Skills = new List<string>();
             Tags = new List<Tags>();
             PostImages = new List<ImageModel>();
-            PostedBy = new UserProfile();
+            //PostedBy = new UserProfile();
             Comments = new List<Comment>();
             LikedBy = new List<UserProfile>();
             ViewedBy = new List<UserProfile>();
@@ -27,7 +27,7 @@ namespace Workwise.Model
         public string Description { get; set; }
 
         public string PostedById { get; set; }
-        public virtual UserProfile PostedBy { get; set; }
+        ////public virtual UserProfile PostedBy { get; set; }
 
         public List<UserProfile> LikedBy { get; set; }
         public List<UserProfile> ViewedBy { get; set; }

@@ -13,6 +13,7 @@ namespace Workwise.Api.App_Start
     using Ninject.Web.Common.WebHost;
     using Workwise.Service.Interface;
     using Workwise.Service;
+    using System.Reflection;
 
     public static class NinjectWebCommon 
     {
@@ -68,6 +69,8 @@ namespace Workwise.Api.App_Start
             kernel.Bind<IPostService>().To<PostService>();
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IRandomUserService>().To<RandomUserService>();
+
+            kernel.Load(Assembly.GetAssembly(typeof(ServiceLayerBinding)));
         }
     }
 }

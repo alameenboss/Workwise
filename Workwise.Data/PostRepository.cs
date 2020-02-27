@@ -14,7 +14,7 @@ namespace Workwise.Data
         {
             using (var db = new ApplicationDbContext())
             {
-                post.PostedBy = db.UserProfiles.FirstOrDefault(x => x.UserId == UserId);
+                post.PostedById = UserId;
                 post.PostedOn = DateTime.Now;
                 post.Location = "India";
                 db.Post.Add(post);
@@ -30,7 +30,7 @@ namespace Workwise.Data
             using (var db = new ApplicationDbContext())
             {
                 var user = db.UserProfiles.FirstOrDefault(x => x.UserId == UserId);
-                return db.Post.Include(x=>x.PostImages).Include(x=>x.PostedBy).Where(x=>x.PostedBy.UserId == UserId).OrderByDescending(x => x.PostedOn).Take(10).ToList();
+                return db.Post.Include(x=>x.PostImages).Where(x=>x.PostedById == UserId).OrderByDescending(x => x.PostedOn).Take(10).ToList();
             }
         }
 

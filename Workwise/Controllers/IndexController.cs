@@ -29,8 +29,8 @@ namespace Workwise.Controllers
 
             var model = _userServiceAgent.GetUserById(myuserId);
             model.Posts = _postServiceAgent.GetLatestPostByUser(myuserId).ToList();
-            model.Following = _userServiceAgent.FollowingList(myuserId, myuserId).Select(x => x.UserInfo).ToList();
-            model.Followers = _userServiceAgent.FollowersList(myuserId, myuserId).Select(x => x.UserInfo).ToList();
+            model.Following = new List<UserProfileViewModel>();// _userServiceAgent.FollowingList(myuserId, myuserId).Select(x => x.UserInfo).ToList();
+            model.Followers = new List<UserProfileViewModel>();// _userServiceAgent.FollowersList(myuserId, myuserId).Select(x => x.UserInfo).ToList();
 
             return View(model);
         }

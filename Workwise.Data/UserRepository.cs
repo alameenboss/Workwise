@@ -423,11 +423,20 @@ namespace Workwise.Data
         }
         public UserProfile GetByUserId(string UserId)
         {
-            using (var db = new ApplicationDbContext())
+            try
             {
-                return db.UserProfiles.FirstOrDefault(x => x.UserId == UserId);
+                using (var db = new ApplicationDbContext())
+                {
+                    return db.UserProfiles.FirstOrDefault(x => x.UserId == UserId);
 
+                }
             }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
         public void SaveUserImage(string userid, string imgPath)
         {

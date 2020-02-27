@@ -10,9 +10,9 @@ namespace Workwise.Model.Configuration
     {
         public UserProfileConfigMap()
         {
-            HasMany(x => x.Posts)
-                .WithRequired(x => x.PostedBy)
-                .HasForeignKey(x => x.PostedById);
+            //HasMany(x => x.Posts)
+            //    .WithRequired(x => x.PostedBy)
+            //    .HasForeignKey(x => x.PostedById);
 
             //HasMany(u => u.Following)
             //    .WithMany()
@@ -28,12 +28,12 @@ namespace Workwise.Model.Configuration
 
     public class PostConfigMap : EntityTypeConfiguration<Post>
     {
-        public PostConfigMap()
-        {
+        //public PostConfigMap()
+        //{
 
-            HasRequired(x => x.PostedBy);
+        //    HasRequired(x => x.PostedBy);
                 
 
-        }
+        //}
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Workwise.Model;
 using Workwise.ResultModel;
 using Workwise.Service.Interface;
@@ -11,10 +13,10 @@ namespace Workwise.Api.Controllers
     {
         private readonly IUserService _userService = null;
         private readonly IRandomUserService _randomUserService = null;
-        public UserController(IUserService userService, IRandomUserService randomUserService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _randomUserService = randomUserService;
+            //_randomUserService = randomUserService;, IRandomUserService randomUserService
         }
         public void SaveUserOnlineStatus(OnlineUser objentity)
         {
@@ -24,10 +26,10 @@ namespace Workwise.Api.Controllers
         {
             return _userService.GetUserConnectionId(UserId);
         }
-        public List<string> GetUserConnectionId(string[] userIds)
-        {
-            return _userService.GetUserConnectionId(userIds);
-        }
+        //public List<string> GetUserConnectionId(string[] userIds)
+        //{
+        //    return _userService.GetUserConnectionId(userIds);
+        //}
         public List<UserProfile> GetAllUsers(int count, string userId)
         {
             return _userService.GetAllUsers(count, userId);
@@ -127,9 +129,30 @@ namespace Workwise.Api.Controllers
         {
             return _userService.GetFriends(userId);
         }
-        public UserProfile GetByUserId(string UserId)
+
+        [ResponseType(typeof(UserProfile))]
+        public IHttpActionResult GetByUserId(string UserId)
         {
-            return _userService.GetByUserId(UserId);
+            try
+            {
+                var userprofile = _userService.GetByUserId(UserId);
+                if (userprofile == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(userprofile);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+            
         }
         public void SaveUserImage(string userid, string imgPath)
         {

@@ -21,11 +21,11 @@ namespace Workwise.Model
         public DateTime? UpdatedOn { get; set; }
         public bool IsActive { get; set; }
 
-        public virtual List<Post> Posts { get; set; }
+        //public virtual List<Post> Posts { get; set; }
 
        
-        public virtual List<UserProfile> Following { get; set; }
+        //public virtual List<UserProfile> Following { get; set; }
 
-        public virtual List<UserProfile> Followers { get; set; }
+        //public virtual List<UserProfile> Followers { get; set; }
     }
 }
