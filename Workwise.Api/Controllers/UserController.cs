@@ -16,7 +16,6 @@ namespace Workwise.Api.Controllers
         public UserController(IUserService userService)
         {
             _userService = userService;
-            //_randomUserService = randomUserService;, IRandomUserService randomUserService
         }
         public void SaveUserOnlineStatus(OnlineUser objentity)
         {
@@ -26,11 +25,11 @@ namespace Workwise.Api.Controllers
         {
             return _userService.GetUserConnectionId(UserId);
         }
-        //public List<string> GetUserConnectionId(string[] userIds)
-        //{
-        //    return _userService.GetUserConnectionId(userIds);
-        //}
-        public List<UserProfile> GetAllUsers(int count, string userId)
+        public List<string> GetUserConnectionId(string[] userIds)
+        {
+            return _userService.GetUserConnectionId(userIds);
+        }
+        public List<UserSearchResultModel> GetAllUsers(int count, string userId)
         {
             return _userService.GetAllUsers(count, userId);
         }
@@ -38,13 +37,56 @@ namespace Workwise.Api.Controllers
         {
             return _userService.MyFriendsList(userId);
         }
-        public List<UserSearchResultModel> FollowersList(string userId, string currentUserId)
+        [HttpGet]
+        [ResponseType(typeof(List<UserSearchResultModel>))]
+        public IHttpActionResult FollowersList(string userId, string currentUserId)
         {
-            return _userService.FollowersList(userId, currentUserId);
+            try
+            {
+                var followers = _userService.FollowersList(userId, currentUserId);
+                if (followers == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(followers);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+
         }
-        public List<UserSearchResultModel> FollowingList(string userId, string currentUserId)
+
+        [HttpGet]
+        [ResponseType(typeof(List<UserSearchResultModel>))]
+        public IHttpActionResult FollowingList(string userId, string currentUserId)
         {
-            return _userService.FollowingList(userId, currentUserId);
+            try
+            {
+                var following = _userService.FollowingList(userId, currentUserId);
+                if (following == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(following);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+
         }
         public List<OnlineUserDetailViewModel> GetOnlineFriends(string userId)
         {
@@ -117,14 +159,39 @@ namespace Workwise.Api.Controllers
         {
             return _userService.GetUserOnlineStatus(userId);
         }
-        public void UpdateUserProfilePicture(string userId, string imagePath)
+        [HttpPost]
+        public IHttpActionResult SaveProfileImage(UserProfile model)
         {
-            _userService.UpdateUserProfilePicture(userId, imagePath);
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data.");
+            try
+            {
+                _userService.SaveProfileImage(model.UserId, model.ImageUrl);
+            }
+            catch (HttpResponseException ex)
+            {
+                throw ex;
+            }
+            return Ok();
         }
-        public void SaveUserImage(string userId, string imagePath, bool isProfilePicture)
+
+        [HttpPost]
+        public IHttpActionResult SaveUserImage(UserImage model)
         {
-            _userService.SaveUserImage(userId, imagePath, isProfilePicture);
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data.");
+            try
+            {
+                _userService.SaveUserImage(model.UserId, model.ImagePath, false);
+            }
+            catch (HttpResponseException ex)
+            {
+                throw ex;
+            }
+            return Ok();
         }
+        
+
         public List<OnlineUserDetailViewModel> GetFriends(string userId)
         {
             return _userService.GetFriends(userId);
@@ -154,10 +221,7 @@ namespace Workwise.Api.Controllers
             }
             
         }
-        public void SaveUserImage(string userid, string imgPath)
-        {
-            _userService.SaveUserImage(userid, imgPath);
-        }
+        
         public void SaveProfile(UserProfile profile)
         {
             _userService.SaveProfile(profile);

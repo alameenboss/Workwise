@@ -1,9 +1,9 @@
-namespace Workwise.Migrations
+﻿namespace Workwise.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class UserProfile : DbMigration
+    public partial class updatinguserprofile1 : DbMigration
     {
         public override void Up()
         {

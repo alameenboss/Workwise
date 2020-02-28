@@ -40,9 +40,35 @@ namespace Workwise.ServiceAgent
             return obj;
         }
 
-        public T PostData<T>(string requestUri, T value)
+        public async Task<T> PostDataAsync<T>(string requestUri, T value)
         {
-            throw new NotImplementedException();
+            T obj = default(T);
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44378/api/");
+                //HTTP GET
+                var responseTask = await client.PostAsJsonAsync(requestUri,value);
+               // responseTask.Wait();
+
+                //var result = responseTask.Content;
+                if (responseTask.IsSuccessStatusCode)
+                {
+                    var readTask = await responseTask.Content.ReadAsAsync<T>();
+                    //readTask.Wait();
+
+                    obj = readTask;
+                }
+                //else //web api sent error response 
+                //{
+                //    //log response status here..
+
+                //    students = Enumerable.Empty<StudentViewModel>();
+
+                //    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                //}
+            }
+            return obj;
         }
 
         public T PostData<T, U>(string requestUri, U value)

@@ -20,7 +20,7 @@ namespace Workwise.ServiceAgent
 
         public void ChangeNotificationStatus(int[] notificationIds)
         {
-            _httpClient.PostData<int[]>("User/ChangeNotificationStatus", notificationIds);
+            _httpClient.PostDataAsync<int[]>("User/ChangeNotificationStatus", notificationIds);
         }
 
         public void CreateUserProfile(string userId, string userName, string image = "")
@@ -31,7 +31,7 @@ namespace Workwise.ServiceAgent
                 UserName = userName,
                 ProfilePicture = image
             };
-            _httpClient.PostData<UserViewModel>("User/CreateUserProfile", request);
+            _httpClient.PostDataAsync<UserViewModel>("User/CreateUserProfile", request);
         }
 
         public List<UserSearchViewModel> FollowersList(string UserId, string currentUserId)
@@ -44,9 +44,9 @@ namespace Workwise.ServiceAgent
             return _httpClient.Get<List<UserSearchViewModel>>("User/FollowingList?UserId=" + UserId + "&currentUserId=" + currentUserId);
         }
 
-        public List<UserProfileViewModel> GetAllUsers(int count, string UserId)
+        public List<UserSearchViewModel> GetAllUsers(int count, string UserId)
         {
-            return _httpClient.Get<List<UserProfileViewModel>>("User/GetAllUsers?count=" + count + "&UserId=" + UserId);
+            return _httpClient.Get<List<UserSearchViewModel>>("User/GetAllUsers?count=" + count + "&UserId=" + UserId);
         }
 
         public UserProfileViewModel GetByUserId(string UserId)
@@ -150,15 +150,17 @@ namespace Workwise.ServiceAgent
             throw new NotImplementedException();
         }
 
-        public void SaveUserImage(string userId, string imagePath, bool isProfilePicture)
+
+        public void SaveProfileImage(UserImageViewModel model)
         {
-            throw new NotImplementedException();
+            _httpClient.PostDataAsync("User/SaveProfileImage", model);
         }
 
-        public void SaveUserImage(string userid, string imgPath)
+        public void SaveUserImage(UserImageViewModel model)
         {
-            throw new NotImplementedException();
+            _httpClient.PostDataAsync("User/SaveUserImage", model);
         }
+
 
         public int SaveUserNotification(string notificationType, string fromUserId, string toUserId)
         {

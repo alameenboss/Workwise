@@ -27,7 +27,12 @@ namespace Workwise.Controllers
         public ActionResult SaveImage(string image)
         {
             var profilePicUrl = ImageHelper.SaveBaseEnCodedToImage(image, Server.MapPath("~/Images/Upload"));
-            _userServiceAgent.SaveUserImage(User.Identity.GetUserId(), profilePicUrl);
+            var model = new UserImageViewModel
+            {
+                UserId = User.Identity.GetUserId(),
+                ImageUrl = profilePicUrl
+            };
+            _userServiceAgent.SaveProfileImage(model);
 
             SessionHelper.Get<UserProfileViewModel>(User.Identity.GetUserId()).ImageUrl = profilePicUrl;
             SessionHelper.UserImage = profilePicUrl;

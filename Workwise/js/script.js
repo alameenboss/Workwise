@@ -229,14 +229,24 @@ $(window).on("load", function() {
 
     //  ============ Notifications Open =============
 
-    $(".not-box-open").on("click", function(){$("#message").hide();
+    $(".not-box-open").on("click", function () {
+        $("#message").hide();
         $(".user-account-settingss").hide();
         $(this).next("#notification").toggle();
     });
 
+
      //  ============ Messages Open =============
 
-    $(".not-box-openm").on("click", function(){$("#notification").hide();
+    $("#message .nt-title a").on("click", function (e) {
+        e.preventDefault();
+        $('#message .notfication-details').hide('slow', function () {
+            $(this).remove();
+        });
+    });
+
+    $(".not-box-openm").on("click", function () {
+        $("#notification").hide();
         $(".user-account-settingss").hide();
         $(this).next("#message").toggle();
     });

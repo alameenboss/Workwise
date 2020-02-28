@@ -31,7 +31,7 @@ namespace Workwise.Service
         {
             return _userProfileRepo.GetUserConnectionId(userIds);
         }
-        public List<UserProfile> GetAllUsers(int count, string userId)
+        public List<UserSearchResultModel> GetAllUsers(int count, string userId)
         {
             return _userProfileRepo.GetAllUsers(count,userId);
         }
@@ -107,10 +107,7 @@ namespace Workwise.Service
         {
             return _userProfileRepo.RemoveFriendMapping(friendMappingId);
         }
-        public void UpdateProfilePicture(string userId, string profilePicturePath)
-        {
-
-        }
+       
         public List<UserProfile> GetUsersByLinqQuery(Expression<Func<UserProfile, bool>> where)
         {
             return _userProfileRepo.GetUsersByLinqQuery(where);
@@ -123,9 +120,9 @@ namespace Workwise.Service
         {
             return _userProfileRepo.GetUserOnlineStatus(userId);
         }
-        public void UpdateUserProfilePicture(string userId, string imagePath)
+        public void SaveProfileImage(string userId, string imagePath)
         {
-            _userProfileRepo.UpdateUserProfilePicture(userId, imagePath);
+            _userProfileRepo.SaveProfileImage(userId, imagePath);
         }
         public void SaveUserImage(string userId, string imagePath, bool isProfilePicture)
         {
@@ -139,10 +136,7 @@ namespace Workwise.Service
         {
           return  _userProfileRepo.GetByUserId(UserId);
         }
-        public void SaveUserImage(string userid, string imgPath)
-        {
-            _userProfileRepo.SaveUserImage(userid, imgPath);
-        }
+       
         public void SaveProfile(UserProfile profile)
         {
             _userProfileRepo.SaveProfile(profile);

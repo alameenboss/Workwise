@@ -1,15 +1,15 @@
-﻿@model List<Workwise.ViewModel.UserProfileViewModel>
+﻿@model List<Workwise.ViewModel.UserSearchViewModel>
 
 @foreach (var user in Model)
 {
 
     <div class="suggestion-usd">
-        <img src="@user.ImageUrl" alt="">
+        <img src="@user.UserInfo.ImageUrl" alt="">
         <div class="sgt-text">
-            <a href="/MyProfileFeed/Index/@user.UserId" title="" tabindex="-1"><h4>@user.FirstName</h4></a>
-            <span>@user.Designation</span>
+            <a href="/MyProfileFeed/Index/@user.UserInfo.UserId" title="" tabindex="-1"><h4>@user.UserInfo.FirstName</h4></a>
+            <span>@user.UserInfo.Designation</span>
         </div>
-        <span class="follow-user sendRequest" data-user-id="@user.UserId"><i class="fa fa-plus"></i></span>
+        <span class="follow-user sendRequest" data-user-id="@user.UserInfo.UserId"><i class="fa fa-plus"></i></span>
     </div>
 }
 

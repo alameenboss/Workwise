@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Workwise.ServiceAgent.Interface;
 using Workwise.ViewModel;
 
@@ -12,9 +13,9 @@ namespace Workwise.ServiceAgent
             _httpClient = httpClient;
         }
 
-        public ChatMessageViewModel SaveChatMessage(ChatMessageViewModel objentity)
+        public async Task<ChatMessageViewModel> SaveChatMessage(ChatMessageViewModel objentity)
         {
-            return _httpClient.PostData<ChatMessageViewModel>(Constent.Message.SaveChatMessage, objentity);
+            return await _httpClient.PostDataAsync<ChatMessageViewModel>(Constent.Message.SaveChatMessage, objentity);
         }
         public MessageRecordViewModel GetChatMessagesByUserId(string currentUserId, string toUserId, int lastMessageId = 0)
         {

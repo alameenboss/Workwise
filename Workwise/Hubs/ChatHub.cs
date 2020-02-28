@@ -143,7 +143,7 @@ namespace Workwise.Hubs
                 RefreshOnlineUsersByConnectionIds(connectionIds);
             }
         }
-        public void SendMessage(string fromUserId, string toUserId, string message, string fromUserName, string fromUserProfilePic, string toUserName, string toUserProfilePic)
+        public async void SendMessage(string fromUserId, string toUserId, string message, string fromUserName, string fromUserProfilePic, string toUserName, string toUserProfilePic)
         {
             ChatMessageViewModel objentity = new ChatMessageViewModel();
             objentity.CreatedOn = System.DateTime.Now;
@@ -154,7 +154,7 @@ namespace Workwise.Hubs
             objentity.Status = "Sent";
             objentity.ToUserId = toUserId;
             objentity.UpdatedOn = System.DateTime.Now;
-            var obj = _messageServiceAgent.SaveChatMessage(objentity);
+            var obj = await  _messageServiceAgent.SaveChatMessage(objentity);
             var messageRow = _defaultHelper.GetMessageModel(obj);
             List<string> connectionIds = _userServiceAgent.GetUserConnectionId(new string[] { fromUserId, toUserId });
             Clients.Clients(connectionIds).AddNewChatMessage(messageRow, fromUserId, toUserId, fromUserName, fromUserProfilePic, toUserName, toUserProfilePic);

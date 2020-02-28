@@ -11,7 +11,7 @@ namespace Workwise.ServiceAgent.Interface
         void SaveUserOnlineStatus(OnlineUserViewModel objentity);
         List<string> GetUserConnectionId(string UserId);
         List<string> GetUserConnectionId(string[] userIds);
-        List<UserProfileViewModel> GetAllUsers(int count, string UserId);
+        List<UserSearchViewModel> GetAllUsers(int count, string UserId);
         List<UserProfileViewModel> MyFriendsList(string UserId);
         List<UserSearchViewModel> FollowersList(string UserId, string currentUserId);
         List<UserSearchViewModel> FollowingList(string UserId, string currentUserId);
@@ -32,10 +32,9 @@ namespace Workwise.ServiceAgent.Interface
         List<OnlineUserDetailViewModel> GetRecentChats(string currentUserId);
         OnlineUserDetailViewModel GetUserOnlineStatus(string userId);
         void UpdateUserProfilePicture(string userId, string imagePath);
-        void SaveUserImage(string userId, string imagePath, bool isProfilePicture);
         List<OnlineUserDetailViewModel> GetFriends(string userId);
         UserProfileViewModel GetByUserId(string UserId);
-        void SaveUserImage(string userid, string imgPath);
+        void SaveProfileImage(UserImageViewModel model);
         void SaveProfile(UserProfileViewModel profile);
         void CreateUserProfile(string userId, string userName, string image = "");
         List<UserSearchViewModel> SerachUser(string userName);

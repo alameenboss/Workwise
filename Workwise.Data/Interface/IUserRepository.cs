@@ -16,7 +16,7 @@ namespace Workwise.Data.Interface
         void SaveUserOnlineStatus(OnlineUser objentity);
         List<string> GetUserConnectionId(string UserId);
         List<string> GetUserConnectionId(string[] userIds);
-        List<UserProfile> GetAllUsers(int count, string UserId);
+        List<UserSearchResultModel> GetAllUsers(int count, string UserId);
         List<UserProfile> MyFriendsList(string UserId);
         List<UserSearchResultModel> FollowersList(string UserId, string currentUserId);
         List<UserSearchResultModel> FollowingList(string UserId, string currentUserId);
@@ -36,11 +36,10 @@ namespace Workwise.Data.Interface
         List<UserProfile> GetUsersByLinqQuery(Expression<Func<UserProfile, bool>> where);
         List<OnlineUserDetailViewModel> GetRecentChats(string currentUserId);
         OnlineUserDetailViewModel GetUserOnlineStatus(string userId);
-        void UpdateUserProfilePicture(string userId, string imagePath);
+        void SaveProfileImage(string userId, string imagePath);
         void SaveUserImage(string userId, string imagePath, bool isProfilePicture);
         List<OnlineUserDetailViewModel> GetFriends(string userId);
         UserProfile GetByUserId(string UserId);
-        void SaveUserImage(string userid, string imgPath);
         void SaveProfile(UserProfile profile);
         Task CreateUserProfileAsync(string userId, string userName,string image="");
         List<UserSearchResultModel> SerachUser(string userName);

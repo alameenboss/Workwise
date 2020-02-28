@@ -12,7 +12,7 @@ namespace Workwise.ViewModel
         [Key]
         public int ImageId { get; set; }
         public string UserId { get; set; }
-        public string ImagePath { get; set; }
+        public string ImageUrl { get; set; }
         public bool IsProfilePicture { get; set; }
         public DateTime CreatedOn { get; set; }
         public bool IsActive { get; set; }

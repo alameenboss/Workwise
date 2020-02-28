@@ -30,7 +30,7 @@ namespace Workwise.Data
             using (var db = new ApplicationDbContext())
             {
                 var user = db.UserProfiles.FirstOrDefault(x => x.UserId == UserId);
-                return db.Post.Include(x=>x.PostImages).Where(x=>x.PostedById == UserId).OrderByDescending(x => x.PostedOn).Take(10).ToList();
+                return db.Post.Where(x=>x.PostedById == UserId).OrderByDescending(x => x.PostedOn).Take(10).ToList();
             }
         }
 

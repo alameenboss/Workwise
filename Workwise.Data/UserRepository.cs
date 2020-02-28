@@ -42,14 +42,20 @@ namespace Workwise.Data
             var obj = _context.OnlineUsers.Where(m => userIds.Contains(m.UserId) && m.IsActive == true && m.IsOnline == true).Select(m => m.ConnectionId).ToList();
             return obj;
         }
-        public List<UserProfile> GetAllUsers(int count, string userId)
+        public List<UserSearchResultModel> GetAllUsers(int count, string userId)
         {
             var v = new List<UserSearchResultModel>();
             v.AddRange(FollowersList(userId, userId));
             v.AddRange(FollowingList(userId, userId));
             var ids = v.Select(x => x.UserInfo.UserId).ToList();
 
-            var list = _context.UserProfiles.Where(x => !ids.Contains(x.UserId)).Take(count).ToList();
+            var list = _context.UserProfiles
+                .Where(x => !ids.Contains(x.UserId))
+                .Take(count).Select(x=> 
+                    new UserSearchResultModel() {
+                        UserInfo =  x,
+                        FriendRequestStatus = "Follow"}) 
+                .ToList();
             return list;
         }
         public List<UserProfile> MyFriendsList(string userId)
@@ -376,7 +382,7 @@ namespace Workwise.Data
             }
             return obj;
         }
-        public void UpdateUserProfilePicture(string userId, string imagePath)
+        public void SaveProfileImage(string userId, string imagePath)
         {
             var obj = _context.UserProfiles.Where(m => m.UserId == userId).FirstOrDefault();
             if (obj != null)
@@ -438,26 +444,26 @@ namespace Workwise.Data
             }
            
         }
-        public void SaveUserImage(string userid, string imgPath)
-        {
-            using (var db = new ApplicationDbContext())
-            {
-                var model = db.UserProfiles.FirstOrDefault(x => x.UserId == userid); ;
-                if (model != null)
-                {
-                    model.ImageUrl = imgPath;
-                }
-                else
-                {
-                    db.UserProfiles.Add(new UserProfile()
-                    {
-                        UserId = userid,
-                        ImageUrl = imgPath
-                    });
-                }
-                db.SaveChanges();
-            }
-        }
+        //public void SaveUserImage(string userid, string imgPath)
+        //{
+        //    using (var db = new ApplicationDbContext())
+        //    {
+        //        var model = db.UserProfiles.FirstOrDefault(x => x.UserId == userid); ;
+        //        if (model != null)
+        //        {
+        //            model.ImageUrl = imgPath;
+        //        }
+        //        else
+        //        {
+        //            db.UserProfiles.Add(new UserProfile()
+        //            {
+        //                UserId = userid,
+        //                ImageUrl = imgPath
+        //            });
+        //        }
+        //        db.SaveChanges();
+        //    }
+        //}
         public void SaveProfile(UserProfile profile)
         {
             using (var db = new ApplicationDbContext())

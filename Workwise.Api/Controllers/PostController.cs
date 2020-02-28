@@ -18,7 +18,7 @@ namespace Workwise.Api.Controllers
             _postService.SavePost(post, UserId);
         }
 
-
+        [HttpGet]
         public IEnumerable<Post> GetLatestPostByUser(string UserId)
         {
             return _postService.GetLatestPostByUser(UserId);

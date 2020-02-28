@@ -1,10 +1,10 @@
 ﻿@using Workwise.ViewModel;
 @using Microsoft.AspNet.Identity;
-@model  List<UserSearchResult>
+@model  List<UserSearchViewModel>
 
 <section class="companies-info">
     <div class="container">
-        <div class="company-title">
+        <div class="company-title @(ViewBag.Image == null || ViewBag.Text == null ? "display-none" :"")">
             <div class="user-pro-img">
                 <img src="@ViewBag.Image">
             </div>
