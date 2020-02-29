@@ -20,7 +20,6 @@ namespace Workwise.Model
         public DateTime? CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public bool IsActive { get; set; }
-
         //public List<Post> Posts { get; set; }
 
      

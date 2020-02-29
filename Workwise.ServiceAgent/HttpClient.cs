@@ -71,14 +71,14 @@ namespace Workwise.ServiceAgent
             return obj;
         }
 
-        public T PostData<T, U>(string requestUri, U value)
-        {
-            throw new NotImplementedException();
-        }
+        //public T PostData<T, U>(string requestUri, U value)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public T PostData<T, U, V>(string requestUri, U value, V value2)
-        {
-            throw new NotImplementedException();
-        }
+        //public T PostData<T, U, V>(string requestUri, U value, V value2)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

@@ -76,6 +76,14 @@
     <Compile Include="Migrations\202002271445252_updatinguserprofile2.designer.cs">
       <DependentUpon>202002271445252_updatinguserprofile2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002281821507_addCompanyName.cs" />
+    <Compile Include="Migrations\202002281821507_addCompanyName.designer.cs">
+      <DependentUpon>202002281821507_addCompanyName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002281909254_addCompanyName1.cs" />
+    <Compile Include="Migrations\202002281909254_addCompanyName1.designer.cs">
+      <DependentUpon>202002281909254_addCompanyName1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Configuration\UserProfileConfigMap.cs" />
@@ -105,6 +113,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002271445252_updatinguserprofile2.resx">
       <DependentUpon>202002271445252_updatinguserprofile2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002281821507_addCompanyName.resx">
+      <DependentUpon>202002281821507_addCompanyName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002281909254_addCompanyName1.resx">
+      <DependentUpon>202002281909254_addCompanyName1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

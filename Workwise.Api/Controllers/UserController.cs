@@ -17,26 +17,124 @@ namespace Workwise.Api.Controllers
         {
             _userService = userService;
         }
-        public void SaveUserOnlineStatus(OnlineUser objentity)
+
+        [HttpPost]
+        public IHttpActionResult SaveUserOnlineStatus(OnlineUser objentity)
         {
-            _userService.SaveUserOnlineStatus(objentity);
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data.");
+            try
+            {
+                _userService.SaveUserOnlineStatus(objentity);
+            }
+            catch (HttpResponseException ex)
+            {
+                throw ex;
+            }
+            return Ok();
         }
-        public List<string> GetUserConnectionId(string UserId)
+
+        [HttpGet]
+        [ResponseType(typeof(List<string>))]
+        public IHttpActionResult GetUserConnectionId(string userId)
         {
-            return _userService.GetUserConnectionId(UserId);
+            try
+            {
+                var myConnectionIdList = _userService.GetUserConnectionId(userId);
+                if (myConnectionIdList == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(myConnectionIdList);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
         }
-        public List<string> GetUserConnectionId(string[] userIds)
+
+        [HttpGet]
+        [ResponseType(typeof(List<string>))]
+        public IHttpActionResult GetUserConnectionId(string[] userIds)
         {
-            return _userService.GetUserConnectionId(userIds);
+            try
+            {
+                var myConnectionIdList = _userService.GetUserConnectionId(userIds);
+                if (myConnectionIdList == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(myConnectionIdList);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
         }
-        public List<UserSearchResultModel> GetAllUsers(int count, string userId)
+
+        [HttpGet]
+        [ResponseType(typeof(List<UserSearchResultModel>))]
+        public IHttpActionResult GetAllUsers(int count, string userId)
         {
-            return _userService.GetAllUsers(count, userId);
+            try
+            {
+                var userList = _userService.GetAllUsers(count, userId);
+                if (userList == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(userList);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
         }
-        public List<UserProfile> MyFriendsList(string userId)
+        
+
+        [HttpGet]
+        [ResponseType(typeof(List<UserProfile>))]
+        public IHttpActionResult MyFriendsList(string userId)
         {
-            return _userService.MyFriendsList(userId);
+            try
+            {
+                var myFriendsList = _userService.MyFriendsList(userId);
+                if (myFriendsList == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(myFriendsList);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
         }
+
         [HttpGet]
         [ResponseType(typeof(List<UserSearchResultModel>))]
         public IHttpActionResult FollowersList(string userId, string currentUserId)
@@ -88,77 +186,417 @@ namespace Workwise.Api.Controllers
             }
 
         }
-        public List<OnlineUserDetailViewModel> GetOnlineFriends(string userId)
+        
+        [HttpGet]
+        [ResponseType(typeof(List<OnlineUserDetailViewModel>))]
+        public IHttpActionResult GetOnlineFriends(string userId)
         {
-            return _userService.GetOnlineFriends(userId);
-        }
-        public UserProfile GetUserById(string userId)
-        {
-            return _userService.GetUserById(userId);
-        }
-        public string[] GetFriendUserIds(string userId)
-        {
-            return _userService.GetFriendUserIds(userId);
-        }
-        public List<FriendRequestResultModel> GetSentFriendRequests(string userId)
-        {
-            return _userService.GetSentFriendRequests(userId);
-        }
-        public List<FriendRequestResultModel> GetReceivedFriendRequests(string userId)
-        {
-            return _userService.GetReceivedFriendRequests(userId);
-        }
-        public List<FriendRequestResultModel> GetAllSentFriendRequests()
-        {
-            return _userService.GetAllSentFriendRequests();
-        }
-        public List<UserSearchResultModel> SearchUsers(string name, string userId)
-        {
-            return _userService.SearchUsers(name, userId);
-        }
-        public void SendFriendRequest(string endUserId, string loggedInUserId)
-        {
-            _userService.SendFriendRequest(endUserId, loggedInUserId);
-        }
-        public int SaveUserNotification(string notificationType, string fromUserId, string toUserId)
-        {
-            return _userService.SaveUserNotification(notificationType, fromUserId, toUserId);
-        }
-        public FriendMapping GetFriendRequestStatus(string userId)
-        {
-            return _userService.GetFriendRequestStatus(userId);
-        }
-        public int ResponseToFriendRequest(string requestorId, string requestResponse, string endUserId)
-        {
-            return _userService.ResponseToFriendRequest(requestorId, requestResponse, endUserId);
-        }
-        public List<UserNotificationListResultModel> GetUserNotifications(string toUserId)
-        {
-            return _userService.GetUserNotifications(toUserId);
-        }
-        public int GetUserNotificationCounts(string toUserId)
-        {
-            return _userService.GetUserNotificationCounts(toUserId);
+            try
+            {
+                var onlineFriends = _userService.GetOnlineFriends(userId);
+                if (onlineFriends == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(onlineFriends);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+
         }
 
 
-        public void ChangeNotificationStatus(int[] notificationIds)
+        [HttpGet]
+        [ResponseType(typeof(UserProfile))]
+        public IHttpActionResult GetUserById(string userId)
         {
-            _userService.ChangeNotificationStatus(notificationIds);
+            try
+            {
+                var user = _userService.GetUserById(userId);
+                if (user == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(user);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+
         }
-        public FriendMapping RemoveFriendMapping(int friendMappingId)
+
+        [HttpGet]
+        [ResponseType(typeof(string[]))]
+        public IHttpActionResult GetFriendUserIds(string userId)
         {
-            return _userService.RemoveFriendMapping(friendMappingId);
+            try
+            {
+                var friendUserIds = _userService.GetFriendUserIds(userId);
+                if (friendUserIds == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(friendUserIds);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+
         }
-      
-        public List<OnlineUserDetailViewModel> GetRecentChats(string currentUserId)
+
+        [HttpGet]
+        [ResponseType(typeof(List<FriendRequestResultModel>))]
+        public IHttpActionResult GetSentFriendRequests(string userId)
         {
-            return _userService.GetRecentChats(currentUserId);
+            try
+            {
+                var sentRequests = _userService.GetSentFriendRequests(userId);
+                if (sentRequests == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(sentRequests);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+
         }
-        public OnlineUserDetailViewModel GetUserOnlineStatus(string userId)
+
+
+        [HttpGet]
+        [ResponseType(typeof(List<FriendRequestResultModel>))]
+        public IHttpActionResult GetReceivedFriendRequests(string userId)
         {
-            return _userService.GetUserOnlineStatus(userId);
+            try
+            {
+                var receivedRequest = _userService.GetReceivedFriendRequests(userId);
+                if (receivedRequest == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(receivedRequest);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+
         }
+
+
+
+        [HttpGet]
+        [ResponseType(typeof(List<FriendRequestResultModel>))]
+        public IHttpActionResult GetAllSentFriendRequests()
+        {
+            try
+            {
+                var sentRequests = _userService.GetAllSentFriendRequests();
+                if (sentRequests == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(sentRequests);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+
+        }
+
+        [HttpGet]
+        [ResponseType(typeof(List<UserSearchResultModel>))]
+        public IHttpActionResult SearchUsers(string name, string userId)
+        {
+            try
+            {
+                var result = _userService.SearchUsers(name, userId);
+                if (result == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(result);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+
+        }
+
+        [HttpPost]
+        public IHttpActionResult SendFriendRequest(string endUserId, string loggedInUserId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data.");
+            try
+            {
+                _userService.SendFriendRequest(endUserId, loggedInUserId);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+            return Ok();
+        }
+       
+        
+        [HttpPost]
+        [ResponseType(typeof(int))]
+        public IHttpActionResult SaveUserNotification(string notificationType, string fromUserId, string toUserId)
+        {
+            var result = 0;
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data.");
+            try
+            {
+                result = _userService.SaveUserNotification( notificationType,  fromUserId,  toUserId);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [ResponseType(typeof(FriendMapping))]
+        public IHttpActionResult GetFriendRequestStatus(string userId)
+        {
+            try
+            {
+                var result = _userService.GetFriendRequestStatus(userId);
+                if (result == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(result);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+
+        }
+
+
+
+        [HttpGet]
+        [ResponseType(typeof(int))]
+        public IHttpActionResult ResponseToFriendRequest(string requestorId, string requestResponse, string endUserId)
+        {
+            try
+            {
+                var result = _userService.ResponseToFriendRequest(requestorId, requestResponse, endUserId);
+                if (result == 0)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(result);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            } 
+        }
+        [HttpGet]
+        [ResponseType(typeof(List<UserNotificationListResultModel>))]
+        public IHttpActionResult GetUserNotifications(string toUserId)
+        {
+            try
+            {
+                var result = _userService.GetUserNotifications(toUserId);
+                if (result == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(result);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet]
+        [ResponseType(typeof(int))]
+        public IHttpActionResult GetUserNotificationCounts(string toUserId)
+        {
+            try
+            {
+                var result = _userService.GetUserNotificationCounts(toUserId);
+                if (result == 0)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(result);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult ChangeNotificationStatus(int[] notificationIds)
+        {
+            
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data.");
+            try
+            {
+                _userService.ChangeNotificationStatus(notificationIds);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+            return Ok();
+        }
+
+        [HttpPost]
+        [ResponseType(typeof(FriendMapping))] 
+        public IHttpActionResult RemoveFriendMapping(int friendMappingId)
+        {
+            FriendMapping result = null;
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data.");
+            try
+            {
+                result = _userService.RemoveFriendMapping(friendMappingId);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [ResponseType(typeof(List<OnlineUserDetailViewModel>))]
+        public IHttpActionResult GetRecentChats(string currentUserId)
+        {
+            try
+            {
+                var result = _userService.GetRecentChats(currentUserId);
+                if (result == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(result);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet]
+        [ResponseType(typeof(OnlineUserDetailViewModel))]
+        public IHttpActionResult GetUserOnlineStatus(string userId)
+        {
+            try
+            {
+                var result = _userService.GetUserOnlineStatus(userId);
+                if (result == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(result);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+        }
+
         [HttpPost]
         public IHttpActionResult SaveProfileImage(UserProfile model)
         {
@@ -190,11 +628,30 @@ namespace Workwise.Api.Controllers
             }
             return Ok();
         }
-        
 
-        public List<OnlineUserDetailViewModel> GetFriends(string userId)
+        [HttpGet]
+        [ResponseType(typeof(List<OnlineUserDetailViewModel>))]
+        public IHttpActionResult GetFriends(string userId)
         {
-            return _userService.GetFriends(userId);
+            try
+            {
+                var result = _userService.GetFriends(userId);
+                if (result == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(result);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
         }
 
         [ResponseType(typeof(UserProfile))]
@@ -221,11 +678,25 @@ namespace Workwise.Api.Controllers
             }
             
         }
-        
-        public void SaveProfile(UserProfile profile)
+
+        [HttpPost]
+        public IHttpActionResult SaveProfile(UserProfile profile)
         {
-            _userService.SaveProfile(profile);
+           
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data.");
+            try
+            {
+                _userService.SaveProfile(profile);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
+            return Ok();
         }
+
 
         public async Task CreateUserProfileAsync(string userId, string userName, string userImage = "")
         {

@@ -9,7 +9,7 @@
         public static class Message
         {
             public const string SaveChatMessage = "Message/SaveChatMessage";
-            public const string GetChatMessagesByUserId = "Message/SaveChatMessage?currentUserId={0}&toUserId={1}&lastMessageId={2}";
+            public const string GetChatMessagesByUserId = "Message/GetChatMessagesByUserId?currentUserId={0}&toUserId={1}&lastMessageId={2}";
             public const string UpdateMessageStatusByUserId = "Message/UpdateMessageStatusByUserId";
             public const string UpdateMessageStatusByMessageId = "Message/UpdateMessageStatusByMessageId";
         }

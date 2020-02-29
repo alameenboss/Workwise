@@ -169,7 +169,7 @@ namespace Workwise.ServiceAgent
 
         public void SaveUserOnlineStatus(OnlineUserViewModel objentity)
         {
-            throw new NotImplementedException();
+            _httpClient.PostDataAsync("User/SaveUserOnlineStatus", objentity);
         }
 
         public List<UserSearchViewModel> SearchUsers(string name, string userId)
