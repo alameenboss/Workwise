@@ -13,9 +13,9 @@ namespace Workwise.Service
         {
             _postRepository = postRepository;
         }
-        public void SavePost(Post post, string UserId)
+        public void SavePost(Post post)
         {
-            _postRepository.SavePost(post, UserId);
+            _postRepository.SavePost(post);
         }
 
         public IEnumerable<Post> GetLatestPostByUser(string UserId)

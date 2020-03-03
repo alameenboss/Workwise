@@ -5,7 +5,7 @@ namespace Workwise.Data.Interface
 {
     public interface IPostRepository
     {
-        void SavePost(Post post, string UserId);
+        void SavePost(Post post);
         IEnumerable<Post> GetLatestPostByUser(string UserId);
     }
 }

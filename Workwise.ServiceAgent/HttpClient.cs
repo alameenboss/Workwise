@@ -40,6 +40,16 @@ namespace Workwise.ServiceAgent
             return obj;
         }
 
+        public async void PostData<U>(string requestUri, U value)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44378/api/");
+                //HTTP GET
+                await client.PostAsJsonAsync(requestUri, value);
+            }
+        }
+
         public async Task<T> PostDataAsync<T>(string requestUri, T value)
         {
             T obj = default(T);
@@ -70,15 +80,5 @@ namespace Workwise.ServiceAgent
             }
             return obj;
         }
-
-        //public T PostData<T, U>(string requestUri, U value)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public T PostData<T, U, V>(string requestUri, U value, V value2)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

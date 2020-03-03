@@ -5,7 +5,7 @@ namespace Workwise.ServiceAgent.Interface
 {
     public interface IPostServiceAgent
     {
-        void SavePost(PostViewModel post, string UserId);
+        void SavePost(PostViewModel post);
         IEnumerable<PostViewModel> GetLatestPostByUser(string UserId);
     }
 }

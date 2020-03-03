@@ -25,9 +25,9 @@ namespace Workwise.Api.Controllers
         }
 
         [HttpPost]
-        public void UpdateMessageStatusByUserId(string fromUserId, string currentUserId)
+        public void UpdateMessageStatusByUserId(UpdateMessageStatusRequest model)
         {
-            _messageService.UpdateMessageStatusByUserId(fromUserId, currentUserId);
+            _messageService.UpdateMessageStatusByUserId(model.FromUserId, model.CurrentUserId);
         }
 
         [HttpPost]

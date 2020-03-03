@@ -17,9 +17,9 @@ namespace Workwise.ServiceAgent
             return _httpClient.Get<IEnumerable<PostViewModel>>(string.Format(Constent.Post.GetLatestPostByUser, UserId));
         }
 
-        public void SavePost(PostViewModel post, string UserId)
+        public void SavePost(PostViewModel post)
         {
-            _httpClient.PostData<PostViewModel, PostViewModel,string>(Constent.Message.SaveChatMessage, post, UserId);
+            _httpClient.PostData(Constent.Post.SavePost, post);
         }
     }
 }

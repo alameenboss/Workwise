@@ -13,9 +13,9 @@ namespace Workwise.Api.Controllers
         }
 
         [HttpPost]
-        public void SavePost(Post post, string UserId)
+        public void SavePost(Post post)
         {
-            _postService.SavePost(post, UserId);
+            _postService.SavePost(post);
         }
 
         [HttpGet]

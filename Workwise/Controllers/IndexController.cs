@@ -79,8 +79,10 @@ namespace Workwise.Controllers
                     {
                         ImageUrl = ImageHelper.SavePostedFile(PostImage, Server.MapPath("~/Images/Upload"))
                     });
-                }   
-                _postServiceAgent.SavePost(model, User.Identity.GetUserId());
+                }
+                
+                model.PostedById = User.Identity.GetUserId();
+                _postServiceAgent.SavePost(model);
                 return RedirectToAction("Index");
             }
             catch (Exception)

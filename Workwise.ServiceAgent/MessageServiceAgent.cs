@@ -23,11 +23,16 @@ namespace Workwise.ServiceAgent
         }
         public void UpdateMessageStatusByUserId(string fromUserId, string currentUserId)
         {
-            _httpClient.PostData<ChatMessageViewModel,string,string>(Constent.Message.UpdateMessageStatusByUserId, fromUserId, currentUserId);
+            var model = new UpdateMessageStatusViewModel()
+            {
+                FromUserId = fromUserId,
+                CurrentUserId = currentUserId
+            };
+            _httpClient.PostData(Constent.Message.UpdateMessageStatusByUserId, model);
         }
         public void UpdateMessageStatusByMessageId(int messageId)
         {
-             _httpClient.PostData<ChatMessageViewModel,int>(Constent.Message.UpdateMessageStatusByMessageId, messageId);
+             _httpClient.PostData(Constent.Message.UpdateMessageStatusByMessageId, messageId);
 
         }
     }

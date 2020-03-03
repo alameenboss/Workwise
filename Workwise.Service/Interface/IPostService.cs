@@ -5,7 +5,7 @@ namespace Workwise.Service.Interface
 {
     public interface IPostService
     {
-        void SavePost(Post post, string UserId);
+        void SavePost(Post post);
         IEnumerable<Post> GetLatestPostByUser(string UserId);
     }
 }

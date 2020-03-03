@@ -16,7 +16,8 @@
 
         public static class Post
         {
-            public const string GetLatestPostByUser = "Post/GetLatestPostByUser?UserId={0}"; 
+            public const string GetLatestPostByUser = "Post/GetLatestPostByUser?UserId={0}";
+            public const string SavePost = "Post/SavePost";
         }
 
         public static class User

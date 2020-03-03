@@ -64,6 +64,7 @@
     <Compile Include="RecentChatDetailViewModel.cs" />
     <Compile Include="RegisterViewModel.cs" />
     <Compile Include="ResetPasswordViewModel.cs" />
+    <Compile Include="UpdateMessageStatusViewModel.cs" />
     <Compile Include="UserImageViewModel.cs" />
     <Compile Include="UserNotification.cs" />
     <Compile Include="UserNotificationListResultModel.cs" />

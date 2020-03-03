@@ -10,11 +10,10 @@ namespace Workwise.Data
 {
     public class PostRepository : IPostRepository
     {
-        public void SavePost(Post post, string UserId)
+        public void SavePost(Post post)
         {
             using (var db = new ApplicationDbContext())
             {
-                post.PostedById = UserId;
                 post.PostedOn = DateTime.Now;
                 post.Location = "India";
                 db.Post.Add(post);
