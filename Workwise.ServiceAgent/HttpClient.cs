@@ -70,5 +70,37 @@ namespace Workwise.ServiceAgent
             }
             return obj;
         }
+
+        public async Task<U> PostDataAsync<T, U>(string requestUri, T value)
+        {
+            U result = default(U);
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44378/api/");
+                //HTTP GET
+                var responseTask = await client.PostAsJsonAsync(requestUri, value);
+                // responseTask.Wait();
+
+                //var result = responseTask.Content;
+                if (responseTask.IsSuccessStatusCode)
+                {
+                    var readTask = await responseTask.Content.ReadAsAsync<U>();
+                    //readTask.Wait();
+
+                    result = readTask;
+                }
+                //else //web api sent error response 
+                //{
+                //    //log response status here..
+
+                //    students = Enumerable.Empty<StudentViewModel>();
+
+                //    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                //}
+            }
+            return result;
+        }
+        
     }
 }

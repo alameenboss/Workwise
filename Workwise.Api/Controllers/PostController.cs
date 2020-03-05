@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Workwise.Model;
+using Workwise.ResultModel;
 using Workwise.Service.Interface;
 namespace Workwise.Api.Controllers
 {
@@ -13,15 +16,45 @@ namespace Workwise.Api.Controllers
         }
 
         [HttpPost]
-        public void SavePost(Post post)
+        public IHttpActionResult SavePost(Post post)
         {
-            _postService.SavePost(post);
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data.");
+            try
+            {
+                _postService.SavePost(post);
+            }
+            catch (HttpResponseException ex)
+            {
+                throw ex;
+            }
+            return Ok();
+
         }
 
         [HttpGet]
-        public IEnumerable<Post> GetLatestPostByUser(string UserId)
+        [ResponseType(typeof(IEnumerable<Post>))]
+        public IHttpActionResult GetLatestPostByUser(string UserId)
         {
-            return _postService.GetLatestPostByUser(UserId);
+            try
+            {
+                var result = _postService.GetLatestPostByUser(UserId);
+                if (result == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(result);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
         }
     }
 }

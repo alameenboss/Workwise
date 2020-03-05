@@ -349,11 +349,11 @@ namespace Workwise.Api.Controllers
 
         [HttpGet]
         [ResponseType(typeof(List<UserSearchResultModel>))]
-        public IHttpActionResult SearchUsers(string name, string userId)
+        public IHttpActionResult SearchUsers(UserProfile model)
         {
             try
             {
-                var result = _userService.SearchUsers(name, userId);
+                var result = _userService.SearchUsers(model.FirstName, model.UserId);
                 if (result == null)
                 {
                     var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
@@ -374,13 +374,13 @@ namespace Workwise.Api.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult SendFriendRequest(string endUserId, string loggedInUserId)
+        public IHttpActionResult SendFriendRequest(FriendRequestResultModel model )
         {
             if (!ModelState.IsValid)
                 return BadRequest("Invalid data.");
             try
             {
-                _userService.SendFriendRequest(endUserId, loggedInUserId);
+                _userService.SendFriendRequest(model.EndUserId, model.UserId);
             }
             catch (HttpResponseException)
             {
@@ -393,14 +393,14 @@ namespace Workwise.Api.Controllers
         
         [HttpPost]
         [ResponseType(typeof(int))]
-        public IHttpActionResult SaveUserNotification(string notificationType, string fromUserId, string toUserId)
+        public IHttpActionResult SaveUserNotification(UserNotification model)
         {
             var result = 0;
             if (!ModelState.IsValid)
                 return BadRequest("Invalid data.");
             try
             {
-                result = _userService.SaveUserNotification( notificationType,  fromUserId,  toUserId);
+                result = _userService.SaveUserNotification(model.NotificationType, model.FromUserId, model.ToUserId);
             }
             catch (HttpResponseException)
             {

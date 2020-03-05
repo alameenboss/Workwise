@@ -13,9 +13,9 @@ namespace Workwise.Service
     {
         private readonly ICompanyRepository _companyRepository;
 
-        public CompanyService()
+        public CompanyService(ICompanyRepository companyRepository)
         {
-            _companyRepository = new CompanyRepository();
+            _companyRepository = companyRepository;
         }
 
         public IEnumerable<Company> GetAllCompanies()

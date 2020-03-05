@@ -147,7 +147,7 @@ namespace Workwise.ServiceAgent
 
         public void SaveProfile(UserProfileViewModel profile)
         {
-            throw new NotImplementedException();
+            _httpClient.PostDataAsync("User/SaveProfile", profile);
         }
 
 
@@ -164,7 +164,16 @@ namespace Workwise.ServiceAgent
 
         public int SaveUserNotification(string notificationType, string fromUserId, string toUserId)
         {
-            throw new NotImplementedException();
+            var model = new UserNotificationViewModel()
+            {
+                NotificationType = notificationType,
+                FromUserId = fromUserId,
+                ToUserId = toUserId
+            };
+
+            var result =  _httpClient.PostDataAsync("User/SaveUserNotification", model);
+
+            return result.Result.NotificationId;
         }
 
         public void SaveUserOnlineStatus(OnlineUserViewModel objentity)
@@ -174,22 +183,38 @@ namespace Workwise.ServiceAgent
 
         public List<UserSearchViewModel> SearchUsers(string name, string userId)
         {
-            throw new NotImplementedException();
+            var model = new UserProfileViewModel()
+            {
+                FirstName = name,
+                UserId = userId
+            };
+            return _httpClient.PostDataAsync<UserProfileViewModel,List<UserSearchViewModel>>("User/SearchUsers", model).Result;
         }
 
         public void SendFriendRequest(string endUserId, string loggedInUserId)
         {
-            throw new NotImplementedException();
+            var model = new FriendRequestViewModel()
+            {
+                UserId = loggedInUserId,
+                EndUserId = endUserId
+            };
+            _httpClient.PostDataAsync("User/SendFriendRequest", model);
         }
 
-        public List<UserSearchViewModel> SerachUser(string userName)
+        public  List<UserSearchViewModel> SerachUser(string userName)
         {
-            throw new NotImplementedException();
+            return  _httpClient.PostDataAsync<string, List<UserSearchViewModel>>("User/SerachUser", userName).Result;
         }
 
         public void UpdateUserProfilePicture(string userId, string imagePath)
         {
-            throw new NotImplementedException();
+            var model = new UserProfileViewModel()
+            {
+                UserId = userId,
+                ImageUrl = imagePath
+            };
+            _httpClient.PostDataAsync("User/UpdateUserProfilePicture", model);
+
         }
         public List<UserProfileViewModel> GetManyDummyUser(int pageNo, int pageSize)
         {

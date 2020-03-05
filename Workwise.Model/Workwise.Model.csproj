@@ -52,7 +52,7 @@
     <Compile Include="Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestModel\UpdateMessageStatusRequest.cs" />
-    <Compile Include="ResultModel\FriendRequestViewModel.cs" />
+    <Compile Include="ResultModel\FriendRequestResultModel.cs" />
     <Compile Include="ResultModel\MessageRecordResultModel.cs" />
     <Compile Include="ResultModel\OnlineUserDetailResultModel.cs" />
     <Compile Include="ResultModel\UserNotificationListResultModel.cs" />

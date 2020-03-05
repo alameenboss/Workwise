@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Workwise.Model;
 using Workwise.Service.Interface;
 
@@ -13,11 +14,30 @@ namespace Workwise.Api.Controllers
         {
             _companyService = companyService;
         }
-       
 
-        public IEnumerable<Company> GetAllCompanies()
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Company>))]
+        public IHttpActionResult GetAllCompanies()
         {
-            return _companyService.GetAllCompanies();
+            try
+            {
+                var result = _companyService.GetAllCompanies();
+                if (result == null)
+                {
+                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent("Not Found"),
+                        ReasonPhrase = "Not Found"
+                    };
+                    throw new HttpResponseException(resp);
+                }
+                return Ok(result);
+            }
+            catch (HttpResponseException)
+            {
+
+                throw;
+            }
         }
     }
 }
