@@ -111,7 +111,7 @@ namespace Workwise.Hubs
             if (requestResponse == "Accepted")
             {
                 SendNotification(endUserId, requestorId, "FriendRequestAccepted");
-                List<string> connectionIds = _userServiceAgent.GetUserConnectionId(new string[] { endUserId, requestorId });
+                List<string> connectionIds = _userServiceAgent.GetUsersConnectionId(new string[] { endUserId, requestorId });
                 RefreshOnlineUsersByConnectionIds(connectionIds);
             }
         }
@@ -139,7 +139,7 @@ namespace Workwise.Hubs
             var friendMapping = _userServiceAgent.RemoveFriendMapping(friendMappingId);
             if (friendMapping != null)
             {
-                List<string> connectionIds = _userServiceAgent.GetUserConnectionId(new string[] { friendMapping.EndUserId, friendMapping.UserId });
+                List<string> connectionIds = _userServiceAgent.GetUsersConnectionId(new string[] { friendMapping.EndUserId, friendMapping.UserId });
                 RefreshOnlineUsersByConnectionIds(connectionIds);
             }
         }
@@ -156,12 +156,12 @@ namespace Workwise.Hubs
             objentity.UpdatedOn = System.DateTime.Now;
             var obj = _messageServiceAgent.SaveChatMessage(objentity);
             var messageRow = _defaultHelper.GetMessageModel(obj);
-            List<string> connectionIds = _userServiceAgent.GetUserConnectionId(new string[] { fromUserId, toUserId });
+            List<string> connectionIds = _userServiceAgent.GetUsersConnectionId(new string[] { fromUserId, toUserId });
             Clients.Clients(connectionIds).AddNewChatMessage(messageRow, fromUserId, toUserId, fromUserName, fromUserProfilePic, toUserName, toUserProfilePic);
         }
         public void SendUserTypingStatus(string toUserId, string fromUserId)
         {
-            List<string> connectionIds = _userServiceAgent.GetUserConnectionId(new string[] { toUserId });
+            List<string> connectionIds = _userServiceAgent.GetUsersConnectionId(new string[] { toUserId });
             if (connectionIds.Count > 0)
             {
                 Clients.Clients(connectionIds).UserIsTyping(fromUserId);
@@ -177,7 +177,7 @@ namespace Workwise.Hubs
             {
                 _messageServiceAgent.UpdateMessageStatusByUserId(fromUserId, currentUserId);
             }
-            List<string> connectionIds = _userServiceAgent.GetUserConnectionId(new string[] { currentUserId, fromUserId });
+            List<string> connectionIds = _userServiceAgent.GetUsersConnectionId(new string[] { currentUserId, fromUserId });
             Clients.Clients(connectionIds).UpdateMessageStatusInChatWindow(messageId, currentUserId, fromUserId);
         }
     }

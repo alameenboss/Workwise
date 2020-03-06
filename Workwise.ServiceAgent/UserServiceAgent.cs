@@ -20,7 +20,7 @@ namespace Workwise.ServiceAgent
 
         public void ChangeNotificationStatus(int[] notificationIds)
         {
-            _httpClient.PostDataAsync<int[]>("User/ChangeNotificationStatus", notificationIds);
+            _httpClient.PostData("User/ChangeNotificationStatus", notificationIds);
         }
 
         public void CreateUserProfile(string userId, string userName, string image = "")
@@ -31,7 +31,7 @@ namespace Workwise.ServiceAgent
                 UserName = userName,
                 ProfilePicture = image
             };
-            _httpClient.PostDataAsync<UserViewModel>("User/CreateUserProfile", request);
+            _httpClient.PostData<UserViewModel>("User/CreateUserProfile", request);
         }
 
         public List<UserSearchViewModel> FollowersList(string UserId, string currentUserId)
@@ -99,9 +99,9 @@ namespace Workwise.ServiceAgent
 
         }
 
-        public List<string> GetUserConnectionId(string[] userIds)
+        public List<string> GetUsersConnectionId(string[] userIds)
         {
-            return _httpClient.Get<List<string>>("User/GetUserConnectionId?UserId=" + userIds);
+            return _httpClient.Get<List<string>>("User/GetUsersConnectionId?userIds=" + string.Join(",", userIds));
         }
 
         public int GetUserNotificationCounts(string toUserId)
@@ -147,18 +147,18 @@ namespace Workwise.ServiceAgent
 
         public void SaveProfile(UserProfileViewModel profile)
         {
-            _httpClient.PostDataAsync("User/SaveProfile", profile);
+            _httpClient.PostData("User/SaveProfile", profile);
         }
 
 
         public void SaveProfileImage(UserImageViewModel model)
         {
-            _httpClient.PostDataAsync("User/SaveProfileImage", model);
+            _httpClient.PostData("User/SaveProfileImage", model);
         }
 
         public void SaveUserImage(UserImageViewModel model)
         {
-            _httpClient.PostDataAsync("User/SaveUserImage", model);
+            _httpClient.PostData("User/SaveUserImage", model);
         }
 
 
@@ -171,14 +171,14 @@ namespace Workwise.ServiceAgent
                 ToUserId = toUserId
             };
 
-            var result =  _httpClient.PostDataAsync("User/SaveUserNotification", model);
+            var result =  _httpClient.PostData("User/SaveUserNotification", model);
 
-            return result.Result.NotificationId;
+            return result.NotificationId;
         }
 
         public void SaveUserOnlineStatus(OnlineUserViewModel objentity)
         {
-            _httpClient.PostDataAsync("User/SaveUserOnlineStatus", objentity);
+            _httpClient.PostData("User/SaveUserOnlineStatus", objentity);
         }
 
         public List<UserSearchViewModel> SearchUsers(string name, string userId)
@@ -198,7 +198,7 @@ namespace Workwise.ServiceAgent
                 UserId = loggedInUserId,
                 EndUserId = endUserId
             };
-            _httpClient.PostDataAsync("User/SendFriendRequest", model);
+            _httpClient.PostData("User/SendFriendRequest", model);
         }
 
         public  List<UserSearchViewModel> SerachUser(string userName)
@@ -213,7 +213,7 @@ namespace Workwise.ServiceAgent
                 UserId = userId,
                 ImageUrl = imagePath
             };
-            _httpClient.PostDataAsync("User/UpdateUserProfilePicture", model);
+            _httpClient.PostData("User/UpdateUserProfilePicture", model);
 
         }
         public List<UserProfileViewModel> GetManyDummyUser(int pageNo, int pageSize)

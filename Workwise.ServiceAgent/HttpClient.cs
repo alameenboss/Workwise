@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace Workwise.ServiceAgent
 {
@@ -40,7 +41,7 @@ namespace Workwise.ServiceAgent
             return obj;
         }
 
-        public async Task<T> PostDataAsync<T>(string requestUri, T value)
+        public T PostData<T>(string requestUri, T value)
         {
             T obj = default(T);
 
@@ -48,16 +49,19 @@ namespace Workwise.ServiceAgent
             {
                 client.BaseAddress = new Uri("https://localhost:44378/api/");
                 //HTTP GET
-                var responseTask = await client.PostAsJsonAsync(requestUri,value);
-               // responseTask.Wait();
+                //var responseTask = await client.PostAsJsonAsync(requestUri,value);
+                //responseTask.Wait();
+
+                var response = client.PostAsync(requestUri, new StringContent(
+                new JavaScriptSerializer().Serialize(value), Encoding.UTF8, "application/json")).Result;
 
                 //var result = responseTask.Content;
-                if (responseTask.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    var readTask = await responseTask.Content.ReadAsAsync<T>();
-                    //readTask.Wait();
+                    var readTask = response.Content.ReadAsAsync<T>();
+                    readTask.Wait();
 
-                    obj = readTask;
+                    obj = readTask.Result;
                 }
                 //else //web api sent error response 
                 //{

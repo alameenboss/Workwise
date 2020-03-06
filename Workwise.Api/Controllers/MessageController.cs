@@ -16,20 +16,21 @@ namespace Workwise.Api.Controllers
         }
 
         [HttpPost]
+        [ResponseType(typeof(ChatMessage))]
         public IHttpActionResult SaveChatMessage(ChatMessage objentity)
         {
-
+            ChatMessage result = null;
             if (!ModelState.IsValid)
                 return BadRequest("Invalid data.");
             try
             {
-                _messageService.SaveChatMessage(objentity);
+                result = _messageService.SaveChatMessage(objentity);
             }
             catch (HttpResponseException ex)
             {
                 throw ex;
             }
-            return Ok();
+            return Ok(result);
         }
 
         [HttpGet]

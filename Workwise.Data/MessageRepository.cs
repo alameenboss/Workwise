@@ -24,11 +24,11 @@ namespace Workwise.Data
             var messages = _context.ChatMessages.Where(m => m.IsActive == true && (m.ToUserId == toUserId || m.FromUserId == toUserId) && (m.ToUserId == currentUserId || m.FromUserId == currentUserId)).OrderByDescending(m => m.CreatedOn);
             if (lastMessageId > 0)
             {
-                obj.Messages = messages.Where(m => m.ChatMessageId < lastMessageId).Take(20).ToList().OrderBy(m => m.CreatedOn).ToList();
+                obj.Messages = messages.Where(m => m.ChatMessageId < lastMessageId).OrderBy(m => m.CreatedOn).Take(20).ToList();
             }
             else
             {
-                obj.Messages = messages.Take(20).ToList().OrderBy(m => m.CreatedOn).ToList();
+                obj.Messages = messages.OrderBy(m => m.CreatedOn).Take(20).ToList();
             }
             obj.LastChatMessageId = obj.Messages.OrderBy(m => m.ChatMessageId).Select(m => m.ChatMessageId).FirstOrDefault();
             return obj;

@@ -13,7 +13,7 @@ namespace Workwise.ServiceAgent
 
         public  ChatMessageViewModel SaveChatMessage(ChatMessageViewModel objentity)
         {
-            return _httpClient.PostDataAsync(Constent.Message.SaveChatMessage, objentity).Result;
+            return _httpClient.PostData(Constent.Message.SaveChatMessage, objentity);
         }
         public MessageRecordViewModel GetChatMessagesByUserId(string currentUserId, string toUserId, int lastMessageId = 0)
         {
@@ -26,11 +26,11 @@ namespace Workwise.ServiceAgent
                 FromUserId = fromUserId,
                 CurrentUserId = currentUserId
             };
-            _httpClient.PostDataAsync(Constent.Message.UpdateMessageStatusByUserId, model);
+            _httpClient.PostData(Constent.Message.UpdateMessageStatusByUserId, model);
         }
         public void UpdateMessageStatusByMessageId(int messageId)
         {
-             _httpClient.PostDataAsync(Constent.Message.UpdateMessageStatusByMessageId, messageId);
+             _httpClient.PostData(Constent.Message.UpdateMessageStatusByMessageId, messageId);
 
         }
     }

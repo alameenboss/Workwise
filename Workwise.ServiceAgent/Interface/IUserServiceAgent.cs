@@ -7,7 +7,7 @@ namespace Workwise.ServiceAgent.Interface
     {
         void SaveUserOnlineStatus(OnlineUserViewModel objentity);
         List<string> GetUserConnectionId(string UserId);
-        List<string> GetUserConnectionId(string[] userIds);
+        List<string> GetUsersConnectionId(string[] userIds);
         List<UserSearchViewModel> GetAllUsers(int count, string UserId);
         List<UserProfileViewModel> MyFriendsList(string UserId);
         List<UserSearchViewModel> FollowersList(string UserId, string currentUserId);

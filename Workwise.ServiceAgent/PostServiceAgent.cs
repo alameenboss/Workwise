@@ -19,7 +19,7 @@ namespace Workwise.ServiceAgent
 
         public void SavePost(PostViewModel post)
         {
-            _httpClient.PostDataAsync(Constent.Post.SavePost, post);
+            _httpClient.PostData(Constent.Post.SavePost, post);
         }
     }
 }

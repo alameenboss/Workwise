@@ -31,6 +31,7 @@ chat.client.removeNotification = function (notificationID) {
     removeHtmlElement(notificationRow);
 }
 chat.client.addNewChatMessage = function (messageRow, fromUserId, toUserId, fromUserName, fromUserProfilePic, toUserName, toUserProfilePic) {
+    debugger;
     var currentUserId = $('#hdfLoggedInUserID').val();
     var currentChatUserID = $(document).find('.hdf-current-chat-user-id').val();
     if (currentChatUserID == fromUserId || currentChatUserID == toUserId) {

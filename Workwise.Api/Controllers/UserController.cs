@@ -61,11 +61,11 @@ namespace Workwise.Api.Controllers
 
         [HttpGet]
         [ResponseType(typeof(List<string>))]
-        public IHttpActionResult GetUserConnectionId(string[] userIds)
+        public IHttpActionResult GetUsersConnectionId(string userIds)
         {
             try
             {
-                var myConnectionIdList = _userService.GetUserConnectionId(userIds);
+                var myConnectionIdList = _userService.GetUserConnectionId(userIds.Split(','));
                 if (myConnectionIdList == null)
                 {
                     var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
