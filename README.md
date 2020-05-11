@@ -2,7 +2,7 @@
 
 Yet another Social Media project using ASP.Net MVC
 
-#Technology Used
+## Technology Used
 
 * ASP.Net MVC
 * MSSQL
@@ -13,7 +13,7 @@ Yet another Social Media project using ASP.Net MVC
 * Ninject
 * Asp.Net WebApi
 
-#Features
+## Features
 
 * Real time project using SignalR
 * Chat System
@@ -25,7 +25,7 @@ Yet another Social Media project using ASP.Net MVC
 * User Registration
 * Authentication and Authorization
 
-#Architecture
+## Architecture
 * This project is based on Onion Architecture with EntityFramework code first approch. 
 * Application is split into seperate layers. 
 * Dependency Injection with NInject
