@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Workwise.Data.Interface;
 using Workwise.Model;
 using Workwise.Service.Interface;
@@ -13,14 +14,14 @@ namespace Workwise.Service
         {
             _postRepository = postRepository;
         }
-        public void SavePost(Post post)
+        public async Task<Post> SavePost(Post post)
         {
-            _postRepository.SavePost(post);
+            return await _postRepository.SavePost(post);
         }
 
-        public IEnumerable<Post> GetLatestPostByUser(string UserId)
+        public async Task<IEnumerable<Post>> GetLatestPostByUser(string UserId)
         {
-            return _postRepository.GetLatestPostByUser(UserId);
+            return await _postRepository.GetLatestPostByUser(UserId);
         }
 
     }

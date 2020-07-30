@@ -68,7 +68,7 @@ namespace Workwise.Api.App_Start
             kernel.Bind<IMessageService>().To<MessageService>();
             kernel.Bind<IPostService>().To<PostService>();
             kernel.Bind<IUserService>().To<UserService>();
-            kernel.Bind<IRandomUserService>().To<RandomUserService>();
+           // kernel.Bind<IRandomUserService>().To<RandomUserService>();
 
             kernel.Load(Assembly.GetAssembly(typeof(ServiceLayerBinding)));
         }

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Workwise.Model;
 
 namespace Workwise.Service.Interface
 {
     public interface IPostService
     {
-        void SavePost(Post post);
-        IEnumerable<Post> GetLatestPostByUser(string UserId);
+        Task<Post> SavePost(Post post);
+        Task<IEnumerable<Post>> GetLatestPostByUser(string UserId);
     }
 }

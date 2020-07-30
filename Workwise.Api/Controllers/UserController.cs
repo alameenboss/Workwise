@@ -12,7 +12,7 @@ namespace Workwise.Api.Controllers
     public class UserController : ApiController
     {
         private readonly IUserService _userService = null;
-        private readonly IRandomUserService _randomUserService = null;
+        //private readonly IRandomUserService _randomUserService = null;
         public UserController(IUserService userService)
         {
             _userService = userService;
@@ -709,7 +709,8 @@ namespace Workwise.Api.Controllers
 
         public List<UserProfile> GetManyDummyUser(int pageNo, int pageSize)
         {
-            return _randomUserService.GetManyDummyUser(pageNo, pageSize);
+            //return _randomUserService.GetManyDummyUser(pageNo, pageSize);
+            return new List<UserProfile>();
         }
     }
 }
