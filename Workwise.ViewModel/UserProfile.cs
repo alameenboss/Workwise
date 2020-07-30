@@ -8,6 +8,10 @@ namespace Workwise.ViewModel
 {
     public class UserProfileViewModel
     {
+        public UserProfileViewModel()
+        {
+            Posts = new List<PostViewModel>();
+        }
         [Key]
         public string UserId { get; set; }
         public string ImageUrl { get; set; }

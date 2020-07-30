@@ -37,5 +37,6 @@ namespace Workwise.ViewModel
         public int FriendMappingId { get; set; }
         public bool IsOnline { get; set; }
         public string UnReadMessages { get; set; }
+        public string FirstName { get; set; }
     }
 }

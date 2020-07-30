@@ -23,15 +23,15 @@ namespace Workwise.ServiceAgent
             _httpClient.PostData("User/ChangeNotificationStatus", notificationIds);
         }
 
-        public void CreateUserProfile(string userId, string userName, string image = "")
+        public async Task<UserViewModel> CreateUserProfile(string userId, string userName, string image = "")
         {
             var request = new UserViewModel()
             {
                 UserId = userId,
-                UserName = userName,
+                FirstName = userName,
                 ProfilePicture = image
             };
-            _httpClient.PostData<UserViewModel>("User/CreateUserProfile", request);
+            return await _httpClient.PostDataAsync<UserViewModel, UserViewModel>("User/CreateUserProfile", request);
         }
 
         public List<UserSearchViewModel> FollowersList(string UserId, string currentUserId)
@@ -171,7 +171,7 @@ namespace Workwise.ServiceAgent
                 ToUserId = toUserId
             };
 
-            var result =  _httpClient.PostData("User/SaveUserNotification", model);
+            var result =  _httpClient.PostData<UserNotificationViewModel>("User/SaveUserNotification", model);
 
             return result.NotificationId;
         }

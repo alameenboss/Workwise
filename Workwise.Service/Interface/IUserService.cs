@@ -26,7 +26,7 @@ namespace Workwise.Service.Interface
         List<FriendRequestResultModel> GetSentFriendRequests(string userId);
         List<FriendRequestResultModel> GetReceivedFriendRequests(string userId);
         void SendFriendRequest(string endUserId, string loggedInUserId);
-        int SaveUserNotification(string notificationType, string fromUserId, string toUserId);
+        UserNotification SaveUserNotification(string notificationType, string fromUserId, string toUserId);
         FriendMapping GetFriendRequestStatus(string userId);
         int ResponseToFriendRequest(string requestorId, string requestResponse, string endUserId);
         List<UserNotificationListResultModel> GetUserNotifications(string toUserId);

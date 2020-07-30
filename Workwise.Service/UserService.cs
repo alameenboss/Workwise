@@ -79,7 +79,7 @@ namespace Workwise.Service
         {
             _userProfileRepo.SendFriendRequest(endUserId, loggedInUserId);
         }
-        public int SaveUserNotification(string notificationType, string fromUserId, string toUserId)
+        public UserNotification SaveUserNotification(string notificationType, string fromUserId, string toUserId)
         {
             return _userProfileRepo.SaveUserNotification(notificationType, fromUserId,toUserId);
         }

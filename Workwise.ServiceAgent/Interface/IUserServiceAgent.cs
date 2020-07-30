@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Workwise.ViewModel;
 
 namespace Workwise.ServiceAgent.Interface
@@ -33,7 +34,7 @@ namespace Workwise.ServiceAgent.Interface
         UserProfileViewModel GetByUserId(string UserId);
         void SaveProfileImage(UserImageViewModel model);
         void SaveProfile(UserProfileViewModel profile);
-        void CreateUserProfile(string userId, string userName, string image = "");
+        Task<UserViewModel> CreateUserProfile(string userId, string userName, string image = "");
         List<UserSearchViewModel> SerachUser(string userName);
 
         List<UserProfileViewModel> GetManyDummyUser(int pageNo, int pageSize);

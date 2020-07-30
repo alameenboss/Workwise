@@ -74,7 +74,7 @@ namespace Workwise.ServiceAgent
             }
             return obj;
         }
-
+        
         public async Task<U> PostDataAsync<T, U>(string requestUri, T value)
         {
             U result = default(U);

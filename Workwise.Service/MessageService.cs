@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Workwise.Data.Interface;
 using Workwise.Model;
 using Workwise.ResultModel;
@@ -18,9 +19,9 @@ namespace Workwise.Service
         {
             return _messageRepository.SaveChatMessage(objentity);
         }
-        public MessageRecordResultModel GetChatMessagesByUserId(string currentUserId, string toUserId, int lastMessageId = 0)
+        public async Task<MessageRecordResultModel> GetChatMessagesByUserId(string currentUserId, string toUserId, int lastMessageId = 0)
         {
-            return _messageRepository.GetChatMessagesByUserId(currentUserId,toUserId,lastMessageId);
+            return await _messageRepository.GetChatMessagesByUserId(currentUserId,toUserId,lastMessageId);
         }
         public void UpdateMessageStatusByUserId(string fromUserId, string currentUserId)
         {

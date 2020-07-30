@@ -52,10 +52,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(myConnectionIdList);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -77,10 +77,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(myConnectionIdList);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -102,10 +102,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(userList);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
         }
         
@@ -128,10 +128,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(myFriendsList);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -153,10 +153,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(followers);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
 
         }
@@ -179,10 +179,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(following);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
 
         }
@@ -205,10 +205,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(onlineFriends);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
 
         }
@@ -232,10 +232,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(user);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
 
         }
@@ -258,10 +258,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(friendUserIds);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
 
         }
@@ -284,10 +284,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(sentRequests);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
 
         }
@@ -311,10 +311,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(receivedRequest);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
 
         }
@@ -339,10 +339,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(sentRequests);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
 
         }
@@ -365,10 +365,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(result);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
 
         }
@@ -382,30 +382,30 @@ namespace Workwise.Api.Controllers
             {
                 _userService.SendFriendRequest(model.EndUserId, model.UserId);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
             return Ok();
         }
        
         
         [HttpPost]
-        [ResponseType(typeof(int))]
+        [ResponseType(typeof(UserNotification))]
         public IHttpActionResult SaveUserNotification(UserNotification model)
         {
-            var result = 0;
+            var result = new UserNotification();
             if (!ModelState.IsValid)
                 return BadRequest("Invalid data.");
             try
             {
                 result = _userService.SaveUserNotification(model.NotificationType, model.FromUserId, model.ToUserId);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
             return Ok(result);
         }
@@ -428,10 +428,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(result);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
 
         }
@@ -456,10 +456,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(result);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             } 
         }
         [HttpGet]
@@ -480,10 +480,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(result);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
         }
         [HttpGet]
@@ -504,10 +504,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(result);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -521,10 +521,10 @@ namespace Workwise.Api.Controllers
             {
                 _userService.ChangeNotificationStatus(notificationIds);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
             return Ok();
         }
@@ -540,10 +540,10 @@ namespace Workwise.Api.Controllers
             {
                 result = _userService.RemoveFriendMapping(friendMappingId);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
             return Ok(result);
         }
@@ -566,10 +566,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(result);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
         }
         [HttpGet]
@@ -590,10 +590,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(result);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -647,10 +647,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(result);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -671,10 +671,10 @@ namespace Workwise.Api.Controllers
                 }
                 return Ok(userprofile);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
             
         }
@@ -689,18 +689,30 @@ namespace Workwise.Api.Controllers
             {
                 _userService.SaveProfile(profile);
             }
-            catch (HttpResponseException)
+            catch (HttpResponseException ex)
             {
 
-                throw;
+                throw ex;
             }
             return Ok();
         }
 
-
-        public async Task CreateUserProfileAsync(string userId, string userName, string userImage = "")
+        [HttpPost]
+        public async Task<IHttpActionResult> CreateUserProfile(UserProfile model)
         {
-            await _userService.CreateUserProfileAsync(userId, userName);
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data.");
+            try
+            {
+                await _userService.CreateUserProfileAsync(model.UserId, model.FirstName); 
+            }
+            catch (HttpResponseException ex)
+            {
+
+                throw ex;
+            }
+            return Ok();
+            
         }
         public List<UserSearchResultModel> SerachUser(string userName)
         {

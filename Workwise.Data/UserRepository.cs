@@ -247,7 +247,7 @@ namespace Workwise.Data
             _context.FriendMappings.Add(objentity);
             _context.SaveChanges();
         }
-        public int SaveUserNotification(string notificationType, string fromUserId, string toUserId)
+        public UserNotification SaveUserNotification(string notificationType, string fromUserId, string toUserId)
         {
             UserNotification notification = new UserNotification();
             notification.CreatedOn = System.DateTime.Now;
@@ -259,7 +259,7 @@ namespace Workwise.Data
             notification.ToUserId = toUserId;
             _context.UserNotifications.Add(notification);
             _context.SaveChanges();
-            return notification.NotificationId;
+            return notification;
         }
         public FriendMapping GetFriendRequestStatus(string userId)
         {
@@ -504,8 +504,8 @@ namespace Workwise.Data
                     FirstName = userName,
                     ImageUrl = !string.IsNullOrEmpty(userImage) ? userImage : @"/images/DefaultPhoto.png" ,
                     CreatedOn = DateTime.Now,
-                    UpdatedOn = DateTime.Now
-
+                    UpdatedOn = DateTime.Now,
+                    IsActive = true
                 });
                 await db.SaveChangesAsync();
             }

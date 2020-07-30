@@ -9,6 +9,11 @@ namespace Workwise.ViewModel
 {
     public class ChatMessageViewModel
     {
+        public ChatMessageViewModel()
+        {
+            ChatMessages = new List<MessageViewModel>();
+        }
+
         public int ChatMessageId { get; set; }
         public string FromUserId { get; set; }
         public string ToUserId { get; set; }

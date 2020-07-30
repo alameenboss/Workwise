@@ -169,7 +169,7 @@ namespace Workwise.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    _userServiceAgent.CreateUserProfile(user.Id, user.UserName);
+                    var createUserProfileResult = await  _userServiceAgent.CreateUserProfile(user.Id, user.UserName);
 
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
     
@@ -190,21 +190,24 @@ namespace Workwise.Controllers
         public async Task<ActionResult> GenerateUser(int pagenumber)
         {
             var userList = _userServiceAgent.GetManyUser(pagenumber,1000);
-            foreach(var model in userList)
+            if (userList != null)
             {
-                var user = new ApplicationUser
+                foreach(var model in userList)
                 {
-                    UserName = model.UserName,
-                    Email = model.Email
-                };
-                var result = await UserManager.CreateAsync(user, "Test@123");
-                if (result.Succeeded)
-                {
-                    var profilePic = ImageHelper.SaveImagefromWeb(model.ProfilePicture, Server.MapPath("~/Images/Upload"));
-                    _userServiceAgent.CreateUserProfile(user.Id, model.Name , profilePic);
+                    var user = new ApplicationUser
+                    {
+                        UserName = model.UserName,
+                        Email = model.Email
+                    };
+                    var result = await UserManager.CreateAsync(user, "Test@123");
+                    if (result.Succeeded)
+                    {
+                        var profilePic = ImageHelper.SaveImagefromWeb(model.ProfilePicture, Server.MapPath("~/Images/Upload"));
+                        await _userServiceAgent.CreateUserProfile(user.Id, model.Name , profilePic);
+                    }
                 }
             }
-            
+
             return RedirectToAction("Index","Index");
         }
 

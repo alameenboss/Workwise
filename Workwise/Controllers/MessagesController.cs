@@ -36,7 +36,7 @@ namespace Workwise.Controllers
         public ActionResult _Messages(string Id)
         {
             var userModel = _defaultHelper.GetUserModel(Id);
-            var messages = _MessageServiceAgent.GetChatMessagesByUserId(User.Identity.GetUserId(), Id);
+            var messages = new MessageRecordViewModel();//_MessageServiceAgent.GetChatMessagesByUserId(User.Identity.GetUserId(), Id);
             var objmodel = new ChatMessageViewModel();
             objmodel.UserDetail = userModel;
             objmodel.ChatMessages = messages.Messages.Select(m => _defaultHelper.GetMessageModel(m)).ToList();
@@ -51,7 +51,7 @@ namespace Workwise.Controllers
         }
         public ActionResult GetRecentMessages(string Id, int lastChatMessageId)
         {
-            var messages = _MessageServiceAgent.GetChatMessagesByUserId(User.Identity.GetUserId(), Id, lastChatMessageId);
+            var messages = new MessageRecordViewModel();//_MessageServiceAgent.GetChatMessagesByUserId(User.Identity.GetUserId(), Id, lastChatMessageId);
             var objmodel = new ChatMessageViewModel();
             objmodel.ChatMessages = messages.Messages.Select(m => _defaultHelper.GetMessageModel(m)).ToList();
             objmodel.LastChatMessageId = messages.LastChatMessageId;
