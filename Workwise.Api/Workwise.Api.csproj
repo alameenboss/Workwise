@@ -47,6 +47,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.0.35\lib\net461\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
@@ -148,10 +154,76 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Data\BaseRepository.cs" />
+    <Compile Include="Data\CompanyRepository.cs" />
+    <Compile Include="Data\Interface\ICompanyRepository.cs" />
+    <Compile Include="Data\Interface\IMessageRepository.cs" />
+    <Compile Include="Data\Interface\IPostRepository.cs" />
+    <Compile Include="Data\Interface\IUserRepository.cs" />
+    <Compile Include="Data\MessageRepository.cs" />
+    <Compile Include="Data\Migrations\202002271340093_InitialMigration.cs" />
+    <Compile Include="Data\Migrations\202002271340093_InitialMigration.Designer.cs">
+      <DependentUpon>202002271340093_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Migrations\202002271343541_updatinguserprofile.cs" />
+    <Compile Include="Data\Migrations\202002271343541_updatinguserprofile.Designer.cs">
+      <DependentUpon>202002271343541_updatinguserprofile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Migrations\202002271441326_updatinguserprofile1.cs" />
+    <Compile Include="Data\Migrations\202002271441326_updatinguserprofile1.Designer.cs">
+      <DependentUpon>202002271441326_updatinguserprofile1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Migrations\202002271445252_updatinguserprofile2.cs" />
+    <Compile Include="Data\Migrations\202002271445252_updatinguserprofile2.Designer.cs">
+      <DependentUpon>202002271445252_updatinguserprofile2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Migrations\202002281821507_addCompanyName.cs" />
+    <Compile Include="Data\Migrations\202002281821507_addCompanyName.Designer.cs">
+      <DependentUpon>202002281821507_addCompanyName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Migrations\202002281909254_addCompanyName1.cs" />
+    <Compile Include="Data\Migrations\202002281909254_addCompanyName1.Designer.cs">
+      <DependentUpon>202002281909254_addCompanyName1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Migrations\Configuration.cs" />
+    <Compile Include="Data\Models\ApplicationDbContext.cs" />
+    <Compile Include="Data\Models\Configuration\UserProfileConfigMap.cs" />
+    <Compile Include="Data\PostRepository.cs" />
+    <Compile Include="Data\UserRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Model\ChatMessage.cs" />
+    <Compile Include="Model\Comment.cs" />
+    <Compile Include="Model\Company.cs" />
+    <Compile Include="Model\Enum\Enum.cs" />
+    <Compile Include="Model\FriendMapping.cs" />
+    <Compile Include="Model\ImageModel.cs" />
+    <Compile Include="Model\OnlineUser.cs" />
+    <Compile Include="Model\Post.cs" />
+    <Compile Include="Model\RequestModel\UpdateMessageStatusRequest.cs" />
+    <Compile Include="Model\ResultModel\FriendRequestResultModel.cs" />
+    <Compile Include="Model\ResultModel\MessageRecordResultModel.cs" />
+    <Compile Include="Model\ResultModel\OnlineUserDetailResultModel.cs" />
+    <Compile Include="Model\ResultModel\UserNotificationListResultModel.cs" />
+    <Compile Include="Model\ResultModel\UserSearchResultModel.cs" />
+    <Compile Include="Model\Tags.cs" />
+    <Compile Include="Model\UserImage.cs" />
+    <Compile Include="Model\UserNotification.cs" />
+    <Compile Include="Model\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\CompanyService.cs" />
+    <Compile Include="Service\Interface\ICompanyService.cs" />
+    <Compile Include="Service\Interface\IMessageService.cs" />
+    <Compile Include="Service\Interface\IPostService.cs" />
+    <Compile Include="Service\Interface\IRandomUserService.cs" />
+    <Compile Include="Service\Interface\IUserService.cs" />
+    <Compile Include="Service\MessageService.cs" />
+    <Compile Include="Service\PostService.cs" />
+    <Compile Include="Service\RandomUserGenerator.cs" />
+    <Compile Include="Service\RandomUserService.cs" />
+    <Compile Include="Service\ServiceLayerBinding.cs" />
+    <Compile Include="Service\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -165,18 +237,29 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Workwise.Model\Workwise.Model.csproj">
-      <Project>{3189ba84-4b81-41f6-b9a5-b88914c67bbf}</Project>
-      <Name>Workwise.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Workwise.Service\Workwise.Service.csproj">
-      <Project>{fb4d3abd-18b7-425f-b647-8d1eb69aa60e}</Project>
-      <Name>Workwise.Service</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\Migrations\202002271340093_InitialMigration.resx">
+      <DependentUpon>202002271340093_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\Migrations\202002271343541_updatinguserprofile.resx">
+      <DependentUpon>202002271343541_updatinguserprofile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\Migrations\202002271441326_updatinguserprofile1.resx">
+      <DependentUpon>202002271441326_updatinguserprofile1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\Migrations\202002271445252_updatinguserprofile2.resx">
+      <DependentUpon>202002271445252_updatinguserprofile2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\Migrations\202002281821507_addCompanyName.resx">
+      <DependentUpon>202002281821507_addCompanyName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\Migrations\202002281909254_addCompanyName1.resx">
+      <DependentUpon>202002281909254_addCompanyName1.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
