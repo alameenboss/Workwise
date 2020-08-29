@@ -64,6 +64,9 @@
     <Reference Include="Ninject.Web.Common.WebHost, Version=3.3.2.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.Web.Common.WebHost.3.3.2\lib\net45\Ninject.Web.Common.WebHost.dll</HintPath>
     </Reference>
+	<Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+		<HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+	</Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -218,7 +221,49 @@
     <Compile Include="ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendCodeViewModel.cs" />
+    <Compile Include="ServiceAgent\CompanyServiceAgent.cs" />
+    <Compile Include="ServiceAgent\Constent.cs" />
+    <Compile Include="ServiceAgent\HttpClient.cs" />
+    <Compile Include="ServiceAgent\Interface\ICompanyServiceAgent.cs" />
+    <Compile Include="ServiceAgent\Interface\IHttpClient.cs" />
+    <Compile Include="ServiceAgent\Interface\IMessageServiceAgent.cs" />
+    <Compile Include="ServiceAgent\Interface\IPostServiceAgent.cs" />
+    <Compile Include="ServiceAgent\Interface\IRandomUserServiceAgent.cs" />
+    <Compile Include="ServiceAgent\Interface\IUserServiceAgent.cs" />
+    <Compile Include="ServiceAgent\MessageServiceAgent.cs" />
+    <Compile Include="ServiceAgent\PostServiceAgent.cs" />
+    <Compile Include="ServiceAgent\RandomUserServiceAgent.cs" />
+    <Compile Include="ServiceAgent\UserServiceAgent.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\ChatMessageViewModel.cs" />
+    <Compile Include="ViewModel\CommentViewModel.cs" />
+    <Compile Include="ViewModel\CompanyViewModel.cs" />
+    <Compile Include="ViewModel\Enum\Enum.cs" />
+    <Compile Include="ViewModel\ExternalLoginConfirmationViewModel.cs" />
+    <Compile Include="ViewModel\ExternalLoginListViewModel.cs" />
+    <Compile Include="ViewModel\ForgotPasswordViewModel.cs" />
+    <Compile Include="ViewModel\ForgotViewModel.cs" />
+    <Compile Include="ViewModel\FriendMapping.cs" />
+    <Compile Include="ViewModel\FriendRequestViewModel.cs" />
+    <Compile Include="ViewModel\ImageViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\MessageRecordResultModel.cs" />
+    <Compile Include="ViewModel\MessageViewModel.cs" />
+    <Compile Include="ViewModel\OnlineUser.cs" />
+    <Compile Include="ViewModel\OnlineUserDetailResultModel.cs" />
+    <Compile Include="ViewModel\PostViewModel.cs" />
+    <Compile Include="ViewModel\RecentChatDetailViewModel.cs" />
+    <Compile Include="ViewModel\RegisterViewModel.cs" />
+    <Compile Include="ViewModel\ResetPasswordViewModel.cs" />
+    <Compile Include="ViewModel\TagsViewModel.cs" />
+    <Compile Include="ViewModel\UpdateMessageStatusViewModel.cs" />
+    <Compile Include="ViewModel\UserImageViewModel.cs" />
+    <Compile Include="ViewModel\UserNotification.cs" />
+    <Compile Include="ViewModel\UserNotificationListResultModel.cs" />
+    <Compile Include="ViewModel\UserProfile.cs" />
+    <Compile Include="ViewModel\UserSearchResultModel.cs" />
+    <Compile Include="ViewModel\UserViewModel.cs" />
+    <Compile Include="ViewModel\VerifyCodeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\all.min.css" />
@@ -531,16 +576,6 @@
     <Content Include="Views\Profiles\Randomuser.cshtml" />
     <Content Include="Views\Messages\_ChatPartial.cshtml" />
     <Content Include="Views\Messages\_Messages.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Workwise.ServiceAgent\Workwise.ServiceAgent.csproj">
-      <Project>{8235B31B-F49B-47D6-98BB-004389A91830}</Project>
-      <Name>Workwise.ServiceAgent</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Workwise.ViewModel\Workwise.ViewModel.csproj">
-      <Project>{C67B9A3B-5EBC-47B9-AAA3-33DAB20F0223}</Project>
-      <Name>Workwise.ViewModel</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
