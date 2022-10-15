@@ -78,6 +78,11 @@ namespace Workwise.Controllers
                 return View(model);
             }
             var user = await UserManager.FindByNameAsync(model.Username);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return View(model);
+            }
             if(!user.EmailConfirmed)
             {
                 ModelState.AddModelError("", "Invalid login attempt.");

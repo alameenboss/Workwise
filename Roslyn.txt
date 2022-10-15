@@ -1,0 +1,3 @@
+Update-Package Microsoft.CodeDom.Providers.DotNetCompilerPlatform -r
+
+https://stackoverflow.com/a/34391473
