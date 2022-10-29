@@ -493,15 +493,15 @@ namespace Workwise.Api.Controllers
             try
             {
                 var result = _userService.GetUserNotificationCounts(toUserId);
-                if (result == 0)
-                {
-                    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
-                    {
-                        Content = new StringContent("Not Found"),
-                        ReasonPhrase = "Not Found"
-                    };
-                    throw new HttpResponseException(resp);
-                }
+                //if (result == 0)
+                //{
+                //    var resp = new HttpResponseMessage(System.Net.HttpStatusCode.NotFound)
+                //    {
+                //        Content = new StringContent("Not Found"),
+                //        ReasonPhrase = "Not Found"
+                //    };
+                //    throw new HttpResponseException(resp);
+                //}
                 return Ok(result);
             }
             catch (HttpResponseException ex)
