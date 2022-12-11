@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -76,10 +77,25 @@ namespace Workwise
 
         private async Task WriteFileAsync(IdentityMessage message)
         {
-            using (StreamWriter outputFile = new StreamWriter(Path.Combine(@"D:\Temp\", "Email.html")))
+            var path = @"D:\Temp\";
+            if (!Directory.Exists(path))
             {
-                await outputFile.WriteAsync(message.Body);
+                try
+                {
+                    Directory.CreateDirectory(path);
+                }
+                catch (Exception)
+                {
+                }
             }
+            if (Directory.Exists(path))
+            {
+                using (StreamWriter outputFile = new StreamWriter(Path.Combine(path, "Email.html")))
+                {
+                    await outputFile.WriteAsync(message.Body);
+                }
+            }
+                
         }
     }
     public class SmsService : IIdentityMessageService
