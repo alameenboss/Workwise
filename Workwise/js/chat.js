@@ -31,7 +31,7 @@ chat.client.removeNotification = function (notificationID) {
     removeHtmlElement(notificationRow);
 }
 chat.client.addNewChatMessage = function (messageRow, fromUserId, toUserId, fromUserName, fromUserProfilePic, toUserName, toUserProfilePic) {
-    debugger;
+    
     var currentUserId = $('#hdfLoggedInUserID').val();
     var currentChatUserID = $(document).find('.hdf-current-chat-user-id').val();
     if (currentChatUserID == fromUserId || currentChatUserID == toUserId) {
@@ -225,6 +225,7 @@ function createNewMessageBlockHtml(name, profilePicture, createOn, message, alig
     return html;
 }
 function sendChatMessage() {
+   
     var fromUserID = $('#hdfLoggedInUserID').val();
     var fromUserName = $('#hdfLoggedInUserName').val();
     var fromUserPrifilePic = $('#hdfLoggedInUserProfilePicture').val();
@@ -253,7 +254,7 @@ function refreshRecentChats() {
     });
 }
 function addChatMessageCount(currentUserId, fromUserId, fromUserName, fromUserProfilePic, toUserId, toUserName, toUserProfilePic,lastMessage,createdOn) {
-    debugger;
+    
     //var recentChatWindow = $(document).find('.recent-chats');
     var chatUser = $(document).find('li[data-userid="' + ((currentUserId != fromUserId) ? fromUserId : toUserId) + '"]');
     if (chatUser.length > 0) {
@@ -299,7 +300,6 @@ function GetOldMessages() {
     if ($(isOldMessageExsit).val() == "True") {
         var currentChatUserID = $(document).find('.hdf-current-chat-user-id').val();
         var lastMessageID = $(document).find('.hdf-last-chat-message-id').val();
-        console.log($(document).find("div.right-chat-panel").scrollTop())
         $.get('/Chat/GetRecentMessages?Id=' + currentChatUserID + '&lastChatMessageId=' + lastMessageID, function (messages) {
             if (messages.ChatMessages.length > 0) {
                 $(isOldMessageExsit).val((messages.ChatMessages.length < 20 ? "False" : "True"));

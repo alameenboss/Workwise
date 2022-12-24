@@ -11,7 +11,8 @@ namespace Workwise.Controllers
     {
         private readonly IUserServiceAgent _userServiceAgent;
 
-        public FileUploadController(IUserServiceAgent userService)
+        public FileUploadController(
+            IUserServiceAgent userService)
         {
             _userServiceAgent = userService;
 
@@ -33,7 +34,7 @@ namespace Workwise.Controllers
                 ImageUrl = profilePicUrl
             };
             _userServiceAgent.SaveProfileImage(model);
-
+            
             SessionHelper.Get<UserProfileViewModel>(User.Identity.GetUserId()).ImageUrl = profilePicUrl;
             SessionHelper.UserImage = profilePicUrl;
             return Json(new { success = true, imageUrl = profilePicUrl }, JsonRequestBehavior.AllowGet);

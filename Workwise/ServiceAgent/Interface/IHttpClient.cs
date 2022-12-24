@@ -1,13 +1,12 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Workwise.ServiceAgent
 {
 
     public interface IHttpClient
     {
-        T PostData<T>(string requestUri, T value);
-        Task<U> PostDataAsync<T, U>(string requestUri, T value);
-        T Get<T>(string requestUri);
+        T GetAsync<T>(string requestUri);
+        T PostDataAsync<T>(string requestUri, T value);
+        U PostDataAsync<T, U>(string requestUri, T value);
     }
 }

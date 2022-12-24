@@ -18,8 +18,6 @@ namespace Workwise.Helper
         private const string userId = "UserId";
         #endregion
 
-
-
         #region Public Static Methods
         /// <summary>
         /// Clears Session
@@ -39,7 +37,6 @@ namespace Workwise.Helper
         }
 
         #endregion
-
 
         #region Public Static Properties
 

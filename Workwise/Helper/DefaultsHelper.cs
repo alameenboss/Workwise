@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Workwise.ServiceAgent;
 using Workwise.ServiceAgent.Interface;
 using Workwise.ViewModel;
@@ -9,12 +10,12 @@ namespace Workwise.Helper
     public class DefaultsHelper : IDefaultsHelper
     {
         private readonly IUserServiceAgent _userServiceAgent = null;
-       
+
         public DefaultsHelper(IUserServiceAgent userServiceAgent)
         {
             _userServiceAgent = userServiceAgent;
         }
-        public  string GetProfilePicture(string profilePicture, string gender)
+        public string GetProfilePicture(string profilePicture, string gender)
         {
             string profilePicturePath = "";
             if (string.IsNullOrEmpty(profilePicture))
@@ -34,7 +35,7 @@ namespace Workwise.Helper
             }
             return profilePicturePath;
         }
-        public  UserViewModel GetUserModel(string id, UserProfileViewModel objentity = null, string friendRequestStatus = "", bool isRequestReceived = false)
+        public UserViewModel GetUserModel(string id, UserProfileViewModel objentity = null, string friendRequestStatus = "", bool isRequestReceived = false)
         {
             var user = new UserProfileViewModel();
             if (objentity != null)
@@ -67,18 +68,22 @@ namespace Workwise.Helper
             }
             return objmodel;
         }
-        public  MessageViewModel GetMessageModel(ChatMessageViewModel objentity)
+
+        public MessageViewModel  GetMessageModel(ChatMessageViewModel objentity)
         {
             MessageViewModel objmodel = new MessageViewModel();
-            objmodel.ChatMessageId = objentity.ChatMessageId;
-            objmodel.FromUserId = objentity.FromUserId;
-            objmodel.ToUserId = objentity.ToUserId;
-            objmodel.Message = objentity.Message;
-            objmodel.Status = objentity.Status;
-            objmodel.CreatedOn = Convert.ToString(objentity.CreatedOn);
-            objmodel.UpdatedOn = Convert.ToString(objentity.UpdatedOn);
-            objmodel.ViewedOn = Convert.ToString(objentity.ViewedOn);
-            objmodel.IsActive = objentity.IsActive;
+            if (objentity != null)
+            {
+                objmodel.ChatMessageId = objentity.ChatMessageId;
+                objmodel.FromUserId = objentity.FromUserId;
+                objmodel.ToUserId = objentity.ToUserId;
+                objmodel.Message = objentity.Message;
+                objmodel.Status = objentity.Status;
+                objmodel.CreatedOn = Convert.ToString(objentity.CreatedOn);
+                objmodel.UpdatedOn = Convert.ToString(objentity.UpdatedOn);
+                objmodel.ViewedOn = Convert.ToString(objentity.ViewedOn);
+                objmodel.IsActive = objentity.IsActive;
+            }
             return objmodel;
         }
 

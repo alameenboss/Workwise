@@ -21,7 +21,7 @@ namespace Workwise.Hubs
     //[HubName("chat")]
     public class ChatHub : Hub
     {
-        private readonly IUserServiceAgent _userServiceAgent;
+        private readonly IUserServiceAgent  _userServiceAgent;
         private readonly IMessageServiceAgent _messageServiceAgent;
         private readonly IDefaultsHelper _defaultHelper;
         public ChatHub(IUserServiceAgent userServiceAgent, IMessageServiceAgent messageServiceAgent,IDefaultsHelper defaultHelper)
@@ -51,6 +51,7 @@ namespace Workwise.Hubs
                 _userServiceAgent.SaveUserOnlineStatus(new OnlineUserViewModel { UserId = uId, ConnectionId = Context.ConnectionId, IsOnline = false });
                 RefreshOnlineUsers(uId);
             }
+
             return base.OnDisconnected(stopCalled);
         }
         public List<string> GetActiveConnectionIds(List<string> connectionIds)
@@ -64,7 +65,7 @@ namespace Workwise.Hubs
             }
             return connectionIds;
         }
-        public void RefreshOnlineUsers(string userId)
+        public  void RefreshOnlineUsers(string userId)
         {
             var users = _userServiceAgent.GetOnlineFriends(userId);
             RefreshOnlineUsersByConnectionIds(users.SelectMany(m => m.ConnectionId).ToList(), userId);
@@ -93,7 +94,7 @@ namespace Workwise.Hubs
             if (connectionId != null && connectionId.Count() > 0)
             {
                 var userInfo = _defaultHelper.GetUserModel(fromUserId);
-                int notificationCounts = _userServiceAgent.GetUserNotificationCounts(toUserId);
+                int notificationCounts =  _userServiceAgent.GetUserNotificationCounts(toUserId);
                 Clients.Clients(connectionId).ReceiveNotification(notificationType, userInfo, notificationId, notificationCounts);
             }
         }
@@ -121,7 +122,7 @@ namespace Workwise.Hubs
             if (connectionId != null && connectionId.Count() > 0)
             {
                 int notificationCounts = _userServiceAgent.GetUserNotificationCounts(toUserId);
-                Clients.Clients(connectionId).RefreshNotificationCounts(notificationCounts);
+                 Clients.Clients(connectionId).RefreshNotificationCounts(notificationCounts);
             }
         }
         public void ChangeNotitficationStatus(string notificationIds, string toUserId)
@@ -136,49 +137,53 @@ namespace Workwise.Hubs
         }
         public void UnfriendUser(int friendMappingId)
         {
-            var friendMapping = _userServiceAgent.RemoveFriendMapping(friendMappingId);
+            var friendMapping =  _userServiceAgent.RemoveFriendMapping(friendMappingId);
             if (friendMapping != null)
             {
-                List<string> connectionIds = _userServiceAgent.GetUsersConnectionId(new string[] { friendMapping.EndUserId, friendMapping.UserId });
-                RefreshOnlineUsersByConnectionIds(connectionIds);
+                List<string> connectionIds =  _userServiceAgent.GetUsersConnectionId(new string[] { friendMapping.EndUserId, friendMapping.UserId });
+                 RefreshOnlineUsersByConnectionIds(connectionIds);
             }
         }
         public void SendMessage(string fromUserId, string toUserId, string message, string fromUserName, string fromUserProfilePic, string toUserName, string toUserProfilePic)
         {
             ChatMessageViewModel objentity = new ChatMessageViewModel();
-            objentity.CreatedOn = System.DateTime.Now;
+            objentity.CreatedOn = DateTime.Now;
             objentity.FromUserId = fromUserId;
             objentity.IsActive = true;
             objentity.Message = message;
-            objentity.ViewedOn = System.DateTime.Now;
+            objentity.ViewedOn = DateTime.Now;
             objentity.Status = "Sent";
             objentity.ToUserId = toUserId;
-            objentity.UpdatedOn = System.DateTime.Now;
-            var obj = _messageServiceAgent.SaveChatMessage(objentity);
-            var messageRow = _defaultHelper.GetMessageModel(obj);
-            List<string> connectionIds = _userServiceAgent.GetUsersConnectionId(new string[] { fromUserId, toUserId });
-            Clients.Clients(connectionIds).AddNewChatMessage(messageRow, fromUserId, toUserId, fromUserName, fromUserProfilePic, toUserName, toUserProfilePic);
+            objentity.UpdatedOn = DateTime.Now;
+            var obj =  _messageServiceAgent.SaveChatMessage(objentity);
+            if (obj != null)
+            {
+                var messageRow =  _defaultHelper.GetMessageModel(obj);
+                List<string> connectionIds =  _userServiceAgent.GetUsersConnectionId(new string[] { fromUserId, toUserId });
+                 Clients.Clients(connectionIds).AddNewChatMessage(messageRow, fromUserId, toUserId, fromUserName, fromUserProfilePic, toUserName, toUserProfilePic);
+
+            }
         }
         public void SendUserTypingStatus(string toUserId, string fromUserId)
         {
-            List<string> connectionIds = _userServiceAgent.GetUsersConnectionId(new string[] { toUserId });
-            if (connectionIds.Count > 0)
+            List<string> connectionIds =  _userServiceAgent.GetUsersConnectionId(new string[] { toUserId });
+            if (connectionIds?.Count > 0)
             {
-                Clients.Clients(connectionIds).UserIsTyping(fromUserId);
+                 Clients.Clients(connectionIds).UserIsTyping(fromUserId);
             }
         }
         public void UpdateMessageStatus(int messageId, string currentUserId, string fromUserId)
         {
             if (messageId > 0)
             {
-                _messageServiceAgent.UpdateMessageStatusByMessageId(messageId);
+                 _messageServiceAgent.UpdateMessageStatusByMessageId(messageId);
             }
             else
             {
-                _messageServiceAgent.UpdateMessageStatusByUserId(fromUserId, currentUserId);
+                 _messageServiceAgent.UpdateMessageStatusByUserId(fromUserId, currentUserId);
             }
-            List<string> connectionIds = _userServiceAgent.GetUsersConnectionId(new string[] { currentUserId, fromUserId });
-            Clients.Clients(connectionIds).UpdateMessageStatusInChatWindow(messageId, currentUserId, fromUserId);
+            List<string> connectionIds =  _userServiceAgent.GetUsersConnectionId(new string[] { currentUserId, fromUserId });
+             Clients.Clients(connectionIds).UpdateMessageStatusInChatWindow(messageId, currentUserId, fromUserId);
         }
     }
 

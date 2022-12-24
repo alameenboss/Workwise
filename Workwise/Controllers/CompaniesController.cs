@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Workwise.ServiceAgent.Interface;
 
@@ -18,9 +19,7 @@ namespace Workwise.Controllers
 
         public ActionResult Index()
         {
-
-            var model = _companyServiceAgent.GetAllCompanies().ToList();
-
+            var model =_companyServiceAgent.GetAllCompanies().ToList();
             return View(model);
         }
     }

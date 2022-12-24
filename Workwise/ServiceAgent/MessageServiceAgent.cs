@@ -1,4 +1,5 @@
-﻿using Workwise.ServiceAgent.Interface;
+﻿using System.Threading.Tasks;
+using Workwise.ServiceAgent.Interface;
 using Workwise.ViewModel;
 
 namespace Workwise.ServiceAgent
@@ -11,13 +12,13 @@ namespace Workwise.ServiceAgent
             _httpClient = httpClient;
         }
 
-        public  ChatMessageViewModel SaveChatMessage(ChatMessageViewModel objentity)
+        public ChatMessageViewModel SaveChatMessage(ChatMessageViewModel objentity)
         {
-            return _httpClient.PostData(Constent.Message.SaveChatMessage, objentity);
+            return _httpClient.PostDataAsync(Constent.Message.SaveChatMessage, objentity);
         }
         public MessageRecordViewModel GetChatMessagesByUserId(string currentUserId, string toUserId, int lastMessageId = 0)
         {
-            return _httpClient.Get<MessageRecordViewModel>(string.Format(Constent.Message.GetChatMessagesByUserId,currentUserId,toUserId,lastMessageId));
+            return _httpClient.GetAsync<MessageRecordViewModel>(string.Format(Constent.Message.GetChatMessagesByUserId,currentUserId,toUserId,lastMessageId));
         }
         public void UpdateMessageStatusByUserId(string fromUserId, string currentUserId)
         {
@@ -26,12 +27,11 @@ namespace Workwise.ServiceAgent
                 FromUserId = fromUserId,
                 CurrentUserId = currentUserId
             };
-            _httpClient.PostData(Constent.Message.UpdateMessageStatusByUserId, model);
+            _httpClient.PostDataAsync(Constent.Message.UpdateMessageStatusByUserId, model);
         }
         public void UpdateMessageStatusByMessageId(int messageId)
         {
-             _httpClient.PostData(Constent.Message.UpdateMessageStatusByMessageId, messageId);
-
+            _httpClient.PostDataAsync(Constent.Message.UpdateMessageStatusByMessageId, messageId);
         }
     }
 

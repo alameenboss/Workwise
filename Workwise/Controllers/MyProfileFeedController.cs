@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Workwise.ServiceAgent.Interface;
@@ -33,11 +34,11 @@ namespace Workwise.Controllers
             var myuserId = User.Identity.GetUserId();
             if (string.IsNullOrEmpty(id)) id = myuserId;
             var model = _userServiceAgent.GetUserById(id);
-            model.Posts = _postServiceAgent.GetLatestPostByUser(id)?.ToList() ?? new List<PostViewModel>();
+            model.Posts = _postServiceAgent.GetLatestPostByUser(id).ToList();
             model.Following = _userServiceAgent.FollowingList(id, myuserId).Select(x => x.UserInfo).ToList();
             model.Followers = _userServiceAgent.FollowersList(id, myuserId).Select(x => x.UserInfo).ToList();
 
-            
+
 
             var user = UserManager.FindById(id);
             if (user != null)
@@ -46,9 +47,9 @@ namespace Workwise.Controllers
                 ViewData["userimage"] = string.IsNullOrEmpty(model?.ImageUrl) ? @"\images\DefaultPhoto.png" : model?.ImageUrl;
                 ViewData["firstname"] = string.IsNullOrEmpty(model?.FirstName) ? "FirstName" : model?.FirstName;
             }
-            
-            
-            
+
+
+
             return View(model);
         }
 

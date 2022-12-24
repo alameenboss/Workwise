@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Workwise.ServiceAgent.Interface;
 
@@ -31,8 +32,8 @@ namespace Workwise.Controllers
             var userModel = _userServiceAgent.GetByUserId(userid);
             ViewBag.Image = userModel.ImageUrl;
             ViewBag.Text = userModel.FirstName + " is following " + model.Count + " person.";
-           
-            return View("Index",model);
+
+            return View("Index", model);
         }
         public ActionResult Followers(string id)
         {
@@ -40,7 +41,7 @@ namespace Workwise.Controllers
             var model = _userServiceAgent.FollowersList(userid, User.Identity.GetUserId());
             var userModel = _userServiceAgent.GetByUserId(userid);
             ViewBag.Image = userModel.ImageUrl;
-            ViewBag.Text =  userModel.FirstName + " has " + model.Count + " followers.";
+            ViewBag.Text = userModel.FirstName + " has " + model.Count + " followers.";
             return View("Index", model);
         }
         public ActionResult Randomuser(int id)
@@ -49,6 +50,6 @@ namespace Workwise.Controllers
             return View(model);
         }
 
-        
+
     }
 }

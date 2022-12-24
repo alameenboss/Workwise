@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Workwise.Helper;
@@ -16,19 +17,19 @@ namespace Workwise.Controllers
         private readonly IUserServiceAgent _userServiceAgent;
         private readonly IPostServiceAgent _postServiceAgent;
         private readonly IDefaultsHelper _defaultHelper;
-        public IndexController(IUserServiceAgent userService, IPostServiceAgent postService,IDefaultsHelper defaultHelper)
+        public IndexController(IUserServiceAgent userService, IPostServiceAgent postService, IDefaultsHelper defaultHelper)
         {
             _userServiceAgent = userService;
             _postServiceAgent = postService;
             _defaultHelper = defaultHelper;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var myuserId = User.Identity.GetUserId();
 
             var model = _userServiceAgent.GetUserById(myuserId);
-            model.Posts = _postServiceAgent.GetLatestPostByUser(myuserId)?.ToList() ?? new List<PostViewModel>();
+            model.Posts = _postServiceAgent.GetLatestPostByUser(myuserId).ToList() ?? new List<PostViewModel>();
             model.Following = _userServiceAgent.FollowingList(myuserId, myuserId).Select(x => x.UserInfo).ToList();
             model.Followers = _userServiceAgent.FollowersList(myuserId, myuserId).Select(x => x.UserInfo).ToList();
 
@@ -39,11 +40,11 @@ namespace Workwise.Controllers
         {
             var text = new RandomText();
             text.AddContentParagraphs(RandomGenerator.GenerateLockedRandom(1, 10),
-                1, 
+                1,
                 RandomGenerator.GenerateLockedRandom(10, 20),
-                RandomGenerator.GenerateLockedRandom(1, 10), 
+                RandomGenerator.GenerateLockedRandom(1, 10),
                 RandomGenerator.GenerateLockedRandom(10, 30));
-             
+
             var model = new PostViewModel()
             {
                 PostedOn = DateTime.Now.AddSeconds(-90),
@@ -64,13 +65,13 @@ namespace Workwise.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePost(PostViewModel model, HttpPostedFileBase PostImage)
+        public async Task<ActionResult> CreatePost(PostViewModel model, HttpPostedFileBase PostImage)
         {
             if (!ModelState.IsValid)
             {
-                return View("Index",model);
+                return View("Index", model);
             }
-           
+
             try
             {
                 if (PostImage != null)
@@ -80,7 +81,7 @@ namespace Workwise.Controllers
                         ImageUrl = ImageHelper.SavePostedFile(PostImage, Server.MapPath("~/Images/Upload"))
                     });
                 }
-                
+
                 model.PostedById = User.Identity.GetUserId();
                 _postServiceAgent.SavePost(model);
                 return RedirectToAction("Index");
@@ -92,7 +93,7 @@ namespace Workwise.Controllers
         }
 
 
-        public ActionResult SuggestedUser()
+        public async Task<ActionResult> SuggestedUser()
         {
             var model = _userServiceAgent.GetAllUsers(5, User.Identity.GetUserId()).ToList();
             //var model = RandomUserGenerator.GetManyDummyUser(10);

@@ -19,10 +19,13 @@ namespace Workwise.Controllers
         private ApplicationUserManager _userManager;
         private readonly IDefaultsHelper _defaultHelper;
         private readonly IUserServiceAgent _userServiceAgent;
+
         public AccountController()
         {
         }
-        public AccountController(IUserServiceAgent userServiceAgent, IDefaultsHelper defaultHelper)
+        public AccountController(
+            IUserServiceAgent userServiceAgent,
+            IDefaultsHelper defaultHelper)
         {
             _userServiceAgent = userServiceAgent;
             _defaultHelper = defaultHelper;
@@ -174,7 +177,7 @@ namespace Workwise.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    var createUserProfileResult = await  _userServiceAgent.CreateUserProfile(user.Id, user.UserName);
+                    var createUserProfileResult =  _userServiceAgent.CreateUserProfile(user.Id, user.UserName);
 
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
     
@@ -208,7 +211,7 @@ namespace Workwise.Controllers
                     if (result.Succeeded)
                     {
                         var profilePic = ImageHelper.SaveImagefromWeb(model.ProfilePicture, Server.MapPath("~/Images/Upload"));
-                        await _userServiceAgent.CreateUserProfile(user.Id, model.Name , profilePic);
+                        _userServiceAgent.CreateUserProfile(user.Id, model.Name , profilePic);
                     }
                 }
             }

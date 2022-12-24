@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Workwise.Helper;
@@ -11,29 +12,35 @@ namespace Workwise.Controllers
 {
     public class UserController : BaseController
     {
-        private IUserServiceAgent _userServiceAgent;
+        private readonly IUserServiceAgent _userServiceAgent;
         private readonly IDefaultsHelper _defaultHelper;
-        public UserController(IUserServiceAgent userServiceAgent, IDefaultsHelper defaultHelper)
+        public UserController(
+            IUserServiceAgent userServiceAgent,
+            IDefaultsHelper defaultHelper)
         {
             this._userServiceAgent = userServiceAgent;
             _defaultHelper = defaultHelper;
         }
+
         public ActionResult Chat()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult getusers()
         {
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
+
         [HttpGet]
         public ActionResult EditProfile()
         {
             var objmodel = _defaultHelper.GetUserModel(User.Identity.GetUserId());
             return View(objmodel);
         }
+
         [HttpPost]
         public ActionResult EditProfile(UserViewModel model)
         {
@@ -42,7 +49,7 @@ namespace Workwise.Controllers
             entity.Gender = model.Gender;
             entity.DOB = Convert.ToDateTime(model.DOB);
             entity.Bio = model.Bio;
-            entity.UpdatedOn = System.DateTime.Now;
+            entity.UpdatedOn = DateTime.Now;
             _userServiceAgent.SaveProfile(entity);
             return RedirectToAction("Profile");
         }
@@ -62,7 +69,7 @@ namespace Workwise.Controllers
         public ActionResult _OnlineFriends()
         {
             var onlineFriends = _userServiceAgent.GetOnlineFriends(User.Identity.GetUserId());
-            var objmodel = onlineFriends.Select(m => new UserViewModel()
+            var objmodel = onlineFriends.Select(m =>  new UserViewModel()
             {
                 UserId = m.UserId,
                 Name = m.Name,

@@ -90,7 +90,7 @@
                 $image_crop.croppie('bind', {
                     url: event.target.result
                 }).then(function () {
-                    console.log('jQuery bind complete');
+                    alert('jQuery bind complete');
                 });
             }
             reader.readAsDataURL(this.files[0]);
@@ -119,7 +119,7 @@
         });
 
         $(window).scroll(function () {
-            // debugger;
+            // 
             if ($('#feed-dd').hasClass('current')) {
                 if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
                     $('.spinner').show();

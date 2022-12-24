@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Workwise.ServiceAgent.Interface;
 using Workwise.ViewModel;
 
@@ -12,9 +13,9 @@ namespace Workwise.ServiceAgent
             _httpClient = httpClient;
         }
 
-        public IEnumerable<CompanyViewModel> GetAllCompanies()
+        public  IEnumerable<CompanyViewModel> GetAllCompanies()
         {
-            return _httpClient.Get<IEnumerable<CompanyViewModel>>(Constent.Company.GetCompanies);
+            return _httpClient.GetAsync<IEnumerable<CompanyViewModel>>(Constent.Company.GetCompanies);
         }
     }
 }

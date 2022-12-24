@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Workwise.ServiceAgent.Interface;
 using Workwise.ViewModel;
 
@@ -14,12 +15,12 @@ namespace Workwise.ServiceAgent
 
         public IEnumerable<PostViewModel> GetLatestPostByUser(string UserId)
         {
-            return _httpClient.Get<IEnumerable<PostViewModel>>(string.Format(Constent.Post.GetLatestPostByUser, UserId));
+            return _httpClient.GetAsync<IEnumerable<PostViewModel>>(string.Format(Constent.Post.GetLatestPostByUser, UserId));
         }
 
         public void SavePost(PostViewModel post)
         {
-            _httpClient.PostData(Constent.Post.SavePost, post);
+            _httpClient.PostDataAsync(Constent.Post.SavePost, post);
         }
     }
 }

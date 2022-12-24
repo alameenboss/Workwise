@@ -10,98 +10,62 @@ namespace Workwise.ServiceAgent
 {
     public class HttpClientWrapper : IHttpClient
     {
-        public T Get<T>(string requestUri)
+        public Uri BaseAddress { get; set; }
+        public HttpClientWrapper()
         {
-            T obj = default(T);
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:44378/api/");
-                //HTTP GET
-                var responseTask = client.GetAsync(requestUri);
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<T>();
-                    readTask.Wait();
-
-                    obj = readTask.Result;
-                }
-                //else //web api sent error response 
-                //{
-                //    //log response status here..
-
-                //    students = Enumerable.Empty<StudentViewModel>();
-
-                //    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                //}
-            }
-            return obj;
+           this.BaseAddress =  new Uri("https://localhost:44358/api/");
         }
 
-        public T PostData<T>(string requestUri, T value)
+        public T GetAsync<T>(string requestUri)
         {
-            T obj = default(T);
+            T result = default(T);
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44378/api/");
-                //HTTP GET
-                //var responseTask = await client.PostAsJsonAsync(requestUri,value);
-                //responseTask.Wait();
+                client.BaseAddress = this.BaseAddress;
+
+                var response = client.GetAsync(requestUri).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    result = response.Content.ReadAsAsync<T>().Result;
+                }
+            }
+            return result;
+        }
+
+        public T PostDataAsync<T>(string requestUri, T value)
+        {
+            T result = default(T);
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = this.BaseAddress;
 
                 var response = client.PostAsync(requestUri, new StringContent(
                 new JavaScriptSerializer().Serialize(value), Encoding.UTF8, "application/json")).Result;
 
-                //var result = responseTask.Content;
                 if (response.IsSuccessStatusCode)
                 {
-                    var readTask = response.Content.ReadAsAsync<T>();
-                    readTask.Wait();
-
-                    obj = readTask.Result;
+                    result = response.Content.ReadAsAsync<T>().Result;
                 }
-                //else //web api sent error response 
-                //{
-                //    //log response status here..
 
-                //    students = Enumerable.Empty<StudentViewModel>();
-
-                //    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                //}
             }
-            return obj;
+            return result;
         }
         
-        public async Task<U> PostDataAsync<T, U>(string requestUri, T value)
+        public U PostDataAsync<T, U>(string requestUri, T value)
         {
             U result = default(U);
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44378/api/");
-                //HTTP GET
-                var responseTask = await client.PostAsJsonAsync(requestUri, value);
-                // responseTask.Wait();
+                client.BaseAddress = this.BaseAddress;
+                var response = client.PostAsJsonAsync(requestUri, value).Result;
 
-                //var result = responseTask.Content;
-                if (responseTask.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    var readTask = await responseTask.Content.ReadAsAsync<U>();
-                    //readTask.Wait();
-
-                    result = readTask;
+                    result = response.Content.ReadAsAsync<U>().Result;
                 }
-                //else //web api sent error response 
-                //{
-                //    //log response status here..
-
-                //    students = Enumerable.Empty<StudentViewModel>();
-
-                //    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                //}
             }
             return result;
         }
