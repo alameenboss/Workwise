@@ -1,0 +1,120 @@
+﻿
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index :999;
+}
+.content-seperator {
+    margin-top: 56px;
+}
+
+header .user-account .user-info > img  {
+    height:30px !important;
+}
+.post-bar .post_topbar .usy-dt > img {
+    height: 30px !important;
+}
+
+.post-topbar .user-picy > img {
+    border-radius : 100%;
+}
+
+header nav {
+    width: 51% !important;
+}
+@media (max-width: 576px) {
+    .content-seperator {
+        margin-top: 150px;
+    }
+
+    /*#msg-list-container, .message-bar-head {
+        display: none;
+    }*/
+    
+}
+
+.posty {
+    margin-bottom: 20px;
+}
+
+.job_descp > p {
+    white-space: pre-wrap;
+}
+
+.user-pro-img img {
+
+    width:200px;
+    height:200px;
+}
+.header-data nav > ul > li {
+    padding: 12px 5px !important;
+}
+
+.attach-image {
+    top: 0px;
+    position: absolute;
+    right: 15px;
+}
+
+.post-topbar .status-text {
+    float: left;
+    margin: 15px;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+/*#mCSB_1_scrollbar_vertical {
+   background-color:  rgb(29, 161, 242)
+}*/
+
+.messages-line {
+    margin-top: 100px;
+    max-height: 300px !important;
+}
+
+.edit-basic-open{
+    font-size:0.5em;
+}
+
+
+.suggestion-usd img {
+    width: 35px;
+}
+
+.user-profy > img{
+    width:50px;
+    border-radius:100%;
+}
+
+.user-profy span {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.sgt-text{
+    width:150px;
+}
+
+.display-none{
+display:none;
+}
+
+.user-notification-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25px;
+    height: 25px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    -ms-border-radius: 100px;
+    -o-border-radius: 100px;
+    border-radius: 100px;
+    background-color: #e77667;
+    text-align: center;
+    line-height: 25px;
+    font-size: 13px;
+    color: #fff;
+}
+

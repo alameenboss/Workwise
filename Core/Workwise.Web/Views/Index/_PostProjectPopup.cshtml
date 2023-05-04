@@ -1,0 +1,43 @@
+﻿@model Workwise.ViewModel.PostViewModel
+
+
+<div class="post-popup pst-pj">
+    <div class="post-project">
+        <div class="post-project-fields">
+            @using (Html.BeginForm("CreatePost", "Index", FormMethod.Post, new { @class = "form-horizontal", role = "form",enctype="multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-lg-12">
+                        @Html.TextBoxFor(m => Model.Title, new { htmlAttributes = new { placeholder = "Title" } })
+                    </div>
+                    <div class="col-lg-6" style="display:none">
+                        <div class="price-br">
+                            @Html.EditorFor(m => Model.Rate, new { htmlAttributes = new { placeholder = "Price" } })
+                            <i class="fa fa-dollar"></i>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" style="display:none">
+                        <div class="inp-field">
+                           @* @Html.DropDownListFor(model => model.Worktype)*@
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        @Html.TextAreaFor(m => Model.Description, new { htmlAttributes = new { placeholder = "Description" } })
+                        
+                        @*<label for="PostImage" class="attach-image"><i class="fa fa-camera"></i>
+                        <input type="file" name="PostImage" id="PostImage" accept="image/*" style="display:none" /></label>*@
+                    </div>
+                    <input type="file" name="PostImage" id="PostImage" accept="image/*" />
+                    <div class="col-lg-12">
+                        <ul>
+                            <li><button class="active" type="submit" value="post">Post</button></li>
+                            <li><a href="#" title="">Cancel</a></li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div><!--post-project-fields end-->
+        <a href="#" title=""><i class="fa fa-times-circle-o"></i></a>
+    </div><!--post-project end-->
+</div><!--post-project-popup end-->

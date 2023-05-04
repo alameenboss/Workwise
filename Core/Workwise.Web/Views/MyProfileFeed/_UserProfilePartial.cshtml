@@ -1,0 +1,49 @@
+﻿@using Workwise.ViewModel;
+@model UserProfileViewModel
+@{
+    var username = ViewData["username"] != null ? ViewData["username"].ToString() : string.Empty;
+    var userImage = ViewData["userimage"] != null ? ViewData["userimage"].ToString() : string.Empty;
+     
+}
+<div class="user_profile">
+    <div class="user-pro-img">
+        <img src="@userImage" alt="" id="uploaded_image">
+        @if (username == User.Identity.Name)
+        {
+            <div class="add-dp" id="OpenImgUpload">
+                <input type="file" name="upload_image" id="upload_image" accept="image/*" />
+                <label for="upload_image"><i class="fa fa-camera"></i></label>
+            </div>
+        }
+
+    </div><!--user-pro-img end-->
+    <div class="user_pro_status">
+        @if (username != User.Identity.Name)
+        {
+            <ul class="flw-hr">
+                <li><a href="#" title="" class="flww"><i class="fa fa-plus"></i> Follow</a></li>
+                <li><a href="#" title="" class="hre">Hire</a></li>
+            </ul>
+        }
+    <ul class="flw-status">
+        <li>
+            <a href="@("/profiles/Following/" + Model.UserId )"><h4>Following</h4></a>
+            <span>@Model.Following.Count</span>
+        </li>
+        <li>
+            <a href="@("/profiles/Followers/" + Model.UserId )"><h4>Followers</h4></a>
+            <span>@Model.Followers.Count</span>
+        </li>
+    </ul>
+    </div><!--user_pro_status end-->
+    <ul class="social_links">
+        <li><a href="#" title=""><i class="fa fa-globe"></i> www.example.com</a></li>
+        <li><a href="#" title=""><i class="fa fa-facebook-square"></i> Http://www.facebook.com/john...</a></li>
+        <li><a href="#" title=""><i class="fa fa-twitter"></i> Http://www.Twitter.com/john...</a></li>
+        <li><a href="#" title=""><i class="fa fa-google-plus-square"></i> Http://www.googleplus.com/john...</a></li>
+        <li><a href="#" title=""><i class="fa fa-behance-square"></i> Http://www.behance.com/john...</a></li>
+        <li><a href="#" title=""><i class="fa fa-pinterest"></i> Http://www.pinterest.com/john...</a></li>
+        <li><a href="#" title=""><i class="fa fa-instagram"></i> Http://www.instagram.com/john...</a></li>
+        <li><a href="#" title=""><i class="fa fa-youtube"></i> Http://www.youtube.com/john...</a></li>
+    </ul>
+</div><!--user_profile end-->

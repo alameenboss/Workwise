@@ -1,0 +1,43 @@
+﻿@using Workwise.ViewModel;
+@model List<UserSearchViewModel>
+<div class="top-profiles">
+    <div class="pf-hd">
+        <h3>Top Profiles</h3>
+        <i class="fa fa-ellipsis-v"></i>
+    </div>
+    <div class="profiles-slider">
+
+        @foreach (var user in Model)
+        {
+            <div class="user-profy" tabindex="-1" style="width: 153px;">
+                <img src="@user.UserInfo.ImageUrl" alt="">
+                <h3>@user.UserInfo.FirstName</h3>
+                <span>@user.UserInfo.Designation</span>
+                <ul>
+                    <li>
+                        <a href="#" title="" class="followw follow-user sendRequest"  data-user-id="@user.UserInfo.UserId" tabindex="-1">Follow</a>
+                    </li>
+                    <li>
+                        <a href="#" title="" class="envlp message-user " data-user-id="@user.UserInfo.UserId" tabindex="-1" onclick="return false;"><img src="/images/envelop.png" alt=""></a>
+                    </li>
+                    <li>
+                        <a href="#" title="" class="hire hire-user" data-user-id="@user.UserInfo.UserId" tabindex="-1" onclick="return false;">hire</a>
+                    </li>
+                </ul>
+                <a href="/MyProfileFeed/Index/@user.UserInfo.UserId" title="" tabindex="-1">View Profile</a>
+            </div>
+            
+            
+        }
+
+
+
+        <!--user-profy end-->
+        <!--user-profy end-->
+        <!--user-profy end-->
+        <!--user-profy end-->
+        <!--user-profy end-->
+        <!--user-profy end-->
+
+    </div><!--profiles-slider end-->
+</div><!--top-profiles end-->

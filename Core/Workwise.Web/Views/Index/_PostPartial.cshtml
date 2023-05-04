@@ -1,0 +1,126 @@
+﻿@using Workwise.ViewModel
+@model  PostViewModel
+@{ 
+    var hasImage = Model.PostImages?.Count > 0;
+}
+<div class="post-bar @(Model.HasCommmet ? "no-margin":"") ">
+    <div class="post_topbar">
+        <div class="usy-dt">
+            <img class="profile-pic" src="@Model.PostedBy.ImageUrl" alt="">
+            <div class="usy-name">
+                <h3>@Model.PostedBy.FirstName</h3>
+                <span><img src="/images/clock.png" alt="">@PrettyDate.GetPrettyDate(Model.PostedOn)</span>
+            </div>
+        </div>
+        <div class="ed-opts">
+            <a href="#" title="" class="ed-opts-open"><i class="fa fa-ellipsis-v"></i></a>
+            <ul class="ed-options">
+                <li>
+                    <a href="#" title="">Edit Post</a>
+                </li>
+                <li>
+                    <a href="#" title="">Unsaved</a>
+                </li>
+                <li>
+                    <a href="#" title="">Unbid</a>
+                </li>
+                <li>
+                    <a href="#" title="">Close</a>
+                </li>
+                <li>
+                    <a href="#" title="">Hide</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="epi-sec">
+        <ul class="descp">
+            <li>
+                <img src="/images/icon8.png" alt="">
+                <span>Epic Coder</span>
+            </li>
+            <li>
+                <img src="/images/icon9.png" alt="">
+                <span>@Model.Location</span>
+            </li>
+        </ul>
+        <ul class="bk-links">
+            <li>
+                <a href="#" title=""><i class="fa fa-bookmark"></i></a>
+            </li>
+            <li>
+                <a href="#" title=""><i class="fa fa-envelope"></i></a>
+            </li>
+            <li style="display:none">
+                <a href="#" title="" class="bid_now">Bid Now</a>
+            </li>
+        </ul>
+    </div>
+    <div class="job_descp">
+        @if (hasImage)
+        {
+            var firstPost = Model.PostImages.FirstOrDefault().ImageUrl;
+            <a href="@firstPost" target="_blank">
+                <div style="max-height:300px;overflow:hidden">
+
+                    @if (firstPost.EndsWith(".jpg") || firstPost.EndsWith(".jpeg") || firstPost.EndsWith(".png") || firstPost.EndsWith(".gif"))
+                    {
+                    <img class="card-img-top" src="@firstPost" style="width:100%;margin-bottom:10px;padding:0px;" />
+                    }
+                    else if(firstPost.EndsWith(".mp4"))
+                    {
+                    <video controls="controls" style="width:100%" preload="metadata" >
+                        <source src="@firstPost" type="video/mp4" />
+                    </video>
+                    }
+                </div>
+            </a>
+        }
+        <br />
+        <h3>@Model.Title</h3>
+        <ul class="job-dt" style="display:none">
+            <li>
+                <a href="#" title="">@Model.Worktype.ToString()</a>
+            </li>
+            <li>
+                <span>Rs. @Model.Rate / hr</span>
+            </li>
+        </ul>
+        <p>
+        @if (!string.IsNullOrEmpty(Model.Description) && Model.Description.Length > 300)
+        {
+            @Model.Description.Substring(0, 300)<span>...</span><a href="#" title="">Show All</a>
+        }
+        else
+        {
+            @Model.Description
+        }
+        </p>
+
+        <ul class="skill-tags">
+        @if (Model.Tags != null)
+        {
+
+            foreach (var tag in Model.Tags)
+            {
+                <li>
+                <a href="/Search/@tag" title="">@tag</a>
+                </li>
+            }
+        }
+        </ul>
+    </div>
+    <div class="job-status-bar">
+        <ul class="like-com">
+            <li>
+                <a href="/Like/@Model.Id" class="like-post"><i class="fa fa-heart"></i> Like</a>
+                <img  src="/images/liked-img.png" alt="">
+                <span >@Model.LikeCount</span>
+            </li>
+            <li>
+                <a href="/Comment/@Model.Id" class="com comment-post"><i class="fa fa-comment-alt"></i> Comment @Model.CommentCount</a>
+            </li>
+        </ul>
+        <a href="/View/@Model.Id" class="view-post"><i class="fa fa-eye"></i>Views @Model.ViewCount</a>
+    </div>
+</div><!--post-bar end-->

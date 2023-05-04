@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Friend.ly Message</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" type="text/css" href="/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/line-awesome.css">
+    <link rel="stylesheet" type="text/css" href="/css/line-awesome-font-awesome.min.css">
+    <link rel="stylesheet" type="text.css" href="/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/slick.css">
+    <link rel="stylesheet" type="text/css" href="/css/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="/css/jquery.range.css">
+    <link rel="stylesheet" type="text/css" href="/css/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/croppie.css"/>
+   
+    <link rel="stylesheet" type="text/css" href="~/css/MyStyles.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+
+        @Html.Partial("_Header")
+        <div class="content-seperator"></div>
+        @RenderBody()
+        <input type="hidden" id="hdfLoggedInUserID" value="alameen02111988" />
+        <input type="hidden" id="hdfLoggedInUserName" value="alameenboss" />
+        <input type="hidden" id="hdfLoggedInUserProfilePicture" value="/images/alameen_user.jpg" />
+        
+        <input type="hidden" id="hdfPendingMessageID" />
+        @Html.Partial("_Loading")
+
+        @Html.Partial("_Footer")
+
+    </div><!--theme-layout end-->
+
+
+    <script type="text/javascript" src="/js/popper.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.mCustomScrollbar.js"></script>
+    <script type="text/javascript" src="/js/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="/js/slick.min.js"></script>
+    <script type="text/javascript" src="/js/scrollbar.js"></script>
+    <script type="text/javascript" src="/js/jquery.range-min.js"></script>
+    <script type="text/javascript" src="/js/flatpickr.min.js"></script>
+    <script type="text/javascript" src="~/js/exif.js"></script>
+    <script type="text/javascript" src="~/js/croppie.js"></script>
+    <script type="text/javascript" src="~/js/prettydate.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.signalR-2.4.1.js"></script>
+    <script type="text/javascript" src="~/signalr/hubs"></script>
+    <script type="text/javascript" src="~/js/chat.js"></script>
+    <script type="text/javascript" src="/js/script.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

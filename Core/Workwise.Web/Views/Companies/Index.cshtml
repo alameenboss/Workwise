@@ -1,0 +1,22 @@
+﻿@model  List<Workwise.ViewModel.CompanyViewModel>
+
+<section class="companies-info">
+    <div class="container">
+        <div class="company-title">
+            <h3>All Companies</h3>
+        </div><!--company-title end-->
+        <div class="companies-list">
+            <div class="row">
+
+                @foreach(var company in Model)
+                {
+                    @Html.Partial("_CompanyCard",company)
+                }
+
+               
+            </div>
+        </div><!--companies-list end-->
+
+    </div>
+</section><!--companies-info end-->
+

@@ -1,0 +1,55 @@
+﻿@using Workwise.ViewModel;
+@model  List<UserProfileViewModel>
+
+
+<div class="col-lg-4 col-md-12 no-pdd" id="msg-list-container">
+    <div class="msgs-list">
+        <div class="msg-title">
+            <h3>Messages</h3>
+            <ul>
+                <li><a href="#" title=""><i class="fa fa-cog"></i></a></li>
+                <li><a href="#" title=""><i class="fa fa-ellipsis-v"></i></a></li>
+            </ul>
+        </div>
+        <div class="messages-list">
+            <ul>
+                @foreach (var user in Model)
+                {
+                    <li class="usr-list-item" data-userid="@user.UserId" data-userimg="@user.ImageUrl"  data-username="@user.FirstName" >
+                        <div class="usr-msg-details">
+                            <div class="usr-ms-img">
+                                <img src="@user.ImageUrl" alt="">
+                                <span class="msg-status display-none"></span>
+                            </div>
+                            <div class="usr-mg-info">
+                                <h3>@user.FirstName</h3>
+                                <p>Last Message <img src="/images/smley.png" alt=""></p>
+                            </div>
+                            <span class="posted_time prettydate">@DateTime.Now</span>
+                            <span class="msg-notifc display-none"></span>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+<input type="hidden" class="hdf-current-chat-user-id" value=""/>
+<input type="hidden" class="hdf-current-chat-user-name" value=""/>
+<input type="hidden" class="hdf-current-chat-user-profile-picture"  value=""/>
+<input type="hidden" class="hdf-last-chat-message-id"  value=""/>
+<input type="hidden" class="hdf-old-messages-exist"  value=""/>
+
+<script>
+    $(function () {
+        $('.usr-list-item').click(function () {
+            $(this).siblings('li').removeClass('active');
+            $(this).addClass('active');
+            $('.hdf-current-chat-user-id').val($(this).attr('data-userid'));
+            $('.hdf-current-chat-user-profile-picture').val($(this).attr('data-userimg'));
+            $('.hdf-current-chat-user-name').val($(this).attr('data-username'));
+            $('.hdf-current-chat-user-id').val($(this).attr('data-userid'));
+            $('.hdf-current-chat-user-id').val($(this).attr('data-userid'));
+        });
+    });
+</script>

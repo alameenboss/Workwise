@@ -1,0 +1,14 @@
+﻿@using Workwise.ViewModel;
+@model UserProfileViewModel
+<div class="product-feed-tab current" id="feed-dd">
+    <div class="posts-section">
+        @*@Html.Action("GetPosts", "Index")*@
+        @if(Model != null)
+        {
+            foreach (var post in Model.Posts)
+            {
+                @Html.Partial(@"~\Views\Index\_PostDetail.cshtml", post)
+            }
+        }
+    </div><!--posts-section end-->
+</div><!--product-feed-tab end-->
