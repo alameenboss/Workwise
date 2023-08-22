@@ -9,7 +9,6 @@ namespace Workwise.Web.Controllers
     [Authorize]
     public class JobsController : Controller
     {
-        // GET: Conpanies
         public ActionResult Index()
         {
             return View();

@@ -9,7 +9,6 @@ namespace Workwise.Web.Controllers
     [Authorize]
     public class UserProfileController : Controller
     {
-        // GET: Conpanies
         public ActionResult Index()
         {
             return View();
